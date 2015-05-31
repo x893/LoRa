@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Tools\Semtech\SX1276SKA\SemtechLib.Devices.SX1276LR.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9D244EB9-404F-44EF-A5B0-B1B1E3902CAC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>SemtechLib.Devices.SX1276LR</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <ApplicationVersion>2.0.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>SemtechLib.Devices.SX1276LR</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SX1276LR.cs" />
+    <Compile Include="Enumerations\LnaGainEnum.cs" />
+    <Compile Include="Enumerations\ClockOutEnum.cs" />
+    <Compile Include="Enumerations\PaRampEnum.cs" />
+    <Compile Include="Enumerations\LimitCheckStatusEnum.cs" />
+    <Compile Include="Enumerations\DioMappingEnum.cs" />
+    <Compile Include="Enumerations\RfPaSwitchSelEnum.cs" />
+    <Compile Include="Enumerations\BandEnum.cs" />
+    <Compile Include="Enumerations\PaSelectEnum.cs" />
+    <Compile Include="Enumerations\OperatingModeEnum.cs" />
+    <Compile Include="Events\DioMappingEventHandler.cs" />
+    <Compile Include="Events\ClockOutEventHandler.cs" />
+    <Compile Include="Events\ClockOutEventArg.cs" />
+    <Compile Include="Events\LimitCheckStatusEventArg.cs" />
+    <Compile Include="Events\BandEventHandler.cs" />
+    <Compile Include="Events\BandEventArg.cs" />
+    <Compile Include="Events\PaRampEventArg.cs" />
+    <Compile Include="Events\PaModeEventArg.cs" />
+    <Compile Include="Events\AgcStepEventArg.cs" />
+    <Compile Include="Events\LimitCheckStatusEventHandler.cs" />
+    <Compile Include="Events\LnaGainEventHandler.cs" />
+    <Compile Include="Events\AgcStepEventHandler.cs" />
+    <Compile Include="Events\LnaGainEventArg.cs" />
+    <Compile Include="Events\PaRampEventHandler.cs" />
+    <Compile Include="Events\PaModeEventHandler.cs" />
+    <Compile Include="Events\DioMappingEventArg.cs" />
+    <Compile Include="General\ILog.cs" />
+    <Compile Include="General\DataLog.cs" />
+    <Compile Include="General\PacketLog.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SemtechLib.Devices.Common.Hid\SemtechLib.Devices.Common.Hid.csproj">
+      <Project>{83fa7ef8-aaa9-494f-b51d-fb4df839da30}</Project>
+      <Name>SemtechLib.Devices.Common.Hid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib.Devices.Common\SemtechLib.Devices.Common.csproj">
+      <Project>{ab9bb82b-d9ef-47e7-adf7-198040c17cd4}</Project>
+      <Name>SemtechLib.Devices.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib\SemtechLib.csproj">
+      <Project>{ca0db6c9-e611-4131-9732-6d2231afa1fb}</Project>
+      <Name>SemtechLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

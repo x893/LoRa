@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Tools\Semtech\SX1276SKA\SemtechLib.Devices.SX1276.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1FF05CAC-B9B3-4620-8913-BEBD11130457}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>SemtechLib.Devices.SX1276</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <ApplicationVersion>2.0.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>SemtechLib.Devices.SX1276</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SX1276.cs" />
+    <Compile Include="General\MaskValidationType.cs" />
+    <Compile Include="General\ILog.cs" />
+    <Compile Include="General\Latency.cs" />
+    <Compile Include="General\PacketLog.cs" />
+    <Compile Include="General\DataLog.cs" />
+    <Compile Include="General\PseudoNoiseGenerator.cs" />
+    <Compile Include="General\Packet.cs" />
+    <Compile Include="Events\FromReceiveEventHandler.cs" />
+    <Compile Include="Events\AutoRestartRxEventArg.cs" />
+    <Compile Include="Events\PaRampEventArg.cs" />
+    <Compile Include="Events\OokThreshTypeEventArg.cs" />
+    <Compile Include="Events\EnterConditionEventArg.cs" />
+    <Compile Include="Events\LnaGainEventHandler.cs" />
+    <Compile Include="Events\TempThresholdEventArg.cs" />
+    <Compile Include="Events\FromTransmitEventArg.cs" />
+    <Compile Include="Events\FromPacketReceivedEventHandler.cs" />
+    <Compile Include="Events\FromPacketReceivedEventArg.cs" />
+    <Compile Include="Events\TimerResolutionEventArg.cs" />
+    <Compile Include="Events\FeiRangeEventArg.cs" />
+    <Compile Include="Events\AgcStepEventHandler.cs" />
+    <Compile Include="Events\AddressFilteringEventHandler.cs" />
+    <Compile Include="Events\PaModeEventArg.cs" />
+    <Compile Include="Events\OokAverageThreshFiltEventArg.cs" />
+    <Compile Include="Events\FifoFillConditionEventArg.cs" />
+    <Compile Include="Events\OokThreshTypeEventHandler.cs" />
+    <Compile Include="Events\LowPowerSelectionEventHandler.cs" />
+    <Compile Include="Events\AddressFilteringEventArg.cs" />
+    <Compile Include="Events\RfPaSwitchSelEventHandler.cs" />
+    <Compile Include="Events\PacketFormatEventHandler.cs" />
+    <Compile Include="Events\IntermediateModeEventHandler.cs" />
+    <Compile Include="Events\FifoFillConditionEventHandler.cs" />
+    <Compile Include="Events\PreamblePolarityEventArg.cs" />
+    <Compile Include="Events\ListenResolEventArg.cs" />
+    <Compile Include="Events\OokAverageThreshFiltEventHandler.cs" />
+    <Compile Include="Events\EnterConditionEventHandler.cs" />
+    <Compile Include="Events\TempThresholdEventHandler.cs" />
+    <Compile Include="Events\FromStartEventHandler.cs" />
+    <Compile Include="Events\PnSequenceEventHandler.cs" />
+    <Compile Include="Events\RxTriggerEventHandler.cs" />
+    <Compile Include="Events\BandEventArg.cs" />
+    <Compile Include="Events\LimitCheckStatusEventArg.cs" />
+    <Compile Include="Events\ExitConditionEventHandler.cs" />
+    <Compile Include="Events\DcFreeEventHandler.cs" />
+    <Compile Include="Events\RxTriggerEventArg.cs" />
+    <Compile Include="Events\AutoRestartRxEventHandler.cs" />
+    <Compile Include="Events\PaRampEventHandler.cs" />
+    <Compile Include="Events\OokPeakThreshDecEventHandler.cs" />
+    <Compile Include="Events\FromIdleEventArg.cs" />
+    <Compile Include="Events\FeiRangeEventHandler.cs" />
+    <Compile Include="Events\PacketFormatEventArg.cs" />
+    <Compile Include="Events\PaModeEventHandler.cs" />
+    <Compile Include="Events\ListenCriteriaEventHandler.cs" />
+    <Compile Include="Events\FromRxTimeoutEventHandler.cs" />
+    <Compile Include="Events\LowBatTrimEventArg.cs" />
+    <Compile Include="Events\DcFreeEventArg.cs" />
+    <Compile Include="Events\ClockOutEventHandler.cs" />
+    <Compile Include="Events\ListenEndEventArg.cs" />
+    <Compile Include="Events\OokPeakThreshDecEventArg.cs" />
+    <Compile Include="Events\DioMappingEventArg.cs" />
+    <Compile Include="Events\LimitCheckStatusEventHandler.cs" />
+    <Compile Include="Events\DioMappingEventHandler.cs" />
+    <Compile Include="Events\FromReceiveEventArg.cs" />
+    <Compile Include="Events\IdleModeEventHandler.cs" />
+    <Compile Include="Events\AgcStepEventArg.cs" />
+    <Compile Include="Events\ListenEndEventHandler.cs" />
+    <Compile Include="Events\DataModeEventHandler.cs" />
+    <Compile Include="Events\TimerResolutionEventHandler.cs" />
+    <Compile Include="Events\PreamblePolarityEventHandler.cs" />
+    <Compile Include="Events\FromStartEventArg.cs" />
+    <Compile Include="Events\IdleModeEventArg.cs" />
+    <Compile Include="Events\ListenCriteriaEventArg.cs" />
+    <Compile Include="Events\ExitConditionEventArg.cs" />
+    <Compile Include="Events\FromRxTimeoutEventArg.cs" />
+    <Compile Include="Events\LowPowerSelectionEventArg.cs" />
+    <Compile Include="Events\PnSequenceEventArg.cs" />
+    <Compile Include="Events\DataModeEventArg.cs" />
+    <Compile Include="Events\ModulationTypeEventArg.cs" />
+    <Compile Include="Events\ModulationTypeEventHandler.cs" />
+    <Compile Include="Events\LnaGainEventArg.cs" />
+    <Compile Include="Events\IntermediateModeEventArg.cs" />
+    <Compile Include="Events\ClockOutEventArg.cs" />
+    <Compile Include="Events\RfPaSwitchSelEventArg.cs" />
+    <Compile Include="Events\FromIdleEventHandler.cs" />
+    <Compile Include="Events\LowBatTrimEventHandler.cs" />
+    <Compile Include="Events\ListenResolEventHandler.cs" />
+    <Compile Include="Events\FromTransmitEventHandler.cs" />
+    <Compile Include="Events\BandEventHandler.cs" />
+    <Compile Include="Enumerations\PreamblePolarityEnum.cs" />
+    <Compile Include="Enumerations\OperatingModeEnum.cs" />
+    <Compile Include="Enumerations\IntermediateModeEnum.cs" />
+    <Compile Include="Enumerations\DioMappingEnum.cs" />
+    <Compile Include="Enumerations\DcFreeEnum.cs" />
+    <Compile Include="Enumerations\OokThreshTypeEnum.cs" />
+    <Compile Include="Enumerations\ModulationTypeEnum.cs" />
+    <Compile Include="Enumerations\DataModeEnum.cs" />
+    <Compile Include="Enumerations\FifoFillConditionEnum.cs" />
+    <Compile Include="Enumerations\TimerResolution.cs" />
+    <Compile Include="Enumerations\BandEnum.cs" />
+    <Compile Include="Enumerations\ListenEndEnum.cs" />
+    <Compile Include="Enumerations\RxTriggerEnum.cs" />
+    <Compile Include="Enumerations\IdleMode.cs" />
+    <Compile Include="Enumerations\LimitCheckStatusEnum.cs" />
+    <Compile Include="Enumerations\PacketFormatEnum.cs" />
+    <Compile Include="Enumerations\OokAverageThreshFiltEnum.cs" />
+    <Compile Include="Enumerations\FromRxTimeout.cs" />
+    <Compile Include="Enumerations\FromStart.cs" />
+    <Compile Include="Enumerations\AutoRestartRxEnum.cs" />
+    <Compile Include="Enumerations\PaSelectEnum.cs" />
+    <Compile Include="Enumerations\FeiRangeEnum.cs" />
+    <Compile Include="Enumerations\FromReceive.cs" />
+    <Compile Include="Enumerations\FromPacketReceived.cs" />
+    <Compile Include="Enumerations\ListenCriteriaEnum.cs" />
+    <Compile Include="Enumerations\ExitConditionEnum.cs" />
+    <Compile Include="Enumerations\LowPowerSelection.cs" />
+    <Compile Include="Enumerations\RfPaSwitchSelEnum.cs" />
+    <Compile Include="Enumerations\FromTransmit.cs" />
+    <Compile Include="Enumerations\FromIdle.cs" />
+    <Compile Include="Enumerations\OokPeakThreshStepEnum.cs" />
+    <Compile Include="Enumerations\ClockOutEnum.cs" />
+    <Compile Include="Enumerations\ListenResolEnum.cs" />
+    <Compile Include="Enumerations\LnaGainEnum.cs" />
+    <Compile Include="Enumerations\TempThresholdEnum.cs" />
+    <Compile Include="Enumerations\PnSequence.cs" />
+    <Compile Include="Enumerations\LowBatTrimEnum.cs" />
+    <Compile Include="Enumerations\AddressFilteringEnum.cs" />
+    <Compile Include="Enumerations\PaRampEnum.cs" />
+    <Compile Include="Enumerations\OokPeakThreshDecEnum.cs" />
+    <Compile Include="Enumerations\EnterConditionEnum.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SemtechLib.Devices.Common.Hid\SemtechLib.Devices.Common.Hid.csproj">
+      <Project>{83fa7ef8-aaa9-494f-b51d-fb4df839da30}</Project>
+      <Name>SemtechLib.Devices.Common.Hid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib.Devices.Common\SemtechLib.Devices.Common.csproj">
+      <Project>{ab9bb82b-d9ef-47e7-adf7-198040c17cd4}</Project>
+      <Name>SemtechLib.Devices.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib\SemtechLib.csproj">
+      <Project>{ca0db6c9-e611-4131-9732-6d2231afa1fb}</Project>
+      <Name>SemtechLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

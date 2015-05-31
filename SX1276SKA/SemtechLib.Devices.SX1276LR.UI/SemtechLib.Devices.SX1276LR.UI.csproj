@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Tools\Semtech\SX1276SKA\SemtechLib.Devices.SX1276LR.UI.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1450FEA1-8358-4F69-AD75-5618B2DAAE8D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>SemtechLib.Devices.SX1276LR.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <ApplicationVersion>2.0.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>SemtechLib.Devices.SX1276LR.UI</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="ZedGraph">
+      <HintPath>..\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\LoRaViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RssiGraphControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SpectrumGraphControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DeviceViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CommonViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RegisterTableControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\PacketLogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\CommonViewControl.resx" />
+    <EmbeddedResource Include="Controls\DeviceViewControl.resx" />
+    <EmbeddedResource Include="Controls\LoRaViewControl.resx" />
+    <EmbeddedResource Include="Controls\RegisterTableControl.resx" />
+    <EmbeddedResource Include="Controls\RssiGraphControl.resx" />
+    <EmbeddedResource Include="Controls\SpectrumGraphControl.resx" />
+    <EmbeddedResource Include="Forms\PacketLogForm.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SemtechLib.Devices.Common\SemtechLib.Devices.Common.csproj">
+      <Project>{ab9bb82b-d9ef-47e7-adf7-198040c17cd4}</Project>
+      <Name>SemtechLib.Devices.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib.Devices.SX1276LR\SemtechLib.Devices.SX1276LR.csproj">
+      <Project>{9d244eb9-404f-44ef-a5b0-b1b1e3902cac}</Project>
+      <Name>SemtechLib.Devices.SX1276LR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib\SemtechLib.csproj">
+      <Project>{ca0db6c9-e611-4131-9732-6d2231afa1fb}</Project>
+      <Name>SemtechLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Tools\Semtech\SX1276SKA\sx1276ska.exe-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DB8CF3BE-FD55-4780-B153-9B4BC192B136}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>sx1276ska</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>SX1276SKA</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="ZedGraph">
+      <HintPath>..\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sx1276ska_usersguide.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SemtechLib.Devices.Common.Hid\SemtechLib.Devices.Common.Hid.csproj">
+      <Project>{83fa7ef8-aaa9-494f-b51d-fb4df839da30}</Project>
+      <Name>SemtechLib.Devices.Common.Hid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib.Devices.Common\SemtechLib.Devices.Common.csproj">
+      <Project>{ab9bb82b-d9ef-47e7-adf7-198040c17cd4}</Project>
+      <Name>SemtechLib.Devices.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib.Devices.SX1276.Common\SemtechLib.Devices.SX1276.Common.csproj">
+      <Project>{80166908-280a-4518-b80a-93f1e100290d}</Project>
+      <Name>SemtechLib.Devices.SX1276.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib.Devices.SX1276.UI\SemtechLib.Devices.SX1276.UI.csproj">
+      <Project>{c1494cf6-e7d4-46f7-8ddd-6c4d4e332fac}</Project>
+      <Name>SemtechLib.Devices.SX1276.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib.Devices.SX1276LR.UI\SemtechLib.Devices.SX1276LR.UI.csproj">
+      <Project>{1450fea1-8358-4f69-ad75-5618b2daae8d}</Project>
+      <Name>SemtechLib.Devices.SX1276LR.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib.Devices.SX1276LR\SemtechLib.Devices.SX1276LR.csproj">
+      <Project>{9d244eb9-404f-44ef-a5b0-b1b1e3902cac}</Project>
+      <Name>SemtechLib.Devices.SX1276LR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib.Devices.SX1276\SemtechLib.Devices.SX1276.csproj">
+      <Project>{1ff05cac-b9b3-4620-8913-bebd11130457}</Project>
+      <Name>SemtechLib.Devices.SX1276</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemtechLib\SemtechLib.csproj">
+      <Project>{ca0db6c9-e611-4131-9732-6d2231afa1fb}</Project>
+      <Name>SemtechLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sx1276_pr.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\sx1276_pr.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

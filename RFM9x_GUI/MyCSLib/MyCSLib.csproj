@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Tools\HopeRF\RFM9x_GUI_1_1_0_9\MyCSLib.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4AE56EEB-BA03-445C-9C81-9821D8657EAB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>MyCSLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fusionbird\FusionToolkit\NativeMethods.cs" />
+    <Compile Include="Fusionbird\FusionToolkit\FusionTrackBar\TrackBarItemState.cs" />
+    <Compile Include="Fusionbird\FusionToolkit\FusionTrackBar\TrackBarOwnerDrawParts.cs" />
+    <Compile Include="Fusionbird\FusionToolkit\FusionTrackBar\FusionTrackBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fusionbird\FusionToolkit\FusionTrackBar\TrackBarDrawItemEventArgs.cs" />
+    <Compile Include="Fusionbird\FusionToolkit\FusionTrackBar\TrackDrawModeEditor.cs" />
+    <Compile Include="MyCSLib\General\EditableObject.cs" />
+    <Compile Include="MyCSLib\General\PropertySorter.cs" />
+    <Compile Include="MyCSLib\General\PropertyOrderAttribute.cs" />
+    <Compile Include="MyCSLib\General\PropertyOrderPair.cs" />
+    <Compile Include="MyCSLib\General\ApplicationSettings.cs" />
+    <Compile Include="MyCSLib\General\BindingRegister.cs" />
+    <Compile Include="MyCSLib\General\QueueTS`1.cs" />
+    <Compile Include="MyCSLib\General\MouseGlobalHook.cs" />
+    <Compile Include="MyCSLib\General\BindingCollectionBase.cs" />
+    <Compile Include="MyCSLib\General\BindingRegisterList.cs" />
+    <Compile Include="MyCSLib\General\CircularQueue`1.cs" />
+    <Compile Include="MyCSLib\General\RegisterCollection.cs" />
+    <Compile Include="MyCSLib\General\EngineeringNotation.cs" />
+    <Compile Include="MyCSLib\General\Register.cs" />
+    <Compile Include="MyCSLib\General\Events\DecimalEventHandler.cs" />
+    <Compile Include="MyCSLib\General\Events\Int16EventArg.cs" />
+    <Compile Include="MyCSLib\General\Events\ByteEventHandler.cs" />
+    <Compile Include="MyCSLib\General\Events\ByteArrayEventArg.cs" />
+    <Compile Include="MyCSLib\General\Events\BooleanEventHandler.cs" />
+    <Compile Include="MyCSLib\General\Events\Int16EventHandler.cs" />
+    <Compile Include="MyCSLib\General\Events\DoubleEventHandler.cs" />
+    <Compile Include="MyCSLib\General\Events\ProgressEventHandler.cs" />
+    <Compile Include="MyCSLib\General\Events\ByteEventArg.cs" />
+    <Compile Include="MyCSLib\General\Events\ByteArrayEventHandler.cs" />
+    <Compile Include="MyCSLib\General\Events\Int32EventArg.cs" />
+    <Compile Include="MyCSLib\General\Events\DoubleEventArg.cs" />
+    <Compile Include="MyCSLib\General\Events\BooleanEventArg.cs" />
+    <Compile Include="MyCSLib\General\Events\Int32EventHandler.cs" />
+    <Compile Include="MyCSLib\General\Events\ErrorEventHandler.cs" />
+    <Compile Include="MyCSLib\General\Events\ErrorEventArgs.cs" />
+    <Compile Include="MyCSLib\General\Events\DecimalEventArg.cs" />
+    <Compile Include="MyCSLib\General\Events\ProgressEventArg.cs" />
+    <Compile Include="MyCSLib\General\TypeConverters\UInt32HexConverter.cs" />
+    <Compile Include="MyCSLib\General\TypeConverters\ByteHexConverter.cs" />
+    <Compile Include="MyCSLib\General\TypeConverters\ObjectConverter.cs" />
+    <Compile Include="MyCSLib\General\TypeConverters\UInt16HexConverter.cs" />
+    <Compile Include="MyCSLib\General\Interfaces\INotifyDocumentationChanged.cs" />
+    <Compile Include="MyCSLib\General\Interfaces\DocumentationChangedEventArgs.cs" />
+    <Compile Include="MyCSLib\General\Interfaces\DocumentationChangedEventHandler.cs" />
+    <Compile Include="MyCSLib\Controls\PushBtn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\Angle.cs" />
+    <Compile Include="MyCSLib\Controls\BytesBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\ToolStripLed.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\Command.cs" />
+    <Compile Include="MyCSLib\Controls\VProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\SwitchBtn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\Led.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\GroupBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\NumericUpDownEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\ToolStripEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\MenuStripEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\Jumper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\IByteProvider.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\BuiltInContextMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\DataBlock.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\HexBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\NativeMethods.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\DataMap.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\FileByteProvider.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\ByteCollection.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\DynamicByteProvider.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\IByteCharConverter.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\DefaultByteCharConverter.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\EbcdicByteCharProvider.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\MemoryDataBlock.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\FileDataBlock.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\Util.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\HexCasing.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\DynamicFileByteProvider.cs" />
+    <Compile Include="MyCSLib\Controls\HexBoxCtrl\BytePositionInfo.cs" />
+    <Compile Include="MyCSLib\Controls\Graph\GraphCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyCSLib\Native\NativeConstants.cs" />
+    <Compile Include="MyCSLib\Properties\Resources.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MyCSLib\Controls\Graph\GraphCtrl.resx">
+      <DependentUpon>GraphCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyCSLib\Controls\HexBoxCtrl\HexBox.resx">
+      <DependentUpon>HexBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyCSLib\Properties\Resources.resx">
+      <DependentUpon>Resources.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

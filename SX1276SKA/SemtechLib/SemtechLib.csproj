@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Tools\Semtech\SX1276SKA\SemtechLib.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CA0DB6C9-E611-4131-9732-6D2231AFA1FB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>SemtechLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <ApplicationVersion>2.2.0.1</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SemtechLib\Properties\Resources.cs" />
+    <Compile Include="SemtechLib\General\PropertySorter.cs" />
+    <Compile Include="SemtechLib\General\PropertyOrderAttribute.cs" />
+    <Compile Include="SemtechLib\General\PropertyOrderPair.cs" />
+    <Compile Include="SemtechLib\General\QueueTS`1.cs" />
+    <Compile Include="SemtechLib\General\BindingCollectionBase.cs" />
+    <Compile Include="SemtechLib\General\BindingRegisterList.cs" />
+    <Compile Include="SemtechLib\General\RegisterCollection.cs" />
+    <Compile Include="SemtechLib\General\CircularQueue`1.cs" />
+    <Compile Include="SemtechLib\General\EditableObject.cs" />
+    <Compile Include="SemtechLib\General\BindingRegister.cs" />
+    <Compile Include="SemtechLib\General\ApplicationSettings.cs" />
+    <Compile Include="SemtechLib\General\Register.cs" />
+    <Compile Include="SemtechLib\General\EngineeringNotation.cs" />
+    <Compile Include="SemtechLib\General\Events\ByteArrayEventHandler.cs" />
+    <Compile Include="SemtechLib\General\Events\Int32EventHandler.cs" />
+    <Compile Include="SemtechLib\General\Events\DoubleEventHandler.cs" />
+    <Compile Include="SemtechLib\General\Events\ProgressEventHandler.cs" />
+    <Compile Include="SemtechLib\General\Events\BooleanEventArg.cs" />
+    <Compile Include="SemtechLib\General\Events\ErrorEventHandler.cs" />
+    <Compile Include="SemtechLib\General\Events\DoubleEventArg.cs" />
+    <Compile Include="SemtechLib\General\Events\Int16EventArg.cs" />
+    <Compile Include="SemtechLib\General\Events\DecimalEventArg.cs" />
+    <Compile Include="SemtechLib\General\Events\DecimalEventHandler.cs" />
+    <Compile Include="SemtechLib\General\Events\BooleanEventHandler.cs" />
+    <Compile Include="SemtechLib\General\Events\ErrorEventArgs.cs" />
+    <Compile Include="SemtechLib\General\Events\ByteArrayEventArg.cs" />
+    <Compile Include="SemtechLib\General\Events\ProgressEventArg.cs" />
+    <Compile Include="SemtechLib\General\Events\ByteEventArg.cs" />
+    <Compile Include="SemtechLib\General\Events\Int16EventHandler.cs" />
+    <Compile Include="SemtechLib\General\Events\ByteEventHandler.cs" />
+    <Compile Include="SemtechLib\General\Events\Int32EventArg.cs" />
+    <Compile Include="SemtechLib\General\TypeConverters\UInt32HexConverter.cs" />
+    <Compile Include="SemtechLib\General\TypeConverters\ByteHexConverter.cs" />
+    <Compile Include="SemtechLib\General\TypeConverters\ObjectConverter.cs" />
+    <Compile Include="SemtechLib\General\TypeConverters\UInt16HexConverter.cs" />
+    <Compile Include="SemtechLib\General\Interfaces\INotifyDocumentationChanged.cs" />
+    <Compile Include="SemtechLib\General\Interfaces\DocumentationChangedEventArgs.cs" />
+    <Compile Include="SemtechLib\General\Interfaces\DocumentationChangedEventHandler.cs" />
+    <Compile Include="SemtechLib\Controls\ToolStripEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\MenuStripEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\PushBtn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\Angle.cs" />
+    <Compile Include="SemtechLib\Controls\ToolStripLed.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\VProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\Led.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\Jumper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\SwitchBtn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\GroupBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\NumericUpDownEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\TempCtrl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\NativeMethods.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\IByteProvider.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\FileByteProvider.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\BuiltInContextMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\DataBlock.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\MemoryDataBlock.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\DataMap.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\BytePositionInfo.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\FileDataBlock.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\HexCasing.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\DynamicByteProvider.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\DynamicFileByteProvider.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\HexBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\Util.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\ByteCollection.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\IByteCharConverter.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\DefaultByteCharConverter.cs" />
+    <Compile Include="SemtechLib\Controls\HexBoxCtrl\EbcdicByteCharProvider.cs" />
+    <Compile Include="SemtechLib\Controls\Graph\GraphCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SemtechLib\Native\NativeConstants.cs" />
+    <Compile Include="SemtechLib\Usb\UsbDeviceEvent.cs" />
+    <Compile Include="Fusionbird\FusionToolkit\NativeMethods.cs" />
+    <Compile Include="Fusionbird\FusionToolkit\FusionTrackBar\TrackBarItemState.cs" />
+    <Compile Include="Fusionbird\FusionToolkit\FusionTrackBar\TrackBarOwnerDrawParts.cs" />
+    <Compile Include="Fusionbird\FusionToolkit\FusionTrackBar\FusionTrackBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fusionbird\FusionToolkit\FusionTrackBar\TrackBarDrawItemEventArgs.cs" />
+    <Compile Include="Fusionbird\FusionToolkit\FusionTrackBar\TrackDrawModeEditor.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SemtechLib\Controls\Graph\GraphCtrl.resx" />
+    <EmbeddedResource Include="SemtechLib\Controls\HexBoxCtrl\HexBox.resx" />
+    <EmbeddedResource Include="SemtechLib\Properties\Resources.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
