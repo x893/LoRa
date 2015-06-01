@@ -335,6 +335,7 @@ namespace SX1276SKA
 				btnOpenDevice.Image = (Image)Resources.Connected;
 				connectToolStripMenuItem.Text = "Disconnect";
 				connectToolStripMenuItem.Image = (Image)Resources.Connected;
+
 				device.Reset();
 				tsBtnOpenFile.Enabled = true;
 				tsBtnSaveFile.Enabled = true;

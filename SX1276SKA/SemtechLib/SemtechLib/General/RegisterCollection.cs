@@ -7,21 +7,15 @@ namespace SemtechLib.General
 	{
 		public Register this[int index]
 		{
-			get
-			{
-				return (Register)this.List[index];
-			}
-			set
-			{
-				this.List[index] = (object)value;
-			}
+			get { return (Register)List[index]; }
+			set { List[index] = value; }
 		}
 
 		public Register this[string name]
 		{
 			get
 			{
-				foreach (Register register in (IEnumerable)this.List)
+				foreach (Register register in (IEnumerable)List)
 				{
 					if (register.Name == name)
 						return register;
@@ -30,10 +24,10 @@ namespace SemtechLib.General
 			}
 			set
 			{
-				foreach (Register register in (IEnumerable)this.List)
+				foreach (Register register in (IEnumerable)List)
 				{
 					if (register.Name == name)
-						this.List[(int)register.Address] = (object)value;
+						List[(int)register.Address] = value;
 				}
 			}
 		}
@@ -46,49 +40,49 @@ namespace SemtechLib.General
 
 		public RegisterCollection(RegisterCollection value)
 		{
-			this.AddRange(value);
+			AddRange(value);
 		}
 
 		public RegisterCollection(Register[] value)
 		{
-			this.AddRange(value);
+			AddRange(value);
 		}
 
 		public int Add(Register value)
 		{
-			return this.List.Add((object)value);
+			return List.Add((object)value);
 		}
 
 		public void AddRange(Register[] value)
 		{
 			for (int index = 0; index < value.Length; ++index)
-				this.Add(value[index]);
+				Add(value[index]);
 		}
 
 		public void AddRange(RegisterCollection value)
 		{
 			for (int index = 0; index < value.Count; ++index)
-				this.Add(value[index]);
+				Add(value[index]);
 		}
 
 		public bool Contains(Register value)
 		{
-			return this.List.Contains((object)value);
+			return List.Contains((object)value);
 		}
 
 		public void CopyTo(Register[] array, int index)
 		{
-			this.List.CopyTo((Array)array, index);
+			List.CopyTo((Array)array, index);
 		}
 
 		public int IndexOf(Register value)
 		{
-			return this.List.IndexOf((object)value);
+			return List.IndexOf((object)value);
 		}
 
 		public void Insert(int index, Register value)
 		{
-			this.List.Insert(index, (object)value);
+			List.Insert(index, (object)value);
 		}
 
 		public new RegisterCollection.RegisterEnumerator GetEnumerator()
@@ -100,8 +94,8 @@ namespace SemtechLib.General
 		{
 			try
 			{
-				this.List.Remove((object)value);
-				--this.Capacity;
+				List.Remove((object)value);
+				--Capacity;
 			}
 			catch { }
 		}
@@ -109,21 +103,21 @@ namespace SemtechLib.General
 		public void RemoveRange(Register[] value)
 		{
 			for (int index = 0; index < value.Length; ++index)
-				this.Remove(value[index]);
+				Remove(value[index]);
 		}
 
 		public void RemoveRange(RegisterCollection value)
 		{
 			for (int index = 0; index < value.Count; ++index)
-				this.Remove(value[index]);
+				Remove(value[index]);
 		}
 
 		protected override void OnInsert(int index, object value)
 		{
 			base.OnInsert(index, value);
-			if (this.DataInserted == null)
+			if (DataInserted == null)
 				return;
-			this.DataInserted((object)this, EventArgs.Empty);
+			DataInserted((object)this, EventArgs.Empty);
 		}
 
 		public class RegisterEnumerator : IEnumerator
@@ -135,7 +129,7 @@ namespace SemtechLib.General
 			{
 				get
 				{
-					return (Register)this.baseEnumerator.Current;
+					return (Register)baseEnumerator.Current;
 				}
 			}
 
@@ -143,34 +137,34 @@ namespace SemtechLib.General
 			{
 				get
 				{
-					return this.baseEnumerator.Current;
+					return baseEnumerator.Current;
 				}
 			}
 
 			public RegisterEnumerator(RegisterCollection mappings)
 			{
-				this.temp = (IEnumerable)mappings;
-				this.baseEnumerator = this.temp.GetEnumerator();
+				temp = (IEnumerable)mappings;
+				baseEnumerator = temp.GetEnumerator();
 			}
 
 			public bool MoveNext()
 			{
-				return this.baseEnumerator.MoveNext();
+				return baseEnumerator.MoveNext();
 			}
 
 			bool IEnumerator.MoveNext()
 			{
-				return this.baseEnumerator.MoveNext();
+				return baseEnumerator.MoveNext();
 			}
 
 			public void Reset()
 			{
-				this.baseEnumerator.Reset();
+				baseEnumerator.Reset();
 			}
 
 			void IEnumerator.Reset()
 			{
-				this.baseEnumerator.Reset();
+				baseEnumerator.Reset();
 			}
 		}
 	}

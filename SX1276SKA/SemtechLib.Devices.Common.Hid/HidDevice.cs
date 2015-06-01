@@ -33,6 +33,21 @@ namespace SemtechLib.Devices.Common.Hid
 		private int productId;
 		private FileStream fileStream;
 
+		public HidDevice(int vendorId, int productId, string product)
+		{
+			this.vendorId = vendorId;
+			this.productId = productId;
+			this.product = product;
+
+			deviceID = string.Format(CultureInfo.InvariantCulture,
+				"vid_{0:x4}&pid_{1:x4}",
+				vendorId,
+				productId
+			);
+			usbDetector = new UsbDetector();
+			usbDetector.StateChanged += new DeviceStateEventHandler(usbDetector_StateChanged);
+		}
+
 		public bool IsOpen
 		{
 			get
@@ -70,32 +85,16 @@ namespace SemtechLib.Devices.Common.Hid
 			private set { product = value; }
 		}
 
-		public HidDevice(int vendorId, int productId, string product)
-		{
-			this.vendorId = vendorId;
-			this.productId = productId;
-			this.product = product;
-			deviceID = string.Format(CultureInfo.InvariantCulture,
-				"vid_{0:x4}&pid_{1:x4}",
-				vendorId,
-				productId
-			);
-			usbDetector = new UsbDetector();
-			usbDetector.StateChanged += new DeviceStateEventHandler(usbDetector_StateChanged);
-		}
-
 		private void OnOpened()
 		{
-			if (Opened == null)
-				return;
-			Opened((object)this, EventArgs.Empty);
+			if (Opened != null)
+				Opened(this, EventArgs.Empty);
 		}
 
 		private void OnClosed()
 		{
-			if (Closed == null)
-				return;
-			Closed((object)this, EventArgs.Empty);
+			if (Closed != null)
+				Closed(this, EventArgs.Empty);
 		}
 
 		private static List<HidDevice.DeviceData> PopulateDeviceList(int vendorId, int productId)
@@ -105,20 +104,20 @@ namespace SemtechLib.Devices.Common.Hid
 			Guid gHid;
 			SemtechLib.Devices.Common.NativeMethods.HidD_GetHidGuid(out gHid);
 			IntPtr classDevs = SemtechLib.Devices.Common.NativeMethods.SetupDiGetClassDevs(ref gHid, IntPtr.Zero, IntPtr.Zero, 18);
-			string str = string.Format((IFormatProvider)CultureInfo.InvariantCulture, "vid_{0:x4}&pid_{1:x4}", new object[2]
-      {
-        (object) vendorId,
-        (object) productId
-      });
+			string vid_pid = string.Format((IFormatProvider)CultureInfo.InvariantCulture,
+				"vid_{0:x4}&pid_{1:x4}",
+				vendorId,
+				productId
+				);
 			try
 			{
 				SemtechLib.Devices.Common.NativeMethods.SP_DEVICE_INTERFACE_DATA deviceInterfaceData = new SemtechLib.Devices.Common.NativeMethods.SP_DEVICE_INTERFACE_DATA();
-				deviceInterfaceData.cbSize = Marshal.SizeOf((object)deviceInterfaceData);
-				int num = 0;
-				while (SemtechLib.Devices.Common.NativeMethods.SetupDiEnumDeviceInterfaces(classDevs, IntPtr.Zero, ref gHid, num++, ref deviceInterfaceData))
-				{
+				deviceInterfaceData.cbSize = Marshal.SizeOf(deviceInterfaceData);
+				int deviceIndex = 0;
+				while (SemtechLib.Devices.Common.NativeMethods.SetupDiEnumDeviceInterfaces(classDevs, IntPtr.Zero, ref gHid, deviceIndex++, ref deviceInterfaceData))
+				{	// Scan device path for VIS/PID
 					string devicePath = HidDevice.GetDevicePath(classDevs, ref deviceInterfaceData);
-					if (devicePath.IndexOf(str) >= 0)
+					if (devicePath.IndexOf(vid_pid) >= 0)
 					{
 						if (safeFileHandle != null)
 							safeFileHandle.Close();
@@ -126,10 +125,10 @@ namespace SemtechLib.Devices.Common.Hid
 						if (Marshal.GetLastWin32Error() == 0)
 						{
 							StringBuilder lpBuffer = new StringBuilder();
-							if (SemtechLib.Devices.Common.NativeMethods.HidD_GetManufacturerString(safeFileHandle, lpBuffer, (int)byte.MaxValue))
+							if (SemtechLib.Devices.Common.NativeMethods.HidD_GetManufacturerString(safeFileHandle, lpBuffer, 255))
 							{
 								StringBuilder lpbuffer = new StringBuilder();
-								if (SemtechLib.Devices.Common.NativeMethods.HidD_GetProductString(safeFileHandle, lpbuffer, (int)byte.MaxValue))
+								if (SemtechLib.Devices.Common.NativeMethods.HidD_GetProductString(safeFileHandle, lpbuffer, 255))
 									list.Add(new HidDevice.DeviceData(devicePath, lpBuffer.ToString(), lpbuffer.ToString()));
 							}
 						}
@@ -147,21 +146,21 @@ namespace SemtechLib.Devices.Common.Hid
 
 		private static string GetDevicePath(IntPtr DeviceInfoTable, ref SemtechLib.Devices.Common.NativeMethods.SP_DEVICE_INTERFACE_DATA InterfaceDataStructure)
 		{
-			SemtechLib.Devices.Common.NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA interfaceDetailData = new SemtechLib.Devices.Common.NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA();
 			int RequiredSize = 0;
-			interfaceDetailData.cbSize = Marshal.SizeOf((object)interfaceDetailData);
+
+			SemtechLib.Devices.Common.NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA interfaceDetailData = new SemtechLib.Devices.Common.NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA();
+			interfaceDetailData.cbSize = Marshal.SizeOf(interfaceDetailData);
 			SemtechLib.Devices.Common.NativeMethods.SetupDiGetDeviceInterfaceDetail(DeviceInfoTable, ref InterfaceDataStructure, IntPtr.Zero, 0, ref RequiredSize, IntPtr.Zero);
-			IntPtr num1 = IntPtr.Zero;
-			IntPtr num2 = Marshal.AllocHGlobal(RequiredSize);
+			IntPtr hDevice = Marshal.AllocHGlobal(RequiredSize);
 			interfaceDetailData.cbSize = IntPtr.Size != 8 ? 4 + Marshal.SystemDefaultCharSize : 8;
-			Marshal.StructureToPtr((object)interfaceDetailData, num2, false);
-			if (SemtechLib.Devices.Common.NativeMethods.SetupDiGetDeviceInterfaceDetail(DeviceInfoTable, ref InterfaceDataStructure, num2, RequiredSize, IntPtr.Zero, IntPtr.Zero))
+			Marshal.StructureToPtr(interfaceDetailData, hDevice, false);
+			if (SemtechLib.Devices.Common.NativeMethods.SetupDiGetDeviceInterfaceDetail(DeviceInfoTable, ref InterfaceDataStructure, hDevice, RequiredSize, IntPtr.Zero, IntPtr.Zero))
 			{
-				string str = Marshal.PtrToStringUni(new IntPtr(num2.ToInt32() + 4));
-				Marshal.FreeHGlobal(num2);
-				return str;
+				string devicePath = Marshal.PtrToStringUni(new IntPtr(hDevice.ToInt32() + 4));
+				Marshal.FreeHGlobal(hDevice);
+				return devicePath;
 			}
-			Marshal.FreeHGlobal(num2);
+			Marshal.FreeHGlobal(hDevice);
 			return string.Empty;
 		}
 
@@ -171,7 +170,7 @@ namespace SemtechLib.Devices.Common.Hid
 			foreach (HidDevice.DeviceData deviceData in devicesList)
 			{
 				if (!IsOpen
-					&& (name.ToLower() == deviceData.Name || string.IsNullOrEmpty(name))
+					&& (string.IsNullOrEmpty(name) || name.ToLower() == deviceData.Name)
 					&& product == deviceData.Product)
 				{
 					deviceStream = SemtechLib.Devices.Common.NativeMethods.CreateFile(deviceData.Name, -1073741824, 3, IntPtr.Zero, 3, 0, IntPtr.Zero);
@@ -189,7 +188,7 @@ namespace SemtechLib.Devices.Common.Hid
 
 		private void OnUnattached(string name)
 		{
-			if (!IsOpen || !(name.ToLower() == Name))
+			if (!IsOpen || name.ToLower() != Name)
 				return;
 			if (fileStream != null)
 			{
@@ -227,7 +226,6 @@ namespace SemtechLib.Devices.Common.Hid
 		{
 			if (isWpfApplication)
 			{
-				// HwndSource.FromHwnd(handle).AddHook(new HwndSourceHook(NotificationHandler));
 				HwndSource source = HwndSource.FromHwnd(handle);
 				HwndSourceHook hook = new HwndSourceHook(NotificationHandler);
 				source.AddHook(hook);
@@ -253,7 +251,7 @@ namespace SemtechLib.Devices.Common.Hid
 		private int ReadAsync(byte[] array, int offset, int count, int timeout)
 		{
 			ManualResetEvent manualResetEvent = new ManualResetEvent(false);
-			IAsyncResult asyncResult = fileStream.BeginRead(array, offset, count, new AsyncCallback(HidDevice.OnReadCompletion), (object)manualResetEvent);
+			IAsyncResult asyncResult = fileStream.BeginRead(array, offset, count, new AsyncCallback(HidDevice.OnReadCompletion), manualResetEvent);
 			manualResetEvent.WaitOne(timeout, false);
 			if (asyncResult.IsCompleted)
 				return fileStream.EndRead(asyncResult);
@@ -268,7 +266,7 @@ namespace SemtechLib.Devices.Common.Hid
 		private void WriteAsync(byte[] array, int offset, int count, int timeout)
 		{
 			ManualResetEvent manualResetEvent = new ManualResetEvent(false);
-			IAsyncResult asyncResult = fileStream.BeginWrite(array, offset, count, new AsyncCallback(HidDevice.OnWriteCompletion), (object)manualResetEvent);
+			IAsyncResult asyncResult = fileStream.BeginWrite(array, offset, count, new AsyncCallback(HidDevice.OnWriteCompletion), manualResetEvent);
 			manualResetEvent.WaitOne(timeout, false);
 			if (!asyncResult.IsCompleted)
 				throw new Exception("Write timeout");
@@ -280,29 +278,39 @@ namespace SemtechLib.Devices.Common.Hid
 			(asyncResult.AsyncState as ManualResetEvent).Set();
 		}
 
+		/// <summary>
+		/// Request:	[0][Command][outData...]
+		/// Response:	[0][Command][inData...]
+		/// </summary>
+		/// <param name="command"></param>
+		/// <param name="outData"></param>
+		/// <param name="inData"></param>
+		/// <returns></returns>
 		public bool TxRxCommand(byte command, byte[] outData, ref byte[] inData)
 		{
-			byte[] buffer1 = new byte[65];
-			byte[] buffer2 = new byte[65];
+			byte[] request = new byte[65];
+			byte[] response = new byte[65];
 			try
 			{
 				lock (syncObject)
 				{
 					if (IsOpen && (fileStream.CanWrite || fileStream.CanRead))
 					{
-						for (uint local_2 = 0U; (long)local_2 < (long)buffer1.Length; ++local_2)
-							buffer1[local_2] = byte.MaxValue;
-						buffer1[0] = (byte)0;
-						buffer1[1] = command;
+						for (int idx = 0; idx < request.Length; ++idx)
+							request[idx] = 0xFF;
+
+						request[0] = 0;
+						request[1] = command;
 						if (outData != null)
-							Array.Copy((Array)outData, 0, (Array)buffer1, 2, outData.Length);
-						fileStream.Write(buffer1, 0, buffer1.Length);
+							Array.Copy(outData, 0, request, 2, outData.Length);
+						fileStream.Write(request, 0, request.Length);
+
 						if (inData == null)
 							return true;
-						buffer2[0] = (byte)0;
-						if (fileStream.Read(buffer2, 0, buffer2.Length) > 0 && (int)buffer2[1] == (int)command)
+						response[0] = 0;
+						if (fileStream.Read(response, 0, response.Length) > 0 && response[1] == command)
 						{
-							Array.Copy((Array)buffer2, 2, (Array)inData, 0, inData.Length);
+							Array.Copy(response, 2, inData, 0, inData.Length);
 							return true;
 						}
 					}
@@ -338,7 +346,7 @@ namespace SemtechLib.Devices.Common.Hid
 		public void Dispose()
 		{
 			Dispose(true);
-			GC.SuppressFinalize((object)this);
+			GC.SuppressFinalize(this);
 		}
 
 		protected virtual void Dispose(bool disposing)
@@ -350,9 +358,8 @@ namespace SemtechLib.Devices.Common.Hid
 
 		private void OnPropertyChanged(string propName)
 		{
-			if (PropertyChanged == null)
-				return;
-			PropertyChanged((object)this, new PropertyChangedEventArgs(propName));
+			if (PropertyChanged != null)
+				PropertyChanged(this, new PropertyChangedEventArgs(propName));
 		}
 
 		public struct DeviceData

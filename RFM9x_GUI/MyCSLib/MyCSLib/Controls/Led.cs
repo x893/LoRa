@@ -19,12 +19,12 @@ namespace MyCSLib.Controls
 		{
 			get
 			{
-				return this._checked;
+				return _checked;
 			}
 			set
 			{
-				this._checked = value;
-				this.Invalidate();
+				_checked = value;
+				Invalidate();
 			}
 		}
 
@@ -34,12 +34,12 @@ namespace MyCSLib.Controls
 		{
 			get
 			{
-				return this.ledColor;
+				return ledColor;
 			}
 			set
 			{
-				this.ledColor = value;
-				this.Invalidate();
+				ledColor = value;
+				Invalidate();
 			}
 		}
 
@@ -50,12 +50,12 @@ namespace MyCSLib.Controls
 		{
 			get
 			{
-				return this.ledAlign;
+				return ledAlign;
 			}
 			set
 			{
-				this.ledAlign = value;
-				this.Invalidate();
+				ledAlign = value;
+				Invalidate();
 			}
 		}
 
@@ -65,12 +65,12 @@ namespace MyCSLib.Controls
 		{
 			get
 			{
-				return this.itemSize;
+				return itemSize;
 			}
 			set
 			{
-				this.itemSize = value;
-				this.Invalidate();
+				itemSize = value;
+				Invalidate();
 			}
 		}
 
@@ -79,43 +79,43 @@ namespace MyCSLib.Controls
 			get
 			{
 				Point point = new Point();
-				switch (this.ledAlign)
+				switch (ledAlign)
 				{
 					case ContentAlignment.BottomCenter:
-						point.X = (int)((double)this.Width / 2.0 - (double)this.itemSize.Width / 2.0);
-						point.Y = this.Height - this.itemSize.Height - 1;
+						point.X = (int)((double)Width / 2.0 - (double)itemSize.Width / 2.0);
+						point.Y = Height - itemSize.Height - 1;
 						return point;
 					case ContentAlignment.BottomRight:
-						point.X = this.Width - this.itemSize.Width - 1;
-						point.Y = this.Height - this.itemSize.Height - 1;
+						point.X = Width - itemSize.Width - 1;
+						point.Y = Height - itemSize.Height - 1;
 						return point;
 					case ContentAlignment.MiddleRight:
-						point.X = this.Width - this.itemSize.Width - 1;
-						point.Y = (int)((double)this.Height / 2.0 - (double)this.itemSize.Height / 2.0);
+						point.X = Width - itemSize.Width - 1;
+						point.Y = (int)((double)Height / 2.0 - (double)itemSize.Height / 2.0);
 						return point;
 					case ContentAlignment.BottomLeft:
 						point.X = 0;
-						point.Y = this.Height - this.itemSize.Height - 1;
+						point.Y = Height - itemSize.Height - 1;
 						return point;
 					case ContentAlignment.TopLeft:
 						point.X = 1;
 						point.Y = 1;
 						return point;
 					case ContentAlignment.TopCenter:
-						point.X = (int)((double)this.Width / 2.0 - (double)this.itemSize.Width / 2.0);
+						point.X = (int)((double)Width / 2.0 - (double)itemSize.Width / 2.0);
 						point.Y = 1;
 						return point;
 					case ContentAlignment.TopRight:
-						point.X = this.Width - this.itemSize.Width - 1;
+						point.X = Width - itemSize.Width - 1;
 						point.Y = 1;
 						return point;
 					case ContentAlignment.MiddleLeft:
 						point.X = 1;
-						point.Y = (int)((double)this.Height / 2.0 - (double)this.itemSize.Height / 2.0);
+						point.Y = (int)((double)Height / 2.0 - (double)itemSize.Height / 2.0);
 						return point;
 					case ContentAlignment.MiddleCenter:
-						point.X = (int)((double)this.Width / 2.0 - (double)this.itemSize.Width / 2.0);
-						point.Y = (int)((double)this.Height / 2.0 - (double)this.itemSize.Height / 2.0);
+						point.X = (int)((double)Width / 2.0 - (double)itemSize.Width / 2.0);
+						point.Y = (int)((double)Height / 2.0 - (double)itemSize.Height / 2.0);
 						return point;
 					default:
 						point.X = 0;
@@ -129,20 +129,20 @@ namespace MyCSLib.Controls
 
 		public Led()
 		{
-			this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-			this.SetStyle(ControlStyles.DoubleBuffer, true);
-			this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-			this.SetStyle(ControlStyles.UserPaint, true);
-			this.SetStyle(ControlStyles.ResizeRedraw, true);
-			this.BackColor = Color.Transparent;
-			this.Size = new Size(15, 15);
+			SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+			SetStyle(ControlStyles.DoubleBuffer, true);
+			SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+			SetStyle(ControlStyles.UserPaint, true);
+			SetStyle(ControlStyles.ResizeRedraw, true);
+			BackColor = Color.Transparent;
+			Size = new Size(15, 15);
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			if (this.Paint != null)
+			if (Paint != null)
 			{
-				this.Paint(this, e);
+				Paint(this, e);
 			}
 			else
 			{
@@ -150,7 +150,7 @@ namespace MyCSLib.Controls
 				float num = 1f - (((float)base.Width) / ((float)base.Height));
 				float angle = 50f - (15f * num);
 				float num3 = 230f - (15f * num);
-				Rectangle rect = new Rectangle(this.PosFromAlignment.X, this.PosFromAlignment.Y, this.itemSize.Width, this.itemSize.Height);
+				Rectangle rect = new Rectangle(PosFromAlignment.X, PosFromAlignment.Y, itemSize.Width, itemSize.Height);
 				LinearGradientBrush brush = new LinearGradientBrush(rect, ControlPaint.Dark(base.Parent.BackColor), ControlPaint.LightLight(base.Parent.BackColor), angle);
 				Blend blend = new Blend
 				{
@@ -163,13 +163,13 @@ namespace MyCSLib.Controls
 				e.Graphics.FillEllipse(brush, rectangle2);
 				if (base.Enabled)
 				{
-					if (this.Checked)
+					if (Checked)
 					{
-						e.Graphics.FillEllipse(new SolidBrush(ControlPaint.Light(this.ledColor)), this.PosFromAlignment.X, this.PosFromAlignment.Y, this.itemSize.Width, this.itemSize.Height);
+						e.Graphics.FillEllipse(new SolidBrush(ControlPaint.Light(ledColor)), PosFromAlignment.X, PosFromAlignment.Y, itemSize.Width, itemSize.Height);
 					}
 					else
 					{
-						e.Graphics.FillEllipse(new SolidBrush(ControlPaint.Dark(this.ledColor)), this.PosFromAlignment.X, this.PosFromAlignment.Y, this.itemSize.Width, this.itemSize.Height);
+						e.Graphics.FillEllipse(new SolidBrush(ControlPaint.Dark(ledColor)), PosFromAlignment.X, PosFromAlignment.Y, itemSize.Width, itemSize.Height);
 					}
 				}
 				LinearGradientBrush brush2 = new LinearGradientBrush(rect, Color.FromArgb(150, 0xff, 0xff, 0xff), Color.Transparent, angle);
@@ -181,8 +181,8 @@ namespace MyCSLib.Controls
 				};
 				brush2.Blend = blend2;
 				brush3.Blend = blend2;
-				e.Graphics.FillEllipse(brush3, (int)(this.PosFromAlignment.X + ((this.itemSize.Width * 13) / 100)), (int)(this.PosFromAlignment.Y + ((this.itemSize.Height * 13) / 100)), (int)((this.itemSize.Width * 40) / 100), (int)((this.itemSize.Height * 40) / 100));
-				e.Graphics.FillEllipse(brush2, new Rectangle(this.PosFromAlignment, this.itemSize));
+				e.Graphics.FillEllipse(brush3, (int)(PosFromAlignment.X + ((itemSize.Width * 13) / 100)), (int)(PosFromAlignment.Y + ((itemSize.Height * 13) / 100)), (int)((itemSize.Width * 40) / 100), (int)((itemSize.Height * 40) / 100));
+				e.Graphics.FillEllipse(brush2, new Rectangle(PosFromAlignment, itemSize));
 			}
 		}
 	}

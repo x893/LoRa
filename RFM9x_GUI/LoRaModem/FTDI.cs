@@ -28,9 +28,9 @@ namespace LoRaModem
 		{
 			try
 			{
+				byte[] buffer = new byte[1] { (byte)FTDI.SPI_CMD.SPI_QUERY };
 				foreach (string port in SerialPort.GetPortNames())
 				{
-					byte[] buffer = new byte[1] { (byte)FTDI.SPI_CMD.SPI_QUERY };
 					mycomm.PortName = port;
 					if (!mycomm.IsOpen)
 					{
@@ -68,14 +68,14 @@ namespace LoRaModem
 				byte[] outData = new byte[3] { (byte)FTDI.SPI_CMD.SPI_WRITE, address, data };
 				mycomm.DiscardOutBuffer();
 				mycomm.Write(outData, 0, 3);
-				byte local_1;
-				for (local_1 = (byte)0; (int)local_1 < 5; ++local_1)
+				int delay;
+				for (delay = 0; delay < 5; ++delay)
 				{
 					Thread.Sleep(3);
 					if (mycomm.BytesToWrite == 0)
 						break;
 				}
-				return (int)local_1 < 5;
+				return delay < 5;
 			}
 		}
 
@@ -237,8 +237,7 @@ namespace LoRaModem
 
 		public bool LReset()
 		{
-			byte[] buffer = new byte[1];
-			buffer[0] = (byte)FTDI.SPI_CMD.SPI_LRESET;
+			byte[] buffer = new byte[] { (byte)FTDI.SPI_CMD.SPI_LRESET };
 			mycomm.DiscardOutBuffer();
 			mycomm.DiscardInBuffer();
 			mycomm.Write(buffer, 0, 1);
@@ -265,7 +264,7 @@ namespace LoRaModem
 				mycomm.DiscardOutBuffer();
 				mycomm.Write(buffer, 0, 1);
 				mycomm.ReadTimeout += 100;
-				return ((mycomm.ReadByte() & 0xFF) == (byte)FTDI.LCD_CMD.LCD_ACK);
+				return ((mycomm.ReadByte() & 0xFF) == (int)FTDI.LCD_CMD.LCD_ACK);
 			}
 			catch { }
 			return false;
@@ -280,7 +279,7 @@ namespace LoRaModem
 				mycomm.DiscardOutBuffer();
 				mycomm.Write(buffer, 0, 1);
 				mycomm.ReadTimeout += 100;
-				return ((mycomm.ReadByte() & 0xFF) == (byte)FTDI.LCD_CMD.LCD_ACK);
+				return ((mycomm.ReadByte() & 0xFF) == (int)FTDI.LCD_CMD.LCD_ACK);
 			}
 			catch { }
 			return false;
@@ -295,7 +294,7 @@ namespace LoRaModem
 				mycomm.DiscardOutBuffer();
 				mycomm.Write(buffer, 0, 1);
 				mycomm.ReadTimeout += 100;
-				return ((mycomm.ReadByte() & 0xFF) == (byte)FTDI.LCD_CMD.LCD_ACK);
+				return ((mycomm.ReadByte() & 0xFF) == (int)FTDI.LCD_CMD.LCD_ACK);
 			}
 			catch { }
 			return false;

@@ -1161,6 +1161,7 @@ namespace LoRaModem
 				PktTxCnt = 0U;
 				PktRxCnt = 0U;
 				tbTxPktCnt.Text = "0";
+
 				if (rbGoTx.Checked)
 				{
 					ClearLedStatus();
@@ -1311,7 +1312,6 @@ namespace LoRaModem
 
 		public void SetAllValue()
 		{
-			double num1 = 15625.0 / 256.0;
 			rfstatus = ucLoRa.RFStatus.Standby;
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 				rfm92.ApplyValue();
@@ -1320,16 +1320,15 @@ namespace LoRaModem
 
 			try
 			{
-				nudRadioFreq.Value = (Decimal)(
-					(double)
+				double num1 = (double)
 					(
 						(ChipVer != ucLoRa.ChipSet.RF92
-						? (uint)(((int)rfm96.RegFrMsb.Value << 16) + ((int)rfm96.RegFrMid.Value << 8)) + (uint)rfm96.RegFrLsb.Value
-						: (uint)(((int)rfm92.RegFrMsb.Value << 16) + ((int)rfm92.RegFrMid.Value << 8)) + (uint)rfm92.RegFrLsb.Value
+						? (((uint)rfm96.RegFrMsb.Value << 16) + ((uint)rfm96.RegFrMid.Value << 8)) + (uint)rfm96.RegFrLsb.Value
+						: (((uint)rfm92.RegFrMsb.Value << 16) + ((uint)rfm92.RegFrMid.Value << 8)) + (uint)rfm92.RegFrLsb.Value
 						)
-						+ 1U
-					) * num1
-				);
+						+ 1
+					) * (15625.0 / 256.0);
+				nudRadioFreq.Value = 434000000M;	// !!! (Decimal)(num1);
 			}
 			catch (Exception ex)
 			{
@@ -1369,7 +1368,7 @@ namespace LoRaModem
 				cbPaRamp.SelectedIndex = (int)rfm96.RegPaRamp.Value & 15;
 				if (cbPaOutput.SelectedIndex == 1)
 				{
-					if ((int)rfm96.RegPaDac.Value == 135)
+					if (rfm96.RegPaDac.Value == 135)
 						cbOutputPower.SelectedIndex = ((int)rfm96.RegPaConfig.Value & 15) + 3;
 					else
 						cbOutputPower.SelectedIndex = (int)rfm96.RegPaConfig.Value & 15;
@@ -1382,7 +1381,7 @@ namespace LoRaModem
 				cbPLLBW.SelectedIndex = ((int)rfm96.RegPllHf.Value & 192) >> 6;
 			}
 			byte num3 = ChipVer != ucLoRa.ChipSet.RF92 ? rfm96.RegOcp.Value : rfm92.RegOcp.Value;
-			if (((int)num3 & 32) == 32)
+			if ((num3 & 32) == 32)
 			{
 				rbOCPOn.Checked = true;
 				rbOCPOff.Checked = false;
@@ -1392,7 +1391,7 @@ namespace LoRaModem
 				rbOCPOn.Checked = false;
 				rbOCPOff.Checked = true;
 			}
-			switch ((int)num3 & 31)
+			switch (num3 & 0x1F)
 			{
 				case 0:
 				case 1:
@@ -1462,7 +1461,7 @@ namespace LoRaModem
 			cbLnaGain.SelectedIndex = ((ChipVer != ucLoRa.ChipSet.RF92 ? (int)rfm96.RegLna.Value : (int)rfm92.RegLna.Value) & 224) >> 5;
 			byte num4 = ChipVer != ucLoRa.ChipSet.RF92 ? rfm96.RegModemConfig2.Value : rfm92.RegModemConfig2.Value;
 			cbImplicit.Enabled = true;
-			switch ((int)num4 & 240)
+			switch (num4 & 0xF0)
 			{
 				case 176:
 					cbSF.SelectedIndex = 5;
@@ -1504,7 +1503,7 @@ namespace LoRaModem
 			}
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 			{
-				switch ((int)rfm92.RegModemConfig1.Value & 192)
+				switch (rfm92.RegModemConfig1.Value & 0xC0)
 				{
 					case 64:
 						cbBW.SelectedIndex = 1;
@@ -1519,7 +1518,7 @@ namespace LoRaModem
 			}
 			else if (rbTCXO.Checked)
 			{
-				switch ((int)rfm96.RegModemConfig1.Value & 240)
+				switch (rfm96.RegModemConfig1.Value & 0xF0)
 				{
 					case 128:
 						cbBW.SelectedIndex = 8;
@@ -1555,7 +1554,7 @@ namespace LoRaModem
 			}
 			else
 			{
-				switch ((int)rfm96.RegModemConfig1.Value & 240)
+				switch (rfm96.RegModemConfig1.Value & 0xF0)
 				{
 					case 128:
 						cbBW.SelectedIndex = 2;
@@ -1574,7 +1573,7 @@ namespace LoRaModem
 			nudRxTimeOut.Value = ChipVer != ucLoRa.ChipSet.RF92 ? (Decimal)(((int)rfm96.RegModemConfig2.Value & 3) * 256 + (int)rfm96.RegSymbTimeoutLsb.Value) : (Decimal)(((int)rfm92.RegModemConfig2.Value & 3) * 256 + (int)rfm92.RegSymbTimeoutLsb.Value);
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 			{
-				if (((int)rfm92.RegModemConfig1.Value & 4) == 4)
+				if ((rfm92.RegModemConfig1.Value & 4) == 4)
 				{
 					cbImplicit.Checked = true;
 					nudImplicitRxLength.Value = (Decimal)rfm92.RegPayloadLength.Value;
@@ -1589,7 +1588,7 @@ namespace LoRaModem
 				cbImplicit.Checked = ((int)rfm96.RegModemConfig1.Value & 1) == 1;
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 			{
-				if (((int)rfm92.RegModemConfig1.Value & 1) == 1)
+				if ((rfm92.RegModemConfig1.Value & 1) == 1)
 				{
 					rbLROptimizeOn.Checked = true;
 					rbLROptimizeOff.Checked = false;
@@ -1600,7 +1599,7 @@ namespace LoRaModem
 					rbLROptimizeOff.Checked = true;
 				}
 			}
-			else if (((int)rfm96.RegModemConfig3.Value & 8) == 8)
+			else if ((rfm96.RegModemConfig3.Value & 8) == 8)
 			{
 				rbLROptimizeOn.Checked = true;
 				rbLROptimizeOff.Checked = false;
@@ -1613,7 +1612,7 @@ namespace LoRaModem
 			nudPreambleLength.Value = ChipVer != ucLoRa.ChipSet.RF92 ? (Decimal)((int)rfm96.RegPreambleMsb.Value * 256 + (int)rfm96.RegPreambleLsb.Value) : (Decimal)((int)rfm92.RegPreambleMsb.Value * 256 + (int)rfm92.RegPreambleLsb.Value);
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 			{
-				if (((int)rfm92.RegModemConfig1.Value & 2) == 2)
+				if ((rfm92.RegModemConfig1.Value & 2) == 2)
 				{
 					rbPayloadCRCOn.Checked = true;
 					rbPayloadCRCOff.Checked = false;
@@ -1624,7 +1623,7 @@ namespace LoRaModem
 					rbPayloadCRCOff.Checked = true;
 				}
 			}
-			else if (((int)rfm96.RegModemConfig2.Value & 4) == 4)
+			else if ((rfm96.RegModemConfig2.Value & 4) == 4)
 			{
 				rbPayloadCRCOn.Checked = true;
 				rbPayloadCRCOff.Checked = false;
@@ -1635,7 +1634,7 @@ namespace LoRaModem
 				rbPayloadCRCOff.Checked = true;
 			}
 			byte num5 = ChipVer != ucLoRa.ChipSet.RF92 ? rfm96.RegIrqFlagsMask.Value : rfm92.RegIrqFlagsMask.Value;
-			if (((int)num5 & 128) == 128)
+			if ((num5 & 0x80) == 0x80)
 			{
 				cbRxTimeOut.Checked = true;
 				RxTimeOutLed.LedColor = Color.Red;
@@ -1645,7 +1644,7 @@ namespace LoRaModem
 				cbRxTimeOut.Checked = false;
 				RxTimeOutLed.LedColor = Color.Lime;
 			}
-			if (((int)num5 & 64) == 64)
+			if ((num5 & 0x40) == 0x40)
 			{
 				cbRxDone.Checked = true;
 				RxDoneLed.LedColor = Color.Red;
@@ -1655,7 +1654,7 @@ namespace LoRaModem
 				cbRxDone.Checked = false;
 				RxDoneLed.LedColor = Color.Lime;
 			}
-			if (((int)num5 & 32) == 32)
+			if ((num5 & 0x20) == 0x20)
 			{
 				cbCRCError.Checked = true;
 				CRCErrorLed.LedColor = Color.Red;
@@ -1665,7 +1664,7 @@ namespace LoRaModem
 				cbCRCError.Checked = false;
 				CRCErrorLed.LedColor = Color.Lime;
 			}
-			if (((int)num5 & 16) == 16)
+			if ((num5 & 0x10) == 0x10)
 			{
 				cbValidHeader.Checked = true;
 				ValidHeaderLed.LedColor = Color.Red;
@@ -1675,7 +1674,7 @@ namespace LoRaModem
 				cbValidHeader.Checked = false;
 				ValidHeaderLed.LedColor = Color.Lime;
 			}
-			if (((int)num5 & 8) == 8)
+			if ((num5 & 0x08) == 0x08)
 			{
 				cbTxDone.Checked = true;
 				TxDoneLed.LedColor = Color.Red;
@@ -1685,7 +1684,7 @@ namespace LoRaModem
 				cbTxDone.Checked = false;
 				TxDoneLed.LedColor = Color.Lime;
 			}
-			if (((int)num5 & 4) == 4)
+			if ((num5 & 0x04) == 0x04)
 			{
 				cbCADDone.Checked = true;
 				CADDoneLed.LedColor = Color.Red;
@@ -1695,7 +1694,7 @@ namespace LoRaModem
 				cbCADDone.Checked = false;
 				CADDoneLed.LedColor = Color.Lime;
 			}
-			if (((int)num5 & 2) == 2)
+			if ((num5 & 0x02) == 0x02)
 			{
 				cbFHSSChannel.Checked = true;
 				FHSSChannelLed.LedColor = Color.Red;
@@ -1705,7 +1704,7 @@ namespace LoRaModem
 				cbFHSSChannel.Checked = false;
 				FHSSChannelLed.LedColor = Color.Lime;
 			}
-			if (((int)num5 & 1) == 1)
+			if ((num5 & 0x01) == 0x01)
 			{
 				cbCADDetect.Checked = true;
 				CADDetectLed.LedColor = Color.Red;
@@ -2210,6 +2209,7 @@ namespace LoRaModem
 			}
 			else if (!ftdi.LReset())
 				return false;
+
 			EntrySleep();
 			EntryLoRa();
 			GetAllValue();
@@ -2242,16 +2242,16 @@ namespace LoRaModem
 			rfstatus = ucLoRa.RFStatus.Sleep;
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 			{
-				rfm92.RegOpMode.Value = (byte)(128U | (uint)rfstatus);
+				rfm92.RegOpMode.Value = (byte)(0x80 | (int)rfstatus);
 				ftdi.SendByte(rfm92.RegOpMode.Address, rfm92.RegOpMode.Value);
 			}
 			else
 			{
-				rfm96.RegOpMode.Value |= (byte)(128U | (uint)rfstatus);
+				rfm96.RegOpMode.Value |= (byte)(0x80 | (int)rfstatus);
 				if (nudRadioFreq.Value < new Decimal(525000000))
 					rfm96.RegOpMode.Value |= 8;
 				else
-					rfm96.RegOpMode.Value &= 247;
+					rfm96.RegOpMode.Value &= 0xF7;
 				ftdi.SendByte(rfm96.RegOpMode.Address, rfm96.RegOpMode.Value);
 			}
 		}
@@ -2308,13 +2308,13 @@ namespace LoRaModem
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 			{
 				ftdi.ReadByte(rfm92.RegOpMode.Address, ref data);
-				rfm92.RegOpMode.Value = (byte)((uint)(byte)((uint)data & 248U) | (uint)rfstatus);
+				rfm92.RegOpMode.Value = (byte)((data & 248) | (byte)rfstatus);
 				ftdi.SendByte(rfm92.RegOpMode.Address, rfm92.RegOpMode.Value);
 			}
 			else
 			{
 				ftdi.ReadByte(rfm96.RegOpMode.Address, ref data);
-				rfm96.RegOpMode.Value = (byte)((uint)(byte)((uint)data & 248U) | (uint)rfstatus);
+				rfm96.RegOpMode.Value = (byte)((data & 248) | (byte)rfstatus);
 				if (nudRadioFreq.Value < new Decimal(525000000))
 					rfm96.RegOpMode.Value |= 8;
 				else
@@ -2325,16 +2325,15 @@ namespace LoRaModem
 
 		public bool EntryRx()
 		{
-			byte data1 = 0;
-			byte data2 = 0;
+			byte data = 0;
 			ConfigRF();
 			ClearIrq();
 			rfstatus = ucLoRa.RFStatus.Receiver;
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 			{
 				ftdi.SendByte(rfm92.RegIrqFlagsMask.Address, rfm92.RegIrqFlagsMask.Value);
-				ftdi.ReadByte(rfm92.RegFifoRxBaseAddr.Address, ref data2);
-				rfm92.RegFifoAddrPtr.Value = data2;
+				ftdi.ReadByte(rfm92.RegFifoRxBaseAddr.Address, ref data);
+				rfm92.RegFifoAddrPtr.Value = data;
 				ftdi.SendByte(rfm92.RegFifoAddrPtr.Address, rfm92.RegFifoAddrPtr.Value);
 				if (cbImplicit.Checked)
 				{
@@ -2343,24 +2342,20 @@ namespace LoRaModem
 				}
 				if (cbSF.SelectedIndex == 0)
 				{
-					byte data3 = 0;
-					ftdi.ReadByte(49, ref data3);
-					data3 &= 248;
-					data3 |= 5;
-					ftdi.SendByte(49, data3);
+					ftdi.ReadByte(49, ref data);
+					ftdi.SendByte(49, (byte)((data & 248) | 5));
 					ftdi.SendByte(55, 12);
 				}
-				ftdi.ReadByte(rfm92.RegOpMode.Address, ref data1);
-				rfm92.RegOpMode.Value = (byte)((uint)(byte)((uint)data1 & 248U) | (uint)rfstatus);
+				ftdi.ReadByte(rfm92.RegOpMode.Address, ref data);
+				rfm92.RegOpMode.Value = (byte)((data & 248) | (byte)rfstatus);
 				ftdi.SendByte(rfm92.RegOpMode.Address, rfm92.RegOpMode.Value);
 				Thread.Sleep(5);
-				byte data4 = 0;
-				ftdi.ReadByte(rfm92.RegModemStat.Address, ref data4);
-				return ((int)data4 & 4) == 4;
+				ftdi.ReadByte(rfm92.RegModemStat.Address, ref data);
+				return ((data & 4) == 4);
 			}
 			ftdi.SendByte(rfm96.RegIrqFlagsMask.Address, rfm96.RegIrqFlagsMask.Value);
-			ftdi.ReadByte(rfm96.RegFifoRxBaseAddr.Address, ref data2);
-			rfm96.RegFifoAddrPtr.Value = data2;
+			ftdi.ReadByte(rfm96.RegFifoRxBaseAddr.Address, ref data);
+			rfm96.RegFifoAddrPtr.Value = data;
 			ftdi.SendByte(rfm96.RegFifoAddrPtr.Address, rfm96.RegFifoAddrPtr.Value);
 			if (cbImplicit.Checked)
 			{
@@ -2376,17 +2371,16 @@ namespace LoRaModem
 				ftdi.SendByte(49, data3);
 				ftdi.SendByte(55, 12);
 			}
-			ftdi.ReadByte(rfm96.RegOpMode.Address, ref data1);
-			rfm96.RegOpMode.Value = (byte)((uint)(byte)((uint)data1 & 248U) | (uint)rfstatus);
+			ftdi.ReadByte(rfm96.RegOpMode.Address, ref data);
+			rfm96.RegOpMode.Value = (byte)((data & 248) | (byte)rfstatus);
 			if (nudRadioFreq.Value < new Decimal(525000000))
 				rfm96.RegOpMode.Value |= 8;
 			else
 				rfm96.RegOpMode.Value &= 247;
 			ftdi.SendByte(rfm96.RegOpMode.Address, rfm96.RegOpMode.Value);
 			Thread.Sleep(5);
-			byte data5 = 0;
-			ftdi.ReadByte(rfm96.RegModemStat.Address, ref data5);
-			return ((int)data5 & 4) == 4;
+			ftdi.ReadByte(rfm96.RegModemStat.Address, ref data);
+			return (data & 4) == 4;
 		}
 
 		public void EntryCAD()
@@ -2398,13 +2392,13 @@ namespace LoRaModem
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 			{
 				ftdi.ReadByte(rfm92.RegOpMode.Address, ref data);
-				rfm92.RegOpMode.Value = (byte)((uint)(byte)((uint)data & 248U) | (uint)rfstatus);
+				rfm92.RegOpMode.Value = (byte)((data & 248) | (byte)rfstatus);
 				ftdi.SendByte(rfm92.RegOpMode.Address, rfm92.RegOpMode.Value);
 			}
 			else
 			{
 				ftdi.ReadByte(rfm96.RegOpMode.Address, ref data);
-				rfm96.RegOpMode.Value = (byte)((uint)(byte)((uint)data & 248U) | (uint)rfstatus);
+				rfm96.RegOpMode.Value = (byte)((data & 248) | (byte)rfstatus);
 				if (nudRadioFreq.Value < new Decimal(525000000))
 					rfm96.RegOpMode.Value |= 8;
 				else
@@ -2423,12 +2417,12 @@ namespace LoRaModem
 
 		public bool EntryTx()
 		{
-			byte data1 = 0;
-			byte data2 = 0;
+			byte data = 0;
+
 			ConfigRF();
 			ClearIrq();
 			byte txData = GetTxData(bbPayload.Text);
-			if ((int)txData != 0)
+			if (txData != 0)
 			{
 				rfstatus = ucLoRa.RFStatus.Transmitter;
 				if (ChipVer == ucLoRa.ChipSet.RF92)
@@ -2436,10 +2430,10 @@ namespace LoRaModem
 					ftdi.SendByte(rfm92.RegIrqFlagsMask.Address, rfm92.RegIrqFlagsMask.Value);
 					rfm92.RegPayloadLength.Value = txData;
 					ftdi.SendByte(rfm92.RegPayloadLength.Address, rfm92.RegPayloadLength.Value);
-					ftdi.ReadByte(rfm92.RegFifoTxBaseAddr.Address, ref data2);
-					rfm92.RegFifoAddrPtr.Value = data2;
+					ftdi.ReadByte(rfm92.RegFifoTxBaseAddr.Address, ref data);
+					rfm92.RegFifoAddrPtr.Value = data;
 					ftdi.SendByte(rfm92.RegFifoAddrPtr.Address, rfm92.RegFifoAddrPtr.Value);
-					if (ftdi.SendBytes(rfm92.RegFifo.Address, TxBuf, (ushort)txData))
+					if (ftdi.SendBytes(rfm92.RegFifo.Address, TxBuf, txData))
 					{
 						rfm92.RegOpMode.Value &= 248;
 						rfm92.RegOpMode.Value |= (byte)rfstatus;
@@ -2459,16 +2453,16 @@ namespace LoRaModem
 					ftdi.SendByte(rfm96.RegIrqFlagsMask.Address, rfm96.RegIrqFlagsMask.Value);
 					rfm96.RegPayloadLength.Value = txData;
 					ftdi.SendByte(rfm96.RegPayloadLength.Address, rfm96.RegPayloadLength.Value);
-					ftdi.ReadByte(rfm96.RegFifoTxBaseAddr.Address, ref data2);
-					rfm96.RegFifoAddrPtr.Value = data2;
+					ftdi.ReadByte(rfm96.RegFifoTxBaseAddr.Address, ref data);
+					rfm96.RegFifoAddrPtr.Value = data;
 					ftdi.SendByte(rfm96.RegFifoAddrPtr.Address, rfm96.RegFifoAddrPtr.Value);
-					ftdi.ReadByte(rfm96.RegOpMode.Address, ref data1);
-					rfm96.RegOpMode.Value = (byte)((uint)(byte)((uint)data1 & 248U) | (uint)rfstatus);
+					ftdi.ReadByte(rfm96.RegOpMode.Address, ref data);
+					rfm96.RegOpMode.Value = (byte)((data & 248) | (byte)rfstatus);
 					if (nudRadioFreq.Value < new Decimal(525000000))
 						rfm96.RegOpMode.Value |= 8;
 					else
 						rfm96.RegOpMode.Value &= 247;
-					if (ftdi.SendBytes(rfm96.RegFifo.Address, TxBuf, (ushort)txData))
+					if (ftdi.SendBytes(rfm96.RegFifo.Address, TxBuf, txData))
 					{
 						ftdi.SendByte(rfm96.RegOpMode.Address, rfm96.RegOpMode.Value);
 					}
@@ -2489,8 +2483,8 @@ namespace LoRaModem
 
 		public void TxAgain()
 		{
-			byte data1 = 0;
-			byte data2 = 0;
+			byte data = 0;
+
 			byte txData = GetTxData(bbPayload.Text);
 			if ((int)txData != 0)
 			{
@@ -2500,10 +2494,10 @@ namespace LoRaModem
 					ftdi.SendByte(rfm92.RegIrqFlagsMask.Address, rfm92.RegIrqFlagsMask.Value);
 					rfm92.RegPayloadLength.Value = txData;
 					ftdi.SendByte(rfm92.RegPayloadLength.Address, rfm92.RegPayloadLength.Value);
-					ftdi.ReadByte(rfm92.RegFifoTxBaseAddr.Address, ref data2);
-					rfm92.RegFifoAddrPtr.Value = data2;
+					ftdi.ReadByte(rfm92.RegFifoTxBaseAddr.Address, ref data);
+					rfm92.RegFifoAddrPtr.Value = data;
 					ftdi.SendByte(rfm92.RegFifoAddrPtr.Address, rfm92.RegFifoAddrPtr.Value);
-					if (ftdi.SendBytes(rfm92.RegFifo.Address, TxBuf, (ushort)txData))
+					if (ftdi.SendBytes(rfm92.RegFifo.Address, TxBuf, txData))
 					{
 						rfm92.RegOpMode.Value &= 248;
 						rfm92.RegOpMode.Value |= (byte)rfstatus;
@@ -2522,18 +2516,16 @@ namespace LoRaModem
 					ftdi.SendByte(rfm96.RegIrqFlagsMask.Address, rfm96.RegIrqFlagsMask.Value);
 					rfm96.RegPayloadLength.Value = txData;
 					ftdi.SendByte(rfm96.RegPayloadLength.Address, rfm96.RegPayloadLength.Value);
-					ftdi.ReadByte(rfm96.RegFifoTxBaseAddr.Address, ref data2);
-					rfm96.RegFifoAddrPtr.Value = data2;
+					ftdi.ReadByte(rfm96.RegFifoTxBaseAddr.Address, ref data);
+					rfm96.RegFifoAddrPtr.Value = data;
 					ftdi.SendByte(rfm96.RegFifoAddrPtr.Address, rfm96.RegFifoAddrPtr.Value);
-					ftdi.ReadByte(rfm96.RegOpMode.Address, ref data1);
-					data1 &= 248;
-					data1 |= (byte)rfstatus;
-					rfm96.RegOpMode.Value = data1;
+					ftdi.ReadByte(rfm96.RegOpMode.Address, ref data);
+					rfm96.RegOpMode.Value = (byte)((data & 248) | (byte)rfstatus);
 					if (nudRadioFreq.Value < new Decimal(525000000))
 						rfm96.RegOpMode.Value |= 8;
 					else
 						rfm96.RegOpMode.Value &= 247;
-					if (ftdi.SendBytes(rfm96.RegFifo.Address, TxBuf, (ushort)txData))
+					if (ftdi.SendBytes(rfm96.RegFifo.Address, TxBuf, txData))
 					{
 						ftdi.SendByte(rfm96.RegOpMode.Address, rfm96.RegOpMode.Value);
 					}
@@ -2609,7 +2601,7 @@ namespace LoRaModem
 
 		public void ClearIrq()
 		{
-			byte data = byte.MaxValue;
+			byte data = 255;
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 				ftdi.SendByte(rfm92.RegIrqFlags.Address, data);
 			else
@@ -2689,9 +2681,7 @@ namespace LoRaModem
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 			{
 				ftdi.ReadByte(rfm92.RegOpMode.Address, ref data);
-				data &= 152;
-				data |= (byte)((uint)rfstatus & 0xFF);
-				rfm92.RegOpMode.Value = data;
+				rfm92.RegOpMode.Value = (byte)((data & 152) | (byte)rfstatus);
 				ftdi.SendByte(rfm92.RegOpMode.Address, rfm92.RegOpMode.Value);
 				ftdi.RfDataIn();
 				Thread.Sleep(10);
@@ -2701,9 +2691,7 @@ namespace LoRaModem
 			}
 
 			ftdi.ReadByte(rfm96.RegOpMode.Address, ref data);
-			data &= 152;
-			data |= (byte)((uint)rfstatus & 0xFF);
-			rfm96.RegOpMode.Value = data;
+			rfm96.RegOpMode.Value = (byte)((data & 152) | (byte)rfstatus);
 			if (nudRadioFreq.Value < new Decimal(525000000))
 				rfm96.RegOpMode.Value |= 8;
 			else
@@ -2713,7 +2701,7 @@ namespace LoRaModem
 			Thread.Sleep(10);
 			data = 0;
 			ftdi.ReadByte(62, ref data);
-			return ((int)data & 192) == 192;
+			return ((data & 192) == 192);
 		}
 
 		public bool EntryTxTest()
@@ -2725,9 +2713,7 @@ namespace LoRaModem
 			if (ChipVer == ucLoRa.ChipSet.RF92)
 			{
 				ftdi.ReadByte(rfm92.RegOpMode.Address, ref data);
-				data &= 152;
-				data |= 32;
-				rfm92.RegOpMode.Value = (byte)((uint)data | (uint)rfstatus & 0xFF);
+				rfm92.RegOpMode.Value = (byte)((data & 152) | 32 | (byte)rfstatus);
 				ftdi.SendByte(rfm92.RegOpMode.Address, rfm92.RegOpMode.Value);
 				ftdi.RfDataOut();
 				ftdi.RfDataHigh();
@@ -2738,10 +2724,7 @@ namespace LoRaModem
 			}
 
 			ftdi.ReadByte(rfm96.RegOpMode.Address, ref data);
-			data &= 152;
-			data |= 32;
-			data |= (byte)((uint)rfstatus & 0xFF);
-			rfm96.RegOpMode.Value = data;
+			rfm96.RegOpMode.Value = (byte)((data & 152) | 32 | (byte)rfstatus);
 			if (nudRadioFreq.Value < new Decimal(525000000))
 				rfm96.RegOpMode.Value |= 8;
 			else
@@ -2906,51 +2889,46 @@ namespace LoRaModem
 
 		private byte GetTxData(string tx_str)
 		{
-			byte num1 = 0;
+			byte tx_length = 0;
 			if (bbPayload.IsHex)
 			{
 				if (tx_str.Length > 767)
 				{
 					MessageBox.Show("Longer than 256 bytes!");
 				}
-				else if (tx_str.Length == 0)
+				else if (tx_str.Length > 0)
 				{
-					num1 = 0;
-				}
-				else
-				{
-					int num3 = 0;
-					byte num4 = 0;
-					for (; num3 < tx_str.Length; ++num3)
+					int idxIn = 0;
+					int idxOut = 0;
+					for (; idxIn < tx_str.Length; ++idxIn)
 					{
 						try
 						{
-							while (tx_str[num3] != 32)
+							while (tx_str[idxIn] != 32)
 							{
-								byte num5 = (int)tx_str[num3] < 97 || (int)tx_str[num3] > 122
-									? ((int)tx_str[num3] < 65 || (int)tx_str[num3] > 90
-										? (byte)(tx_str[num3] - 48)
-										: (byte)((tx_str[num3] - 65) + 10)
+								byte data = (byte)(
+									tx_str[idxIn] < 97 || tx_str[idxIn] > 122
+									? (tx_str[idxIn] < 65 || tx_str[idxIn] > 90
+										? (tx_str[idxIn] - 48)
+										: (tx_str[idxIn] - 65 + 10)
 										)
-									: (byte)((tx_str[num3] - 97) + 10);
-								++num3;
-								byte num6 = (byte)((uint)num5 << 4);
-								byte num7 = (int)tx_str[num3] < 97 || (int)tx_str[num3] > 122
-									? ((int)tx_str[num3] < 65 || (int)tx_str[num3] > 90
-										? (byte)(tx_str[num3] - 48)
-										: (byte)((tx_str[num3] - 65) + 10))
-									: (byte)((tx_str[num3] - 97) + 10);
-								++num3;
-								byte num8 = (byte)(num6 | num7);
-								TxBuf[(int)num4] = num8;
-								++num4;
+									: (tx_str[idxIn] - 97 + 10));
+								++idxIn;
+								data <<= 4;
+								data |= (byte)(
+									tx_str[idxIn] < 97 || (int)tx_str[idxIn] > 122
+									? (tx_str[idxIn] < 65 || tx_str[idxIn] > 90
+										? (tx_str[idxIn] - 48)
+										: (tx_str[idxIn] - 65 + 10))
+									: (tx_str[idxIn] - 97 + 10));
+								++idxIn;
+								TxBuf[idxOut] = data;
+								++idxOut;
 							}
 						}
-						catch
-						{
-						}
+						catch { }
 					}
-					num1 = (byte)(num4 + 1);
+					tx_length = (byte)(idxOut + 1);
 				}
 			}
 			else if (tx_str.Length > 255)
@@ -2959,30 +2937,18 @@ namespace LoRaModem
 			}
 			else
 			{
-				int num3;
-				for (num3 = 0; num3 < tx_str.Length; ++num3)
-					TxBuf[num3] = (byte)tx_str[num3];
-
+				int idx;
+				for (idx = 0; idx < tx_str.Length; ++idx)
+					TxBuf[idx] = (byte)tx_str[idx];
+				tx_length = (byte)tx_str.Length;
 				if (cbNewLine.Checked)
 				{
-					byte[] numArray1 = TxBuf;
-					int index1 = num3;
-					int num4 = 1;
-					byte num5 = (byte)(index1 + num4);
-					int num6 = 13;
-					numArray1[index1] = (byte)num6;
-					byte[] numArray2 = TxBuf;
-					int index2 = (int)num5;
-					int num7 = 1;
-					byte num8 = (byte)(index2 + num7);
-					int num10 = 10;
-					numArray2[index2] = (byte)num10;
-					num1 = (byte)(tx_str.Length + 2);
+					TxBuf[idx+0] = 13;
+					TxBuf[idx+1] = 10;
+					tx_length += 2;
 				}
-				else
-					num1 = (byte)tx_str.Length;
 			}
-			return num1;
+			return tx_length;
 		}
 
 		private void rbClear_Click(object sender, EventArgs e)
@@ -3008,16 +2974,16 @@ namespace LoRaModem
 
 		private void RFM92_RxDone()
 		{
-			byte data1 = 0;
-			byte data2 = 0;
-			byte data3 = 0;
-			byte[] data4 = new byte[(int)byte.MaxValue];
+			byte data = 0;
+			byte[] data4 = new byte[255];
+
 			ftdi.BeepOn();
-			ftdi.ReadByte(rfm92.RegHopChannel.Address, ref data1);
-			PllLockLed.LedColor = ((int)data1 & 128) != 128 ? Color.Lime : Color.Red;
-			CRC_LED.LedColor = ((int)data1 & 64) != 64 ? Color.Red : Color.Lime;
-			ftdi.ReadByte(rfm92.RegModemStat.Address, ref data1);
-			switch ((int)data1 & 224)
+			ftdi.ReadByte(rfm92.RegHopChannel.Address, ref data);
+			PllLockLed.LedColor = (data & 0x80) != 0x80 ? Color.Lime : Color.Red;
+			CRC_LED.LedColor = (data & 0x40) != 0x40 ? Color.Red : Color.Lime;
+
+			ftdi.ReadByte(rfm92.RegModemStat.Address, ref data);
+			switch (data & 224)
 			{
 				case 96:
 					tbRxCR.Text = "4/7";
@@ -3032,9 +2998,9 @@ namespace LoRaModem
 					tbRxCR.Text = "4/5";
 					break;
 			}
-			ftdi.ReadByte(rfm92.RegPktSnrValue.Address, ref data1);
+			ftdi.ReadByte(rfm92.RegPktSnrValue.Address, ref data);
 			byte data5;
-			if ((data1 & 0x80) == 0x80)
+			if ((data & 0x80) == 0x80)
 			{
 				double[] numArray = new double[3]
 				{
@@ -3042,7 +3008,7 @@ namespace LoRaModem
 					53.9794000867204,
 					56.9897000433602
 				};
-				data5 = (byte)((uint)(byte)((uint)~data1 + 1U) >> 2);
+				data5 = (byte)(((uint)~data + 1U) >> 2);
 				byte num1 = data5;
 				tbPktSnrValue.Text = "-";
 				tbPktSnrValue.Text += data5.ToString();
@@ -3064,7 +3030,7 @@ namespace LoRaModem
 			}
 			else
 			{
-				byte data6 = (byte)((uint)data1 >> 2);
+				byte data6 = (byte)(data >> 2);
 				tbPktSnrValue.Text = "+";
 				tbPktSnrValue.Text += data6.ToString();
 				ftdi.ReadByte(rfm92.RegPktRssiValue.Address, ref data6);
@@ -3113,17 +3079,17 @@ namespace LoRaModem
 				PayCRCLed.LedColor = Color.Red;
 				tbRxPacketCnt.Text = PktRxCnt.ToString();
 			}
-			ftdi.ReadByte(rfm92.RegFifoRxCurrentAddr.Address, ref data2);
-			rfm92.RegFifoAddrPtr.Value = data2;
+			ftdi.ReadByte(rfm92.RegFifoRxCurrentAddr.Address, ref data);
+			rfm92.RegFifoAddrPtr.Value = data;
 			ftdi.SendByte(rfm92.RegFifoAddrPtr.Address, rfm92.RegFifoAddrPtr.Value);
-			ftdi.ReadByte(rfm92.RegRxNbBytes.Address, ref data3);
-			tbRxNbBytes.Text = data3.ToString();
-			ftdi.ReadBytes(rfm92.RegFifo.Address, ref data4, data3);
+			ftdi.ReadByte(rfm92.RegRxNbBytes.Address, ref data);
+			tbRxNbBytes.Text = data.ToString();
+			ftdi.ReadBytes(rfm92.RegFifo.Address, ref data4, data);
 			ClearIrq();
 			if (!bbPayload.IsHex)
 			{
 				string text = bbPayload.Text;
-				for (byte index = 0; (int)index < (int)data3; ++index)
+				for (byte index = 0; index < data; ++index)
 				{
 					char ch = (char)data4[(int)index];
 					text += ch.ToString();
@@ -3133,7 +3099,7 @@ namespace LoRaModem
 			else if (bbPayload.Text.Length == 0)
 			{
 				string str = "";
-				for (byte index = 0; (int)index < (int)data3; ++index)
+				for (byte index = 0; index < data; ++index)
 				{
 					char ch = (char)data4[(int)index];
 					str += ch.ToString();
@@ -3148,7 +3114,7 @@ namespace LoRaModem
 				bbPayload.IsHex = false;
 				bbPayload.ChangeText();
 				string text = bbPayload.Text;
-				for (byte index = 0; (int)index < (int)data3; ++index)
+				for (byte index = 0; index < data; ++index)
 				{
 					char ch = (char)data4[(int)index];
 					text += ch.ToString();
@@ -3164,16 +3130,18 @@ namespace LoRaModem
 
 		private void RFM96_RxDone()
 		{
-			byte data1 = 0;
+			byte data = 0;
 			byte data2 = 0;
 			byte data3 = 0;
-			byte[] data4 = new byte[(int)byte.MaxValue];
+			byte[] data4 = new byte[255];
+
 			ftdi.BeepOn();
-			ftdi.ReadByte(rfm96.RegHopChannel.Address, ref data1);
-			PllLockLed.LedColor = ((int)data1 & 128) != 128 ? Color.Lime : Color.Red;
-			CRC_LED.LedColor = ((int)data1 & 64) != 64 ? Color.Red : Color.Lime;
-			ftdi.ReadByte(rfm96.RegModemStat.Address, ref data1);
-			switch ((int)data1 & 224)
+			ftdi.ReadByte(rfm96.RegHopChannel.Address, ref data);
+			PllLockLed.LedColor = (data & 0x80) != 0x80 ? Color.Lime : Color.Red;
+			CRC_LED.LedColor = (data & 0x40) != 0x40 ? Color.Red : Color.Lime;
+
+			ftdi.ReadByte(rfm96.RegModemStat.Address, ref data);
+			switch (data & 224)
 			{
 				case 96:
 					tbRxCR.Text = "4/7";
@@ -3188,24 +3156,24 @@ namespace LoRaModem
 					tbRxCR.Text = "4/5";
 					break;
 			}
-			ftdi.ReadByte(rfm96.RegPktSnrValue.Address, ref data1);
+			ftdi.ReadByte(rfm96.RegPktSnrValue.Address, ref data);
 			byte data5;
-			if (((int)data1 & 128) == 128)
+			if ((data & 0x80) == 0x80)
 			{
 				double[] numArray = new double[10]
-        {
-          38.9279003035213,
-          40.1773015670055,
-          41.9382002601611,
-          43.1875866931373,
-          44.9485002168009,
-          46.1978910572384,
-          47.9588001734408,
-          50.9691001300806,
-          53.9794000867204,
-          56.9897000433602
-        };
-				data5 = (byte)((uint)(byte)((uint)~data1 + 1U) >> 2);
+				{
+					38.9279003035213,
+					40.1773015670055,
+					41.9382002601611,
+					43.1875866931373,
+					44.9485002168009,
+					46.1978910572384,
+					47.9588001734408,
+					50.9691001300806,
+					53.9794000867204,
+					56.9897000433602
+				};
+				data5 = (byte)(((uint)~data + 1U) >> 2);
 				byte num1 = data5;
 				tbPktSnrValue.Text = "-";
 				tbPktSnrValue.Text += data5.ToString();
@@ -3293,7 +3261,7 @@ namespace LoRaModem
 			}
 			else
 			{
-				byte data6 = (byte)((uint)data1 >> 2);
+				byte data6 = (byte)(data >> 2);
 				tbPktSnrValue.Text = "+";
 				tbPktSnrValue.Text += data6.ToString();
 				ftdi.ReadByte(rfm96.RegPktRssiValue.Address, ref data6);

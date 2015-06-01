@@ -17,6 +17,7 @@ namespace SemtechLib.Devices.SX1276LR
 {
 	public class SX1276LR : IDevice, INotifyPropertyChanged, IDisposable
 	{
+		#region Enums
 		private enum HidCommandsStatus
 		{
 			SX_OK,
@@ -81,6 +82,7 @@ namespace SemtechLib.Devices.SX1276LR
 			HID_DEVICE_SET_PN_ENABLE = 163,
 			HID_SK_CMD_NONE = 255,
 		}
+		#endregion
 
 		public delegate void LimitCheckStatusChangedEventHandler(object sender, LimitCheckStatusEventArg e);
 		public delegate void IoChangedEventHandler(object sender, SX1276LR.IoChangedEventArgs e);
@@ -271,6 +273,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 			deviceName = "SX12xxEiger";
 			usbDevice = new HidDevice(0x047A, 0x000B, deviceName);
+
 			usbDevice.Opened += new EventHandler(usbDevice_Opened);
 			usbDevice.Closed += new EventHandler(usbDevice_Closed);
 
@@ -289,10 +292,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public List<double> PktRssiValues
 		{
-			get
-			{
-				return pktRssiValues;
-			}
+			get { return pktRssiValues; }
 			set
 			{
 				if (pktRssiValues == value)
@@ -303,10 +303,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public List<int> PktLnaValues
 		{
-			get
-			{
-				return pktLnaValues;
-			}
+			get { return pktLnaValues; }
 			set
 			{
 				if (pktLnaValues == value)
@@ -317,29 +314,20 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public object SyncThread
 		{
-			get
-			{
-				return syncThread;
-			}
+			get { return syncThread; }
 		}
 
 		public string DeviceName
 		{
-			get
-			{
-				return deviceName;
-			}
+			get { return deviceName; }
 		}
 
 		public Version FwVersion
 		{
-			get
-			{
-				return fwVersion;
-			}
+			get { return fwVersion; }
 			set
 			{
-				if (!(fwVersion != value))
+				if (fwVersion == value)
 					return;
 				fwVersion = value;
 				OnPropertyChanged("FwVersion");
@@ -348,18 +336,12 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public HidDevice UsbDevice
 		{
-			get
-			{
-				return usbDevice;
-			}
+			get { return usbDevice; }
 		}
 
 		public bool IsOpen
 		{
-			get
-			{
-				return isOpen;
-			}
+			get { return isOpen; }
 			set
 			{
 				isOpen = value;
@@ -369,10 +351,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public int SPISpeed
 		{
-			get
-			{
-				return spiSpeed;
-			}
+			get { return spiSpeed; }
 			set
 			{
 				spiSpeed = value;
@@ -382,10 +361,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public RegisterCollection Registers
 		{
-			get
-			{
-				return registers;
-			}
+			get { return registers; }
 			set
 			{
 				registers = value;
@@ -395,22 +371,13 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool Test
 		{
-			get
-			{
-				return test;
-			}
-			set
-			{
-				test = value;
-			}
+			get { return test; }
+			set { test = value; }
 		}
 
 		public ILog PacketHandlerLog
 		{
-			get
-			{
-				return packetHandlerLog;
-			}
+			get { return packetHandlerLog; }
 			set
 			{
 				packetHandlerLog = value;
@@ -420,10 +387,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool PacketModeTx
 		{
-			get
-			{
-				return packetModeTx;
-			}
+			get { return packetModeTx; }
 			set
 			{
 				packetModeTx = value;
@@ -434,10 +398,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool PacketModeRxSingle
 		{
-			get
-			{
-				return packetModeRxSingle;
-			}
+			get { return packetModeRxSingle; }
 			set
 			{
 				packetModeRxSingle = value;
@@ -448,10 +409,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool PacketUsePer
 		{
-			get
-			{
-				return packetUsePer;
-			}
+			get { return packetUsePer; }
 			set
 			{
 				packetUsePer = value;
@@ -461,10 +419,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool IsDebugOn
 		{
-			get
-			{
-				return isDebugOn;
-			}
+			get { return isDebugOn; }
 			set
 			{
 				isDebugOn = value;
@@ -474,10 +429,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public Decimal FrequencyXo
 		{
-			get
-			{
-				return frequencyXo;
-			}
+			get { return frequencyXo; }
 			set
 			{
 				frequencyXo = value;
@@ -489,10 +441,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public Decimal FrequencyStep
 		{
-			get
-			{
-				return frequencyStep;
-			}
+			get { return frequencyStep; }
 			set
 			{
 				frequencyStep = value;
@@ -502,18 +451,12 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public Decimal SymbolRate
 		{
-			get
-			{
-				return (Decimal)(BandwidthHz / Math.Pow(2.0, (double)SpreadingFactor));
-			}
+			get { return (Decimal)(BandwidthHz / Math.Pow(2.0, (double)SpreadingFactor)); }
 		}
 
 		public Decimal SymbolTime
 		{
-			get
-			{
-				return new Decimal(1) / SymbolRate;
-			}
+			get { return new Decimal(1) / SymbolRate; }
 		}
 
 		public bool Monitor
@@ -535,10 +478,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool SpectrumOn
 		{
-			get
-			{
-				return spectrumOn;
-			}
+			get { return spectrumOn; }
 			set
 			{
 				spectrumOn = value;
@@ -569,10 +509,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public Decimal SpectrumFrequencySpan
 		{
-			get
-			{
-				return spectrumFreqSpan;
-			}
+			get { return spectrumFreqSpan; }
 			set
 			{
 				spectrumFreqSpan = value;
@@ -582,42 +519,27 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public Decimal SpectrumFrequencyMax
 		{
-			get
-			{
-				return FrequencyRf + SpectrumFrequencySpan / new Decimal(20, 0, 0, false, (byte)1);
-			}
+			get { return FrequencyRf + SpectrumFrequencySpan / new Decimal(20, 0, 0, false, 1); }
 		}
 
 		public Decimal SpectrumFrequencyMin
 		{
-			get
-			{
-				return FrequencyRf - SpectrumFrequencySpan / new Decimal(20, 0, 0, false, (byte)1);
-			}
+			get { return FrequencyRf - SpectrumFrequencySpan / new Decimal(20, 0, 0, false, 1); }
 		}
 
 		public int SpectrumNbFrequenciesMax
 		{
-			get
-			{
-				return (int)((SpectrumFrequencyMax - SpectrumFrequencyMin) / SpectrumFrequencyStep);
-			}
+			get { return (int)((SpectrumFrequencyMax - SpectrumFrequencyMin) / SpectrumFrequencyStep); }
 		}
 
 		public Decimal SpectrumFrequencyStep
 		{
-			get
-			{
-				return (Decimal)BandwidthHz / new Decimal(30, 0, 0, false, (byte)1);
-			}
+			get { return (Decimal)BandwidthHz / new Decimal(30, 0, 0, false, 1); }
 		}
 
 		public int SpectrumFrequencyId
 		{
-			get
-			{
-				return spectrumFreqId;
-			}
+			get { return spectrumFreqId; }
 			set
 			{
 				spectrumFreqId = value;
@@ -627,18 +549,12 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public Decimal SpectrumRssiValue
 		{
-			get
-			{
-				return spectrumRssiValue;
-			}
+			get { return spectrumRssiValue; }
 		}
 
 		public bool LowFrequencyModeOn
 		{
-			get
-			{
-				return lowFrequencyModeOn;
-			}
+			get { return lowFrequencyModeOn; }
 			set
 			{
 				lowFrequencyModeOn = value;
@@ -648,10 +564,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool AccessSharedFskReg
 		{
-			get
-			{
-				return accessSharedFskReg;
-			}
+			get { return accessSharedFskReg; }
 			set
 			{
 				accessSharedFskReg = value;
@@ -661,10 +574,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public OperatingModeEnum Mode
 		{
-			get
-			{
-				return mode;
-			}
+			get { return mode; }
 			set
 			{
 				mode = value;
@@ -674,10 +584,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public BandEnum Band
 		{
-			get
-			{
-				return band;
-			}
+			get { return band; }
 			set
 			{
 				band = value;
@@ -687,10 +594,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public Decimal FrequencyRf
 		{
-			get
-			{
-				return frequencyRf;
-			}
+			get { return frequencyRf; }
 			set
 			{
 				frequencyRf = value;
@@ -701,10 +605,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public PaSelectEnum PaSelect
 		{
-			get
-			{
-				return paSelect;
-			}
+			get { return paSelect; }
 			set
 			{
 				paSelect = value;
@@ -714,10 +615,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public Decimal MaxOutputPower
 		{
-			get
-			{
-				return maxOutputPower;
-			}
+			get { return maxOutputPower; }
 			set
 			{
 				maxOutputPower = value;
@@ -727,10 +625,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public Decimal OutputPower
 		{
-			get
-			{
-				return outputPower;
-			}
+			get { return outputPower; }
 			set
 			{
 				outputPower = value;
@@ -740,10 +635,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool ForceTxBandLowFrequencyOn
 		{
-			get
-			{
-				return forceTxBandLowFrequencyOn;
-			}
+			get { return forceTxBandLowFrequencyOn; }
 			set
 			{
 				forceTxBandLowFrequencyOn = value;
@@ -753,10 +645,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public PaRampEnum PaRamp
 		{
-			get
-			{
-				return paRamp;
-			}
+			get { return paRamp; }
 			set
 			{
 				paRamp = value;
@@ -766,10 +655,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool OcpOn
 		{
-			get
-			{
-				return ocpOn;
-			}
+			get { return ocpOn; }
 			set
 			{
 				ocpOn = value;
@@ -779,10 +665,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public Decimal OcpTrim
 		{
-			get
-			{
-				return ocpTrim;
-			}
+			get { return ocpTrim; }
 			set
 			{
 				ocpTrim = value;
@@ -792,10 +675,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public LnaGainEnum LnaGain
 		{
-			get
-			{
-				return lnaGain;
-			}
+			get { return lnaGain; }
 			set
 			{
 				lnaGain = value;
@@ -805,10 +685,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool ForceRxBandLowFrequencyOn
 		{
-			get
-			{
-				return forceRxBandLowFrequencyOn;
-			}
+			get { return forceRxBandLowFrequencyOn; }
 			set
 			{
 				forceRxBandLowFrequencyOn = value;
@@ -818,10 +695,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool LnaBoost
 		{
-			get
-			{
-				return lnaBoost;
-			}
+			get { return lnaBoost; }
 			set
 			{
 				lnaBoost = value;
@@ -831,10 +705,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public byte FifoAddrPtr
 		{
-			get
-			{
-				return fifoAddrPtr;
-			}
+			get { return fifoAddrPtr; }
 			set
 			{
 				fifoAddrPtr = value;
@@ -844,10 +715,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public byte FifoTxBaseAddr
 		{
-			get
-			{
-				return fifoTxBaseAddr;
-			}
+			get { return fifoTxBaseAddr; }
 			set
 			{
 				fifoTxBaseAddr = value;
@@ -857,10 +725,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public byte FifoRxBaseAddr
 		{
-			get
-			{
-				return fifoRxBaseAddr;
-			}
+			get { return fifoRxBaseAddr; }
 			set
 			{
 				fifoRxBaseAddr = value;
@@ -870,18 +735,12 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public byte FifoRxCurrentAddr
 		{
-			get
-			{
-				return fifoRxCurrentAddr;
-			}
+			get { return fifoRxCurrentAddr; }
 		}
 
 		public bool RxTimeoutMask
 		{
-			get
-			{
-				return rxTimeoutMask;
-			}
+			get { return rxTimeoutMask; }
 			set
 			{
 				rxTimeoutMask = value;
@@ -891,10 +750,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool RxDoneMask
 		{
-			get
-			{
-				return rxDoneMask;
-			}
+			get { return rxDoneMask; }
 			set
 			{
 				rxDoneMask = value;
@@ -904,10 +760,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool PayloadCrcErrorMask
 		{
-			get
-			{
-				return payloadCrcErrorMask;
-			}
+			get { return payloadCrcErrorMask; }
 			set
 			{
 				payloadCrcErrorMask = value;
@@ -917,10 +770,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool ValidHeaderMask
 		{
-			get
-			{
-				return validHeaderMask;
-			}
+			get { return validHeaderMask; }
 			set
 			{
 				validHeaderMask = value;
@@ -930,10 +780,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool TxDoneMask
 		{
-			get
-			{
-				return txDoneMask;
-			}
+			get { return txDoneMask; }
 			set
 			{
 				txDoneMask = value;
@@ -943,10 +790,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool CadDoneMask
 		{
-			get
-			{
-				return cadDoneMask;
-			}
+			get { return cadDoneMask; }
 			set
 			{
 				cadDoneMask = value;
@@ -956,10 +800,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool FhssChangeChannelMask
 		{
-			get
-			{
-				return fhssChangeChannelMask;
-			}
+			get { return fhssChangeChannelMask; }
 			set
 			{
 				fhssChangeChannelMask = value;
@@ -969,10 +810,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool CadDetectedMask
 		{
-			get
-			{
-				return cadDetectedMask;
-			}
+			get { return cadDetectedMask; }
 			set
 			{
 				cadDetectedMask = value;
@@ -982,194 +820,122 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool RxTimeout
 		{
-			get
-			{
-				return rxTimeout;
-			}
+			get { return rxTimeout; }
 		}
 
 		public bool RxDone
 		{
-			get
-			{
-				return rxDone;
-			}
+			get { return rxDone; }
 		}
 
 		public bool PayloadCrcError
 		{
-			get
-			{
-				return payloadCrcError;
-			}
+			get { return payloadCrcError; }
 		}
 
 		public bool ValidHeader
 		{
-			get
-			{
-				return validHeader;
-			}
+			get { return validHeader; }
 		}
 
 		public bool TxDone
 		{
-			get
-			{
-				return txDone;
-			}
+			get { return txDone; }
 		}
 
 		public bool CadDone
 		{
-			get
-			{
-				return cadDone;
-			}
+			get { return cadDone; }
 		}
 
 		public bool FhssChangeChannel
 		{
-			get
-			{
-				return fhssChangeChannel;
-			}
+			get { return fhssChangeChannel; }
 		}
 
 		public bool CadDetected
 		{
-			get
-			{
-				return cadDetected;
-			}
+			get { return cadDetected; }
 		}
 
 		public byte RxNbBytes
 		{
-			get
-			{
-				return rxNbBytes;
-			}
+			get { return rxNbBytes; }
 		}
 
 		public ushort ValidHeaderCnt
 		{
-			get
-			{
-				return validHeaderCnt;
-			}
+			get { return validHeaderCnt; }
 		}
 
 		public ushort ValidPacketCnt
 		{
-			get
-			{
-				return validPacketCnt;
-			}
+			get { return validPacketCnt; }
 		}
 
 		public byte RxPayloadCodingRate
 		{
-			get
-			{
-				return rxPayloadCodingRate;
-			}
+			get { return rxPayloadCodingRate; }
 		}
 
 		public bool ModemClear
 		{
-			get
-			{
-				return modemClear;
-			}
+			get { return modemClear; }
 		}
 
 		public bool HeaderInfoValid
 		{
-			get
-			{
-				return headerInfoValid;
-			}
+			get { return headerInfoValid; }
 		}
 
 		public bool RxOnGoing
 		{
-			get
-			{
-				return rxOnGoing;
-			}
+			get { return rxOnGoing; }
 		}
 
 		public bool SignalSynchronized
 		{
-			get
-			{
-				return signalSynchronized;
-			}
+			get { return signalSynchronized; }
 		}
 
 		public bool SignalDetected
 		{
-			get
-			{
-				return signalDetected;
-			}
+			get { return signalDetected; }
 		}
 
 		public sbyte PktSnrValue
 		{
-			get
-			{
-				return pktSnrValue;
-			}
+			get { return pktSnrValue; }
 		}
 
 		public Decimal PktRssiValue
 		{
-			get
-			{
-				return pktRssiValue;
-			}
+			get { return pktRssiValue; }
 		}
 
 		public Decimal RssiValue
 		{
-			get
-			{
-				return rssiValue;
-			}
+			get { return rssiValue; }
 		}
 
 		public bool PllTimeout
 		{
-			get
-			{
-				return pllTimeout;
-			}
+			get { return pllTimeout; }
 		}
 
 		public bool RxPayloadCrcOn
 		{
-			get
-			{
-				return rxPayloadCrcOn;
-			}
+			get { return rxPayloadCrcOn; }
 		}
 
 		public byte HopChannel
 		{
-			get
-			{
-				return hopChannel;
-			}
+			get { return hopChannel; }
 		}
 
 		public byte Bandwidth
 		{
-			get
-			{
-				return bandwidth;
-			}
+			get { return bandwidth; }
 			set
 			{
 				bandwidth = value;
@@ -1180,10 +946,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public byte CodingRate
 		{
-			get
-			{
-				return codingRate;
-			}
+			get { return codingRate; }
 			set
 			{
 				codingRate = value;
@@ -1193,10 +956,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool ImplicitHeaderModeOn
 		{
-			get
-			{
-				return implicitHeaderModeOn;
-			}
+			get { return implicitHeaderModeOn; }
 			set
 			{
 				implicitHeaderModeOn = value;
@@ -1206,10 +966,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public byte SpreadingFactor
 		{
-			get
-			{
-				return spreadingFactor;
-			}
+			get { return spreadingFactor; }
 			set
 			{
 				spreadingFactor = value;
@@ -1219,10 +976,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool TxContinuousModeOn
 		{
-			get
-			{
-				return txContinuousModeOn;
-			}
+			get { return txContinuousModeOn; }
 			set
 			{
 				txContinuousModeOn = value;
@@ -1232,10 +986,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool PayloadCrcOn
 		{
-			get
-			{
-				return payloadCrcOn;
-			}
+			get { return payloadCrcOn; }
 			set
 			{
 				payloadCrcOn = value;
@@ -1245,10 +996,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public Decimal SymbTimeout
 		{
-			get
-			{
-				return symbTimeout;
-			}
+			get { return symbTimeout; }
 			set
 			{
 				symbTimeout = value;
@@ -1258,10 +1006,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public ushort PreambleLength
 		{
-			get
-			{
-				return preambleLength;
-			}
+			get { return preambleLength; }
 			set
 			{
 				preambleLength = value;
@@ -1823,553 +1568,92 @@ namespace SemtechLib.Devices.SX1276LR
 			if (IsOpen)
 			{
 				SetLoraOn(true);
-				byte data = (byte)0;
-				if (!Read((byte)66, ref data))
+				byte data = 0;
+				if (!Read(66, ref data))
 					throw new Exception("Unable to read register RegVersion");
-				if (!Read((byte)66, ref data))
+				if (!Read(66, ref data))
 					throw new Exception("Unable to read register RegVersion");
-				Version = new Version(((int)data & 240) >> 4, (int)data & 15);
+				Version = new Version(((int)data & 0xF0) >> 4, (int)data & 0xF);
 			}
+
 			registers = new RegisterCollection();
-			byte num1 = (byte)0;
-			RegisterCollection registerCollection1 = registers;
-			string name1 = "RegFifo";
-			int num2 = (int)num1;
-			int num3 = 1;
-			byte num4 = (byte)(num2 + num3);
-			int num5 = 0;
-			int num6 = 1;
-			int num7 = 1;
-			Register register1 = new Register(name1, (uint)num2, (uint)num5, num6 != 0, num7 != 0);
-			registerCollection1.Add(register1);
-			RegisterCollection registerCollection2 = registers;
-			string name2 = "RegOpMode";
-			int num8 = (int)num4;
-			int num9 = 1;
-			byte num10 = (byte)(num8 + num9);
-			int num11 = 137;
-			int num12 = 0;
-			int num13 = 1;
-			Register register2 = new Register(name2, (uint)num8, (uint)num11, num12 != 0, num13 != 0);
-			registerCollection2.Add(register2);
-			for (int index = 2; index < 4; ++index)
-				registers.Add(new Register("RegRes" + num10.ToString("X02"), (uint)num10++, 0U, false, true));
-			RegisterCollection registerCollection3 = registers;
-			string name3 = "RegFdevMsb";
-			int num14 = (int)num10;
-			int num15 = 1;
-			byte num16 = (byte)(num14 + num15);
-			int num17 = 0;
-			int num18 = 0;
-			int num19 = 1;
-			Register register3 = new Register(name3, (uint)num14, (uint)num17, num18 != 0, num19 != 0);
-			registerCollection3.Add(register3);
-			RegisterCollection registerCollection4 = registers;
-			string name4 = "RegRes05";
-			int num20 = (int)num16;
-			int num21 = 1;
-			byte num22 = (byte)(num20 + num21);
-			int num23 = 82;
-			int num24 = 0;
-			int num25 = 1;
-			Register register4 = new Register(name4, (uint)num20, (uint)num23, num24 != 0, num25 != 0);
-			registerCollection4.Add(register4);
-			RegisterCollection registerCollection5 = registers;
-			string name5 = "RegFrfMsb";
-			int num26 = (int)num22;
-			int num27 = 1;
-			byte num28 = (byte)(num26 + num27);
-			int num29 = 228;
-			int num30 = 0;
-			int num31 = 1;
-			Register register5 = new Register(name5, (uint)num26, (uint)num29, num30 != 0, num31 != 0);
-			registerCollection5.Add(register5);
-			RegisterCollection registerCollection6 = registers;
-			string name6 = "RegFrfMid";
-			int num32 = (int)num28;
-			int num33 = 1;
-			byte num34 = (byte)(num32 + num33);
-			int num35 = 192;
-			int num36 = 0;
-			int num37 = 1;
-			Register register6 = new Register(name6, (uint)num32, (uint)num35, num36 != 0, num37 != 0);
-			registerCollection6.Add(register6);
-			RegisterCollection registerCollection7 = registers;
-			string name7 = "RegFrfLsb";
-			int num38 = (int)num34;
-			int num39 = 1;
-			byte num40 = (byte)(num38 + num39);
-			int num41 = 0;
-			int num42 = 0;
-			int num43 = 1;
-			Register register7 = new Register(name7, (uint)num38, (uint)num41, num42 != 0, num43 != 0);
-			registerCollection7.Add(register7);
-			RegisterCollection registerCollection8 = registers;
-			string name8 = "RegPaConfig";
-			int num44 = (int)num40;
-			int num45 = 1;
-			byte num46 = (byte)(num44 + num45);
-			int num47 = 15;
-			int num48 = 0;
-			int num49 = 1;
-			Register register8 = new Register(name8, (uint)num44, (uint)num47, num48 != 0, num49 != 0);
-			registerCollection8.Add(register8);
-			RegisterCollection registerCollection9 = registers;
-			string name9 = "RegPaRamp";
-			int num50 = (int)num46;
-			int num51 = 1;
-			byte num52 = (byte)(num50 + num51);
-			int num53 = 25;
-			int num54 = 0;
-			int num55 = 1;
-			Register register9 = new Register(name9, (uint)num50, (uint)num53, num54 != 0, num55 != 0);
-			registerCollection9.Add(register9);
-			RegisterCollection registerCollection10 = registers;
-			string name10 = "RegOcp";
-			int num56 = (int)num52;
-			int num57 = 1;
-			byte num58 = (byte)(num56 + num57);
-			int num59 = 43;
-			int num60 = 0;
-			int num61 = 1;
-			Register register10 = new Register(name10, (uint)num56, (uint)num59, num60 != 0, num61 != 0);
-			registerCollection10.Add(register10);
-			RegisterCollection registerCollection11 = registers;
-			string name11 = "RegLna";
-			int num62 = (int)num58;
-			int num63 = 1;
-			byte num64 = (byte)(num62 + num63);
-			int num65 = 32;
-			int num66 = 0;
-			int num67 = 1;
-			Register register11 = new Register(name11, (uint)num62, (uint)num65, num66 != 0, num67 != 0);
-			registerCollection11.Add(register11);
-			RegisterCollection registerCollection12 = registers;
-			string name12 = "RegFifoAddrPtr";
-			int num68 = (int)num64;
-			int num69 = 1;
-			byte num70 = (byte)(num68 + num69);
-			int num71 = 0;
-			int num72 = 0;
-			int num73 = 1;
-			Register register12 = new Register(name12, (uint)num68, (uint)num71, num72 != 0, num73 != 0);
-			registerCollection12.Add(register12);
-			RegisterCollection registerCollection13 = registers;
-			string name13 = "RegFifoTxBaseAddr";
-			int num74 = (int)num70;
-			int num75 = 1;
-			byte num76 = (byte)(num74 + num75);
-			int num77 = 128;
-			int num78 = 0;
-			int num79 = 1;
-			Register register13 = new Register(name13, (uint)num74, (uint)num77, num78 != 0, num79 != 0);
-			registerCollection13.Add(register13);
-			RegisterCollection registerCollection14 = registers;
-			string name14 = "RegFifoRxBaseAddr";
-			int num80 = (int)num76;
-			int num81 = 1;
-			byte num82 = (byte)(num80 + num81);
-			int num83 = 0;
-			int num84 = 0;
-			int num85 = 1;
-			Register register14 = new Register(name14, (uint)num80, (uint)num83, num84 != 0, num85 != 0);
-			registerCollection14.Add(register14);
-			RegisterCollection registerCollection15 = registers;
-			string name15 = "RegFifoRxCurrentAddr";
-			int num86 = (int)num82;
-			int num87 = 1;
-			byte num88 = (byte)(num86 + num87);
-			int num89 = 0;
-			int num90 = 1;
-			int num91 = 1;
-			Register register15 = new Register(name15, (uint)num86, (uint)num89, num90 != 0, num91 != 0);
-			registerCollection15.Add(register15);
-			RegisterCollection registerCollection16 = registers;
-			string name16 = "RegIrqFlagsMask";
-			int num92 = (int)num88;
-			int num93 = 1;
-			byte num94 = (byte)(num92 + num93);
-			int num95 = 0;
-			int num96 = 0;
-			int num97 = 1;
-			Register register16 = new Register(name16, (uint)num92, (uint)num95, num96 != 0, num97 != 0);
-			registerCollection16.Add(register16);
-			RegisterCollection registerCollection17 = registers;
-			string name17 = "RegIrqFlags";
-			int num98 = (int)num94;
-			int num99 = 1;
-			byte num100 = (byte)(num98 + num99);
-			int num101 = 0;
-			int num102 = 0;
-			int num103 = 1;
-			Register register17 = new Register(name17, (uint)num98, (uint)num101, num102 != 0, num103 != 0);
-			registerCollection17.Add(register17);
-			RegisterCollection registerCollection18 = registers;
-			string name18 = "RegRxNbBytes";
-			int num104 = (int)num100;
-			int num105 = 1;
-			byte num106 = (byte)(num104 + num105);
-			int num107 = 0;
-			int num108 = 1;
-			int num109 = 1;
-			Register register18 = new Register(name18, (uint)num104, (uint)num107, num108 != 0, num109 != 0);
-			registerCollection18.Add(register18);
-			RegisterCollection registerCollection19 = registers;
-			string name19 = "RegRxHeaderCntValueMsb";
-			int num110 = (int)num106;
-			int num111 = 1;
-			byte num112 = (byte)(num110 + num111);
-			int num113 = 0;
-			int num114 = 1;
-			int num115 = 1;
-			Register register19 = new Register(name19, (uint)num110, (uint)num113, num114 != 0, num115 != 0);
-			registerCollection19.Add(register19);
-			RegisterCollection registerCollection20 = registers;
-			string name20 = "RegRxHeaderCntValueLsb";
-			int num116 = (int)num112;
-			int num117 = 1;
-			byte num118 = (byte)(num116 + num117);
-			int num119 = 0;
-			int num120 = 1;
-			int num121 = 1;
-			Register register20 = new Register(name20, (uint)num116, (uint)num119, num120 != 0, num121 != 0);
-			registerCollection20.Add(register20);
-			RegisterCollection registerCollection21 = registers;
-			string name21 = "RegRxPacketCntValueMsb";
-			int num122 = (int)num118;
-			int num123 = 1;
-			byte num124 = (byte)(num122 + num123);
-			int num125 = 0;
-			int num126 = 1;
-			int num127 = 1;
-			Register register21 = new Register(name21, (uint)num122, (uint)num125, num126 != 0, num127 != 0);
-			registerCollection21.Add(register21);
-			RegisterCollection registerCollection22 = registers;
-			string name22 = "RegRxPacketCntValueLsb";
-			int num128 = (int)num124;
-			int num129 = 1;
-			byte num130 = (byte)(num128 + num129);
-			int num131 = 0;
-			int num132 = 1;
-			int num133 = 1;
-			Register register22 = new Register(name22, (uint)num128, (uint)num131, num132 != 0, num133 != 0);
-			registerCollection22.Add(register22);
-			RegisterCollection registerCollection23 = registers;
-			string name23 = "RegModemStat";
-			int num134 = (int)num130;
-			int num135 = 1;
-			byte num136 = (byte)(num134 + num135);
-			int num137 = 0;
-			int num138 = 1;
-			int num139 = 1;
-			Register register23 = new Register(name23, (uint)num134, (uint)num137, num138 != 0, num139 != 0);
-			registerCollection23.Add(register23);
-			RegisterCollection registerCollection24 = registers;
-			string name24 = "RegPktSnrValue";
-			int num140 = (int)num136;
-			int num141 = 1;
-			byte num142 = (byte)(num140 + num141);
-			int num143 = 0;
-			int num144 = 1;
-			int num145 = 1;
-			Register register24 = new Register(name24, (uint)num140, (uint)num143, num144 != 0, num145 != 0);
-			registerCollection24.Add(register24);
-			RegisterCollection registerCollection25 = registers;
-			string name25 = "RegPktRssiValue";
-			int num146 = (int)num142;
-			int num147 = 1;
-			byte num148 = (byte)(num146 + num147);
-			int num149 = 0;
-			int num150 = 1;
-			int num151 = 1;
-			Register register25 = new Register(name25, (uint)num146, (uint)num149, num150 != 0, num151 != 0);
-			registerCollection25.Add(register25);
-			RegisterCollection registerCollection26 = registers;
-			string name26 = "RegRssiValue";
-			int num152 = (int)num148;
-			int num153 = 1;
-			byte num154 = (byte)(num152 + num153);
-			int num155 = 0;
-			int num156 = 1;
-			int num157 = 1;
-			Register register26 = new Register(name26, (uint)num152, (uint)num155, num156 != 0, num157 != 0);
-			registerCollection26.Add(register26);
-			RegisterCollection registerCollection27 = registers;
-			string name27 = "RegHopChannel";
-			int num158 = (int)num154;
-			int num159 = 1;
-			byte num160 = (byte)(num158 + num159);
-			int num161 = 0;
-			int num162 = 1;
-			int num163 = 1;
-			Register register27 = new Register(name27, (uint)num158, (uint)num161, num162 != 0, num163 != 0);
-			registerCollection27.Add(register27);
-			RegisterCollection registerCollection28 = registers;
-			string name28 = "RegModemConfig1";
-			int num164 = (int)num160;
-			int num165 = 1;
-			byte num166 = (byte)(num164 + num165);
-			int num167 = 114;
-			int num168 = 0;
-			int num169 = 1;
-			Register register28 = new Register(name28, (uint)num164, (uint)num167, num168 != 0, num169 != 0);
-			registerCollection28.Add(register28);
-			RegisterCollection registerCollection29 = registers;
-			string name29 = "RegModemConfig2";
-			int num170 = (int)num166;
-			int num171 = 1;
-			byte num172 = (byte)(num170 + num171);
-			int num173 = 112;
-			int num174 = 0;
-			int num175 = 1;
-			Register register29 = new Register(name29, (uint)num170, (uint)num173, num174 != 0, num175 != 0);
-			registerCollection29.Add(register29);
-			RegisterCollection registerCollection30 = registers;
-			string name30 = "RegSymbTimeoutLsb";
-			int num176 = (int)num172;
-			int num177 = 1;
-			byte num178 = (byte)(num176 + num177);
-			int num179 = 100;
-			int num180 = 0;
-			int num181 = 1;
-			Register register30 = new Register(name30, (uint)num176, (uint)num179, num180 != 0, num181 != 0);
-			registerCollection30.Add(register30);
-			RegisterCollection registerCollection31 = registers;
-			string name31 = "RegPreambleMsb";
-			int num182 = (int)num178;
-			int num183 = 1;
-			byte num184 = (byte)(num182 + num183);
-			int num185 = 0;
-			int num186 = 0;
-			int num187 = 1;
-			Register register31 = new Register(name31, (uint)num182, (uint)num185, num186 != 0, num187 != 0);
-			registerCollection31.Add(register31);
-			RegisterCollection registerCollection32 = registers;
-			string name32 = "RegPreambleLsb";
-			int num188 = (int)num184;
-			int num189 = 1;
-			byte num190 = (byte)(num188 + num189);
-			int num191 = 8;
-			int num192 = 0;
-			int num193 = 1;
-			Register register32 = new Register(name32, (uint)num188, (uint)num191, num192 != 0, num193 != 0);
-			registerCollection32.Add(register32);
-			RegisterCollection registerCollection33 = registers;
-			string name33 = "RegPayloadLength";
-			int num194 = (int)num190;
-			int num195 = 1;
-			byte num196 = (byte)(num194 + num195);
-			int num197 = 1;
-			int num198 = 0;
-			int num199 = 1;
-			Register register33 = new Register(name33, (uint)num194, (uint)num197, num198 != 0, num199 != 0);
-			registerCollection33.Add(register33);
-			RegisterCollection registerCollection34 = registers;
-			string name34 = "RegMaxPayloadLength";
-			int num200 = (int)num196;
-			int num201 = 1;
-			byte num202 = (byte)(num200 + num201);
-			int num203 = (int)byte.MaxValue;
-			int num204 = 0;
-			int num205 = 1;
-			Register register34 = new Register(name34, (uint)num200, (uint)num203, num204 != 0, num205 != 0);
-			registerCollection34.Add(register34);
-			RegisterCollection registerCollection35 = registers;
-			string name35 = "RegHopPeriod";
-			int num206 = (int)num202;
-			int num207 = 1;
-			byte num208 = (byte)(num206 + num207);
-			int num209 = 0;
-			int num210 = 0;
-			int num211 = 1;
-			Register register35 = new Register(name35, (uint)num206, (uint)num209, num210 != 0, num211 != 0);
-			registerCollection35.Add(register35);
-			RegisterCollection registerCollection36 = registers;
-			string name36 = "RegFifoRxByteAddr";
-			int num212 = (int)num208;
-			int num213 = 1;
-			byte num214 = (byte)(num212 + num213);
-			int num215 = 0;
-			int num216 = 0;
-			int num217 = 1;
-			Register register36 = new Register(name36, (uint)num212, (uint)num215, num216 != 0, num217 != 0);
-			registerCollection36.Add(register36);
-			RegisterCollection registerCollection37 = registers;
-			string name37 = "RegModemConfig3";
-			int num218 = (int)num214;
-			int num219 = 1;
-			byte num220 = (byte)(num218 + num219);
-			int num221 = 4;
-			int num222 = 0;
-			int num223 = 1;
-			Register register37 = new Register(name37, (uint)num218, (uint)num221, num222 != 0, num223 != 0);
-			registerCollection37.Add(register37);
-			for (int index = 39; index < 64; ++index)
-				registers.Add(new Register("RegTest" + num220.ToString("X02"), (uint)num220++, 0U, false, true));
-			RegisterCollection registerCollection38 = registers;
-			string name38 = "RegDioMapping1";
-			int num224 = (int)num220;
-			int num225 = 1;
-			byte num226 = (byte)(num224 + num225);
-			int num227 = 0;
-			int num228 = 0;
-			int num229 = 1;
-			Register register38 = new Register(name38, (uint)num224, (uint)num227, num228 != 0, num229 != 0);
-			registerCollection38.Add(register38);
-			RegisterCollection registerCollection39 = registers;
-			string name39 = "RegDioMapping2";
-			int num230 = (int)num226;
-			int num231 = 1;
-			byte num232 = (byte)(num230 + num231);
-			int num233 = 0;
-			int num234 = 0;
-			int num235 = 1;
-			Register register39 = new Register(name39, (uint)num230, (uint)num233, num234 != 0, num235 != 0);
-			registerCollection39.Add(register39);
-			RegisterCollection registerCollection40 = registers;
-			string name40 = "RegVersion";
-			int num236 = (int)num232;
-			int num237 = 1;
-			byte num238 = (byte)(num236 + num237);
-			int num239 = 17;
-			int num240 = 0;
-			int num241 = 1;
-			Register register40 = new Register(name40, (uint)num236, (uint)num239, num240 != 0, num241 != 0);
-			registerCollection40.Add(register40);
+			registers.Add(new Register("RegFifo", 0, 0, true, true));
+			registers.Add(new Register("RegOpMode", 1, 137, false, true));
+			for (uint index = 2; index < 4; ++index)
+				registers.Add(new Register("RegRes" + index.ToString("X02"), index, 0, false, true));
+			registers.Add(new Register("RegFdevMsb", 4, 0, false, true));
+			registers.Add(new Register("RegRes05", 5, 82, false, true));
+			registers.Add(new Register("RegFrfMsb", 6, 228, false, true));
+			registers.Add(new Register("RegFrfMid", 7, 192, false, true));
+			registers.Add(new Register("RegFrfLsb", 8, 9, false, true));
+			registers.Add(new Register("RegPaConfig", 9, 15, false, true));
+			registers.Add(new Register("RegPaRamp", 10, 25, false, true));
+			registers.Add(new Register("RegOcp", 11, 43, false, true));
+			registers.Add(new Register("RegLna", 12, 32, false, true));
+			registers.Add(new Register("RegFifoAddrPtr", 13, 0, false, true));
+			registers.Add(new Register("RegFifoTxBaseAddr", 14, 128, false, true));
+			registers.Add(new Register("RegFifoRxBaseAddr", 15, 0, false, true));
+			registers.Add(new Register("RegFifoRxCurrentAddr", 16, 0, true, true));
+			registers.Add(new Register("RegIrqFlagsMask", 17, 0, false, true));
+			registers.Add(new Register("RegIrqFlags", 18, 0, false, true));
+			registers.Add(new Register("RegRxNbBytes", 19, 0, true, true));
+			registers.Add(new Register("RegRxHeaderCntValueMsb", 20, 0, true, true));
+			registers.Add(new Register("RegRxHeaderCntValueLsb", 21, 0, true, true));
+			registers.Add(new Register("RegRxPacketCntValueMsb", 22, 0, true, true));
+			registers.Add(new Register("RegRxPacketCntValueLsb", 23, 0, true, true));
+			registers.Add(new Register("RegModemStat", 24, 0, true, true));
+			registers.Add(new Register("RegPktSnrValue", 25, 26, true, true));
+			registers.Add(new Register("RegPktRssiValue", 26, 0, true, true));
+			registers.Add(new Register("RegRssiValue", 27, 0, true, true));
+			registers.Add(new Register("RegHopChannel", 28, 0, true, true));
+			registers.Add(new Register("RegModemConfig1", 29, 114, false, true));
+			registers.Add(new Register("RegModemConfig2", 30, 112, false, true));
+			registers.Add(new Register("RegSymbTimeoutLsb", 31, 100, false, true));
+			registers.Add(new Register("RegPreambleMsb", 32, 0, false, true));
+			registers.Add(new Register("RegPreambleLsb", 33, 8, false, true));
+			registers.Add(new Register("RegPayloadLength", 34, 1, false, true));
+			registers.Add(new Register("RegMaxPayloadLength", 35, 255, false, true));
+			registers.Add(new Register("RegHopPeriod", 36, 0, false, true));
+			registers.Add(new Register("RegFifoRxByteAddr", 37, 0, false, true));
+			registers.Add(new Register("RegModemConfig3", 38, 4, false, true));
+			for (uint index = 39; index < 64; ++index)
+				registers.Add(new Register("RegTest" + index.ToString("X02"), index, 0, false, true));
+
+			registers.Add(new Register("RegDioMapping1", 64, 0, false, true));
+			registers.Add(new Register("RegDioMapping2", 65, 0, false, true));
+			registers.Add(new Register("RegVersion", 66, 17, false, true));
 			for (int index = 67; index < 68; ++index)
-				registers.Add(new Register("RegTest" + num238.ToString("X02"), (uint)num238++, 0U, false, true));
-			RegisterCollection registerCollection41 = registers;
-			string name41 = "RegPllHop";
-			int num242 = (int)num238;
-			int num243 = 1;
-			byte num244 = (byte)(num242 + num243);
-			int num245 = 45;
-			int num246 = 0;
-			int num247 = 1;
-			Register register41 = new Register(name41, (uint)num242, (uint)num245, num246 != 0, num247 != 0);
-			registerCollection41.Add(register41);
-			for (int index = 69; index < 75; ++index)
-				registers.Add(new Register("RegTest" + num244.ToString("X02"), (uint)num244++, 0U, false, true));
-			RegisterCollection registerCollection42 = registers;
-			string name42 = "RegTcxo";
-			int num248 = (int)num244;
-			int num249 = 1;
-			byte num250 = (byte)(num248 + num249);
-			int num251 = 9;
-			int num252 = 0;
-			int num253 = 1;
-			Register register42 = new Register(name42, (uint)num248, (uint)num251, num252 != 0, num253 != 0);
-			registerCollection42.Add(register42);
-			RegisterCollection registerCollection43 = registers;
-			string name43 = "RegTest4C";
-			int num254 = (int)num250;
-			int num255 = 1;
-			byte num256 = (byte)(num254 + num255);
-			int num257 = 0;
-			int num258 = 0;
-			int num259 = 1;
-			Register register43 = new Register(name43, (uint)num254, (uint)num257, num258 != 0, num259 != 0);
-			registerCollection43.Add(register43);
-			RegisterCollection registerCollection44 = registers;
-			string name44 = "RegPaDac";
-			int num260 = (int)num256;
-			int num261 = 1;
-			byte num262 = (byte)(num260 + num261);
-			int num263 = 132;
-			int num264 = 0;
-			int num265 = 1;
-			Register register44 = new Register(name44, (uint)num260, (uint)num263, num264 != 0, num265 != 0);
-			registerCollection44.Add(register44);
-			for (int index = 78; index < 91; ++index)
-				registers.Add(new Register("RegTest" + num262.ToString("X02"), (uint)num262++, 0U, false, true));
-			RegisterCollection registerCollection45 = registers;
-			string name45 = "RegFormerTemp";
-			int num266 = (int)num262;
-			int num267 = 1;
-			byte num268 = (byte)(num266 + num267);
-			int num269 = 0;
-			int num270 = 0;
-			int num271 = 1;
-			Register register45 = new Register(name45, (uint)num266, (uint)num269, num270 != 0, num271 != 0);
-			registerCollection45.Add(register45);
-			RegisterCollection registerCollection46 = registers;
-			string name46 = "RegTest5C";
-			int num272 = (int)num268;
-			int num273 = 1;
-			byte num274 = (byte)(num272 + num273);
-			int num275 = 0;
-			int num276 = 0;
-			int num277 = 1;
-			Register register46 = new Register(name46, (uint)num272, (uint)num275, num276 != 0, num277 != 0);
-			registerCollection46.Add(register46);
-			RegisterCollection registerCollection47 = registers;
-			string name47 = "RegBitrateFrac";
-			int num278 = (int)num274;
-			int num279 = 1;
-			byte num280 = (byte)(num278 + num279);
-			int num281 = 0;
-			int num282 = 0;
-			int num283 = 1;
-			Register register47 = new Register(name47, (uint)num278, (uint)num281, num282 != 0, num283 != 0);
-			registerCollection47.Add(register47);
-			for (int index = 94; index < 97; ++index)
-				registers.Add(new Register("RegTest" + num280.ToString("X02"), (uint)num280++, 0U, false, true));
-			RegisterCollection registerCollection48 = registers;
-			string name48 = "RegAgcRef";
-			int num284 = (int)num280;
-			int num285 = 1;
-			byte num286 = (byte)(num284 + num285);
-			int num287 = 25;
-			int num288 = 0;
-			int num289 = 1;
-			Register register48 = new Register(name48, (uint)num284, (uint)num287, num288 != 0, num289 != 0);
-			registerCollection48.Add(register48);
-			RegisterCollection registerCollection49 = registers;
-			string name49 = "RegAgcThresh1";
-			int num290 = (int)num286;
-			int num291 = 1;
-			byte num292 = (byte)(num290 + num291);
-			int num293 = 12;
-			int num294 = 0;
-			int num295 = 1;
-			Register register49 = new Register(name49, (uint)num290, (uint)num293, num294 != 0, num295 != 0);
-			registerCollection49.Add(register49);
-			RegisterCollection registerCollection50 = registers;
-			string name50 = "RegAgcThresh2";
-			int num296 = (int)num292;
-			int num297 = 1;
-			byte num298 = (byte)(num296 + num297);
-			int num299 = 75;
-			int num300 = 0;
-			int num301 = 1;
-			Register register50 = new Register(name50, (uint)num296, (uint)num299, num300 != 0, num301 != 0);
-			registerCollection50.Add(register50);
-			RegisterCollection registerCollection51 = registers;
-			string name51 = "RegAgcThresh3";
-			int num302 = (int)num298;
-			int num303 = 1;
-			byte num304 = (byte)(num302 + num303);
-			int num305 = 204;
-			int num306 = 0;
-			int num307 = 1;
-			Register register51 = new Register(name51, (uint)num302, (uint)num305, num306 != 0, num307 != 0);
-			registerCollection51.Add(register51);
-			for (int index = 101; index < 112; ++index)
-				registers.Add(new Register("RegTest" + num304.ToString("X02"), (uint)num304++, 0U, false, true));
-			RegisterCollection registerCollection52 = registers;
-			string name52 = "RegPll";
-			int num308 = (int)num304;
-			int num309 = 1;
-			byte num310 = (byte)(num308 + num309);
-			int num311 = 208;
-			int num312 = 0;
-			int num313 = 1;
-			Register register52 = new Register(name52, (uint)num308, (uint)num311, num312 != 0, num313 != 0);
-			registerCollection52.Add(register52);
-			for (int index = 113; index < 128; ++index)
-				registers.Add(new Register("RegTest" + num310.ToString("X02"), (uint)num310++, 0U, false, true));
-			foreach (Register register53 in registers)
-				register53.PropertyChanged += new PropertyChangedEventHandler(registers_PropertyChanged);
+				registers.Add(new Register("RegTest" + index.ToString("X02"), (uint)index, 0, false, true));
+
+			registers.Add(new Register("RegPllHop", 68, 45, false, true));
+			for (uint index = 69; index < 75; ++index)
+				registers.Add(new Register("RegTest" + index.ToString("X02"), index, 0, false, true));
+
+			registers.Add(new Register("RegTcxo", 75, 9, false, true));
+			registers.Add(new Register("RegTest4C", 76, 0, false, true));
+			registers.Add(new Register("RegPaDac", 77, 132, false, true));
+			for (uint index = 78; index < 91; ++index)
+				registers.Add(new Register("RegTest" + index.ToString("X02"), index, 0, false, true));
+
+			registers.Add(new Register("RegFormerTemp", 91, 0, false, true));
+			registers.Add(new Register("RegTest5C", 92, 0, false, true));
+			registers.Add(new Register("RegBitrateFrac", 93, 0, false, true));
+			for (uint index = 94; index < 97; ++index)
+				registers.Add(new Register("RegTest" + index.ToString("X02"), index, 0, false, true));
+
+			registers.Add(new Register("RegAgcRef", 97, 25, false, true));
+			registers.Add(new Register("RegAgcThresh1", 98, 12, false, true));
+			registers.Add(new Register("RegAgcThresh2", 99, 75, false, true));
+			registers.Add(new Register("RegAgcThresh3", 100, 204, false, true));
+			for (uint index = 101; index < 112; ++index)
+				registers.Add(new Register("RegTest" + index.ToString("X02"), index, 0, false, true));
+
+			registers.Add(new Register("RegPll", 112, 208, false, true));
+			for (uint index = 113; index < 128; ++index)
+				registers.Add(new Register("RegTest" + index.ToString("X02"), index, 0, false, true));
+
+			foreach (Register register in registers)
+				register.PropertyChanged += new PropertyChangedEventHandler(registers_PropertyChanged);
 		}
 
 		private void UpdateRegisterTable()
@@ -2386,9 +1670,11 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				case "RegOpMode":
 					LowFrequencyModeOn = ((int)(r.Value >> 3) & 1) == 1;
-					Console.WriteLine("RegOpMode (URV): 0x{0}", (object)r.Value.ToString("X02"));
-					Mode = ((int)registers["RegModemConfig2"].Value & 8) != 8 || ((int)r.Value & 7) != 3 ? (OperatingModeEnum)((int)r.Value & 7) : OperatingModeEnum.TxContinuous;
-					if ((int)registers["RegPayloadLength"].Value != (int)PayloadLength)
+					Console.WriteLine("RegOpMode (URV): 0x{0}", r.Value.ToString("X02"));
+					Mode = (registers["RegModemConfig2"].Value & 8) != 8 || (r.Value & 7) != 3
+						? (OperatingModeEnum)((int)r.Value & 7)
+						: OperatingModeEnum.TxContinuous;
+					if (registers["RegPayloadLength"].Value != (uint)PayloadLength)
 						registers["RegPayloadLength"].Value = (uint)PayloadLength;
 					lock (syncThread)
 					{
@@ -2396,30 +1682,30 @@ namespace SemtechLib.Devices.SX1276LR
 						break;
 					}
 				case "RegFdevMsb":
-					Band = (BandEnum)((int)(registers["RegFdevMsb"].Value >> 6) & 3);
+					Band = (BandEnum)((registers["RegFdevMsb"].Value >> 6) & 3);
 					break;
 				case "RegFrfMsb":
 				case "RegFrfMid":
 				case "RegFrfLsb":
-					FrequencyRf = (Decimal)((uint)((int)registers["RegFrfMsb"].Value << 16 | (int)registers["RegFrfMid"].Value << 8) | registers["RegFrfLsb"].Value) * FrequencyStep;
+					FrequencyRf = (Decimal)(registers["RegFrfMsb"].Value << 16 | registers["RegFrfMid"].Value << 8 | registers["RegFrfLsb"].Value) * FrequencyStep;
 					BandwidthCheck(Bandwidth);
 					break;
 				case "RegPaConfig":
-					PaSelect = ((int)r.Value & 128) == 128 ? PaSelectEnum.PA_BOOST : PaSelectEnum.RFO;
+					PaSelect = (r.Value & 128) == 128 ? PaSelectEnum.PA_BOOST : PaSelectEnum.RFO;
 					if (PaSelect == PaSelectEnum.RFO)
 					{
-						maxOutputPower = new Decimal(108, 0, 0, false, (byte)1) + new Decimal(6, 0, 0, false, (byte)1) * (Decimal)(r.Value >> 4 & 7U);
-						outputPower = MaxOutputPower - new Decimal(150, 0, 0, false, (byte)1) - (Decimal)(r.Value & 15U);
+						maxOutputPower = new Decimal(108, 0, 0, false, 1) + new Decimal(6, 0, 0, false, 1) * (Decimal)(r.Value >> 4 & 7U);
+						outputPower = MaxOutputPower - new Decimal(150, 0, 0, false, 1) - (Decimal)(r.Value & 15U);
 					}
 					else if (!Pa20dBm)
 					{
 						maxOutputPower = new Decimal(17);
-						outputPower = new Decimal(17) - new Decimal(150, 0, 0, false, (byte)1) - (Decimal)(r.Value & 15U);
+						outputPower = new Decimal(17) - new Decimal(150, 0, 0, false, 1) - (Decimal)(r.Value & 15U);
 					}
 					else
 					{
 						maxOutputPower = new Decimal(20);
-						outputPower = new Decimal(20) - new Decimal(150, 0, 0, false, (byte)1) - (Decimal)(r.Value & 15U);
+						outputPower = new Decimal(20) - new Decimal(150, 0, 0, false, 1) - (Decimal)(r.Value & 15U);
 					}
 					OnPropertyChanged("MaxOutputPower");
 					OnPropertyChanged("OutputPower");
@@ -2430,7 +1716,7 @@ namespace SemtechLib.Devices.SX1276LR
 					break;
 				case "RegOcp":
 					OcpOn = ((int)(r.Value >> 5) & 1) == 1;
-					OcpTrim = (r.Value & 31U) > 15U ? ((r.Value & 31U) <= 15U || (r.Value & 31U) > 27U ? new Decimal(2400, 0, 0, false, (byte)1) : (Decimal)(-30L + (long)(uint)(10 * ((int)r.Value & 31)))) : (Decimal)((uint)(45 + 5 * ((int)r.Value & 15)));
+					OcpTrim = (r.Value & 31U) > 15U ? ((r.Value & 31U) <= 15U || (r.Value & 31U) > 27U ? new Decimal(2400, 0, 0, false, 1) : (Decimal)(-30L + (long)(uint)(10 * ((int)r.Value & 31)))) : (Decimal)((uint)(45 + 5 * ((int)r.Value & 15)));
 					if (!OcpOn)
 						break;
 					OcpTrimCheck(OcpTrim);
@@ -2556,14 +1842,14 @@ namespace SemtechLib.Devices.SX1276LR
 						if (RfPaSwitchSel == RfPaSwitchSelEnum.RF_IO_RFIO)
 						{
 							if (RfPaSwitchEnabled == 1)
-								rfPaRssiValue = new Decimal(1277, 0, 0, true, (byte)1);
+								rfPaRssiValue = new Decimal(1277, 0, 0, true, 1);
 							rfIoRssiValue = rssiValue;
 							OnPropertyChanged("RfIoRssiValue");
 						}
 						else if (RfPaSwitchSel == RfPaSwitchSelEnum.RF_IO_PA_BOOST)
 						{
 							if (RfPaSwitchEnabled == 1)
-								rfIoRssiValue = new Decimal(1277, 0, 0, true, (byte)1);
+								rfIoRssiValue = new Decimal(1277, 0, 0, true, 1);
 							rfPaRssiValue = rssiValue;
 							OnPropertyChanged("RfPaRssiValue");
 						}
@@ -2716,44 +2002,38 @@ namespace SemtechLib.Devices.SX1276LR
 
 		private void OnConnected()
 		{
-			if (Connected == null)
-				return;
-			Connected((object)this, EventArgs.Empty);
+			if (Connected != null)
+				Connected(this, EventArgs.Empty);
 		}
 
 		private void OnDisconnected()
 		{
-			if (Disconected == null)
-				return;
-			Disconected((object)this, EventArgs.Empty);
+			if (Disconected != null)
+				Disconected(this, EventArgs.Empty);
 		}
 
 		private void OnError(byte status, string message)
 		{
-			if (Error == null)
-				return;
-			Error((object)this, new SemtechLib.General.Events.ErrorEventArgs(status, message));
+			if (Error != null)
+				Error(this, new SemtechLib.General.Events.ErrorEventArgs(status, message));
 		}
 
 		private void OnOcpTrimLimitStatusChanged(LimitCheckStatusEnum status, string message)
 		{
-			if (OcpTrimLimitStatusChanged == null)
-				return;
-			OcpTrimLimitStatusChanged((object)this, new LimitCheckStatusEventArg(status, message));
+			if (OcpTrimLimitStatusChanged != null)
+				OcpTrimLimitStatusChanged(this, new LimitCheckStatusEventArg(status, message));
 		}
 
 		private void OnFrequencyRfLimitStatusChanged(LimitCheckStatusEnum status, string message)
 		{
-			if (FrequencyRfLimitStatusChanged == null)
-				return;
-			FrequencyRfLimitStatusChanged((object)this, new LimitCheckStatusEventArg(status, message));
+			if (FrequencyRfLimitStatusChanged != null)
+				FrequencyRfLimitStatusChanged(this, new LimitCheckStatusEventArg(status, message));
 		}
 
 		private void OnBandwidthLimitStatusChanged(LimitCheckStatusEnum status, string message)
 		{
-			if (BandwidthLimitStatusChanged == null)
-				return;
-			BandwidthLimitStatusChanged((object)this, new LimitCheckStatusEventArg(status, message));
+			if (BandwidthLimitStatusChanged != null)
+				BandwidthLimitStatusChanged(this, new LimitCheckStatusEventArg(status, message));
 		}
 
 		public bool Open()
@@ -2780,82 +2060,104 @@ namespace SemtechLib.Devices.SX1276LR
 			return true;
 		}
 
+		/// <summary>
+		///	[Status(U8)][Timeout(U32)]
+		/// </summary>
+		/// <returns></returns>
 		public bool SKReset()
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)0;
-				SX1276LR.HidCommandsStatus local_1 = SX1276LR.HidCommandsStatus.SX_ERROR;
-				ulong local_2 = ulong.MaxValue;
-				byte[] local_3 = new byte[10];
-				byte[] local_4 = new byte[2];
+				byte command = (byte)HidCommands.HID_DEVICE_RESET;
+				SX1276LR.HidCommandsStatus status = SX1276LR.HidCommandsStatus.SX_ERROR;
+				ulong timeout = ulong.MaxValue;
+				byte[] inData = new byte[10];
+				byte[] outData = new byte[2];
 				try
 				{
 					if (IsOpen)
 					{
-						usbDevice.TxRxCommand(local_0, local_4, ref local_3);
-						local_1 = (SX1276LR.HidCommandsStatus)local_3[0];
-						local_2 = (ulong)((long)local_3[1] << 56 | (long)local_3[2] << 48 | (long)local_3[3] << 40 | (long)local_3[4] << 32 | (long)local_3[5] << 24 | (long)local_3[6] << 16 | (long)local_3[7] << 8) | (ulong)local_3[8];
-						if (local_1 == SX1276LR.HidCommandsStatus.SX_OK)
+						usbDevice.TxRxCommand(command, outData, ref inData);
+						status = (SX1276LR.HidCommandsStatus)inData[0];
+						timeout = ((ulong)inData[1] << 56 | (ulong)inData[2] << 48 | (ulong)inData[3] << 40 | (ulong)inData[4] << 32 | (ulong)inData[5] << 24 | (ulong)inData[6] << 16 | (ulong)inData[7] << 8 | (ulong)inData[8]);
+						if (status == SX1276LR.HidCommandsStatus.SX_OK)
 							return true;
 					}
 					return false;
 				}
 				finally
 				{
-					Console.WriteLine("{0} ms: {1} with status {2}", (object)local_2, (object)Enum.GetName(typeof(SX1276LR.HidCommands), (object)(SX1276LR.HidCommands)local_0), (object)Enum.GetName(typeof(SX1276LR.HidCommandsStatus), (object)local_1));
+					Console.WriteLine("{0} ms: {1} with status {2}",
+						timeout,
+						Enum.GetName(typeof(SX1276LR.HidCommands), (SX1276LR.HidCommands)command),
+						Enum.GetName(typeof(SX1276LR.HidCommandsStatus), (object)status)
+						);
 				}
 			}
 		}
 
+		/// <summary>
+		///	[Status(U8)][Timeout(U32)][Length(U8)][Version(U8 * Length)]
+		/// </summary>
+		/// <returns></returns>
 		public bool SKGetVersion()
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)1;
-				SX1276LR.HidCommandsStatus local_1 = SX1276LR.HidCommandsStatus.SX_ERROR;
-				ulong local_2 = ulong.MaxValue;
-				byte[] local_3 = new byte[17];
-				byte[] local_4 = new byte[2];
+				byte command = (byte)HidCommands.HID_SK_GET_VERSION;
+				SX1276LR.HidCommandsStatus status = SX1276LR.HidCommandsStatus.SX_ERROR;
+				ulong timeout = ulong.MaxValue;
+				byte[] inData = new byte[17];
+				byte[] outData = new byte[2];
 				try
 				{
-					usbDevice.TxRxCommand(local_0, local_4, ref local_3);
-					local_1 = (SX1276LR.HidCommandsStatus)local_3[0];
-					local_2 = (ulong)((long)local_3[1] << 56 | (long)local_3[2] << 48 | (long)local_3[3] << 40 | (long)local_3[4] << 32 | (long)local_3[5] << 24 | (long)local_3[6] << 16 | (long)local_3[7] << 8) | (ulong)local_3[8];
-					if (local_1 != SX1276LR.HidCommandsStatus.SX_OK || (int)local_3[9] < 5)
+					usbDevice.TxRxCommand(command, outData, ref inData);
+					status = (SX1276LR.HidCommandsStatus)inData[0];
+					timeout = ((ulong)inData[1] << 56 | (ulong)inData[2] << 48 | (ulong)inData[3] << 40 | (ulong)inData[4] << 32 | (ulong)inData[5] << 24 | (ulong)inData[6] << 16 | (ulong)inData[7] << 8 | (ulong)inData[8]);
+					if (status != SX1276LR.HidCommandsStatus.SX_OK || inData[9] < 5)
 						return false;
-					Array.Copy((Array)local_3, 10, (Array)local_3, 0, (int)local_3[9]);
-					Array.Resize<byte>(ref local_3, (int)local_3[9]);
-					string local_6 = new ASCIIEncoding().GetString(local_3);
-					fwVersion = local_6.Length <= 5 ? new Version(local_6) : new Version(local_6.Remove(4, 1));
+
+					Array.Copy(inData, 10, inData, 0, inData[9]);
+					Array.Resize<byte>(ref inData, inData[9]);
+					string version = new ASCIIEncoding().GetString(inData);
+					fwVersion = version.Length <= 5 ? new Version(version) : new Version(version.Remove(4, 1));
 					return true;
 				}
 				finally
 				{
-					Console.WriteLine("{0} ms: {1} with status {2}", (object)local_2, (object)Enum.GetName(typeof(SX1276LR.HidCommands), (object)(SX1276LR.HidCommands)local_0), (object)Enum.GetName(typeof(SX1276LR.HidCommandsStatus), (object)local_1));
+					Console.WriteLine(
+						"{0} ms: {1} with status {2}",
+						timeout,
+						Enum.GetName(typeof(SX1276LR.HidCommands), (SX1276LR.HidCommands)command),
+						Enum.GetName(typeof(SX1276LR.HidCommandsStatus), status)
+						);
 				}
 			}
 		}
 
+		/// <summary>
+		///	[Status(U8)][Timeout(U32)][Length(U8 >= 9)][Name(U8 * Length)]
+		/// </summary>
+		/// <returns></returns>
 		public bool SKGetName()
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)2;
-				SX1276LR.HidCommandsStatus local_1 = SX1276LR.HidCommandsStatus.SX_ERROR;
-				ulong local_2 = ulong.MaxValue;
-				byte[] local_3 = new byte[25];
-				byte[] local_4 = new byte[2];
+				byte command = (byte)HidCommands.HID_SK_GET_NAME;
+				SX1276LR.HidCommandsStatus status = SX1276LR.HidCommandsStatus.SX_ERROR;
+				ulong timeout = ulong.MaxValue;
+				byte[] inData = new byte[25];
+				byte[] outData = new byte[2];
 				try
 				{
-					usbDevice.TxRxCommand(local_0, local_4, ref local_3);
-					local_1 = (SX1276LR.HidCommandsStatus)local_3[0];
-					local_2 = (ulong)((long)local_3[1] << 56 | (long)local_3[2] << 48 | (long)local_3[3] << 40 | (long)local_3[4] << 32 | (long)local_3[5] << 24 | (long)local_3[6] << 16 | (long)local_3[7] << 8) | (ulong)local_3[8];
-					if (local_1 == SX1276LR.HidCommandsStatus.SX_OK && (int)local_3[9] >= 9)
+					usbDevice.TxRxCommand(command, outData, ref inData);
+					status = (SX1276LR.HidCommandsStatus)inData[0];
+					timeout = ((ulong)inData[1] << 56 | (ulong)inData[2] << 48 | (ulong)inData[3] << 40 | (ulong)inData[4] << 32 | (ulong)inData[5] << 24 | (ulong)inData[6] << 16 | (ulong)inData[7] << 8 | (ulong)inData[8]);
+					if (status == SX1276LR.HidCommandsStatus.SX_OK && inData[9] >= 9)
 					{
-						Array.Copy((Array)local_3, 10, (Array)local_3, 0, 10);
-						Array.Resize<byte>(ref local_3, 9);
-						deviceName = new ASCIIEncoding().GetString(local_3);
+						Array.Copy(inData, 10, inData, 0, 10);
+						Array.Resize<byte>(ref inData, 9);
+						deviceName = new ASCIIEncoding().GetString(inData);
 						return true;
 					}
 					deviceName = string.Empty;
@@ -2863,58 +2165,46 @@ namespace SemtechLib.Devices.SX1276LR
 				}
 				finally
 				{
-					Console.WriteLine("{0} ms: {1} with status {2}", (object)local_2, (object)Enum.GetName(typeof(SX1276LR.HidCommands), (object)(SX1276LR.HidCommands)local_0), (object)Enum.GetName(typeof(SX1276LR.HidCommandsStatus), (object)local_1));
+					Console.WriteLine("{0} ms: {1} with status {2}", (object)timeout, (object)Enum.GetName(typeof(SX1276LR.HidCommands), (object)(SX1276LR.HidCommands)command), (object)Enum.GetName(typeof(SX1276LR.HidCommandsStatus), (object)status));
 				}
 			}
 		}
 
+		/// <summary>
+		///	[Status(U8)][xx(U32)][Length(U8 == 1)][ID(U8)]
+		/// </summary>
+		/// <returns></returns>
 		public bool SKGetId(ref byte id)
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)3;
-				byte[] local_2 = new byte[11];
-				byte[] local_3 = new byte[2];
-				usbDevice.TxRxCommand(local_0, local_3, ref local_2);
-				SX1276LR.HidCommandsStatus local_1_1 = (SX1276LR.HidCommandsStatus)local_2[0];
-				int temp_22 = (int)local_2[1];
-				int temp_25 = (int)local_2[2];
-				int temp_28 = (int)local_2[3];
-				int temp_31 = (int)local_2[4];
-				int temp_34 = (int)local_2[5];
-				int temp_37 = (int)local_2[6];
-				int temp_40 = (int)local_2[7];
-				int temp_43 = (int)local_2[8];
-				if (local_1_1 != SX1276LR.HidCommandsStatus.SX_OK || (int)local_2[9] != 1)
+				byte command = (byte)HidCommands.HID_SK_GET_ID;
+				byte[] inData = new byte[11];
+				byte[] outData = new byte[2];
+				usbDevice.TxRxCommand(command, outData, ref inData);
+				SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
+				if (status != SX1276LR.HidCommandsStatus.SX_OK || inData[9] != 1)
 					return false;
-				id = local_2[10];
+				id = inData[10];
 				return true;
 			}
 		}
 
+		/// <summary>
+		/// [Command(U8)][0][1][ID]
+		///	[Status(U8)][xx(U32)][Length(U8 == 1)][ID(U8)]
+		/// </summary>
+		/// <returns></returns>
 		public bool SKSetId(byte id)
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)4;
-				byte[] local_2 = new byte[10];
-				byte[] local_3 = new byte[3]
-        {
-          (byte) 0,
-          (byte) 1,
-          id
-        };
-				usbDevice.TxRxCommand(local_0, local_3, ref local_2);
-				SX1276LR.HidCommandsStatus local_1_1 = (SX1276LR.HidCommandsStatus)local_2[0];
-				int temp_28 = (int)local_2[1];
-				int temp_31 = (int)local_2[2];
-				int temp_34 = (int)local_2[3];
-				int temp_37 = (int)local_2[4];
-				int temp_40 = (int)local_2[5];
-				int temp_43 = (int)local_2[6];
-				int temp_46 = (int)local_2[7];
-				int temp_49 = (int)local_2[8];
-				return local_1_1 == SX1276LR.HidCommandsStatus.SX_OK;
+				byte command = (byte)HidCommands.HID_SK_SET_ID;
+				byte[] inData = new byte[10];
+				byte[] outData = new byte[3] { 0, 1, id };
+				usbDevice.TxRxCommand(command, outData, ref inData);
+				SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
+				return (status == SX1276LR.HidCommandsStatus.SX_OK);
 			}
 		}
 
@@ -2922,22 +2212,14 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)5;
-				byte[] local_2 = new byte[11];
-				byte[] local_3 = new byte[2];
-				usbDevice.TxRxCommand(local_0, local_3, ref local_2);
-				SX1276LR.HidCommandsStatus local_1_1 = (SX1276LR.HidCommandsStatus)local_2[0];
-				int temp_22 = (int)local_2[1];
-				int temp_25 = (int)local_2[2];
-				int temp_28 = (int)local_2[3];
-				int temp_31 = (int)local_2[4];
-				int temp_34 = (int)local_2[5];
-				int temp_37 = (int)local_2[6];
-				int temp_40 = (int)local_2[7];
-				int temp_43 = (int)local_2[8];
-				if (local_1_1 != SX1276LR.HidCommandsStatus.SX_OK || (int)local_2[9] != 1)
+				byte command = (byte)HidCommands.HID_SK_SET_ID_RND;
+				byte[] inData = new byte[11];
+				byte[] outData = new byte[2];
+				usbDevice.TxRxCommand(command, outData, ref inData);
+				SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
+				if (status != SX1276LR.HidCommandsStatus.SX_OK || inData[9] != 1)
 					return false;
-				id = local_2[10];
+				id = inData[10];
 				return true;
 			}
 		}
@@ -2946,27 +2228,14 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)16;
-				byte[] local_2 = new byte[11];
-				byte[] local_3 = new byte[3]
-        {
-          (byte) 0,
-          (byte) 1,
-          pinId
-        };
-				usbDevice.TxRxCommand(local_0, local_3, ref local_2);
-				SX1276LR.HidCommandsStatus local_1_1 = (SX1276LR.HidCommandsStatus)local_2[0];
-				int temp_28 = (int)local_2[1];
-				int temp_31 = (int)local_2[2];
-				int temp_34 = (int)local_2[3];
-				int temp_37 = (int)local_2[4];
-				int temp_40 = (int)local_2[5];
-				int temp_43 = (int)local_2[6];
-				int temp_46 = (int)local_2[7];
-				int temp_49 = (int)local_2[8];
-				if (local_1_1 != SX1276LR.HidCommandsStatus.SX_OK || (int)local_2[9] != 1)
+				byte command = (byte)HidCommands.HID_SK_GET_PIN;
+				byte[] inData = new byte[11];
+				byte[] outData = new byte[3] { 0, 1, pinId };
+				usbDevice.TxRxCommand(command, outData, ref inData);
+				SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
+				if (status != SX1276LR.HidCommandsStatus.SX_OK || inData[9] != 1)
 					return false;
-				state = local_2[10];
+				state = inData[10];
 				return true;
 			}
 		}
@@ -2975,26 +2244,12 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)17;
-				byte[] local_2 = new byte[10];
-				byte[] local_3 = new byte[4]
-        {
-          (byte) 0,
-          (byte) 2,
-          pinId,
-          state
-        };
-				usbDevice.TxRxCommand(local_0, local_3, ref local_2);
-				SX1276LR.HidCommandsStatus local_1_1 = (SX1276LR.HidCommandsStatus)local_2[0];
-				int temp_31 = (int)local_2[1];
-				int temp_34 = (int)local_2[2];
-				int temp_37 = (int)local_2[3];
-				int temp_40 = (int)local_2[4];
-				int temp_43 = (int)local_2[5];
-				int temp_46 = (int)local_2[6];
-				int temp_49 = (int)local_2[7];
-				int temp_52 = (int)local_2[8];
-				return local_1_1 == SX1276LR.HidCommandsStatus.SX_OK;
+				byte command = (byte)HidCommands.HID_SK_SET_PIN;
+				byte[] inData = new byte[10];
+				byte[] outData = new byte[4] { 0, 2, pinId, state };
+				usbDevice.TxRxCommand(command, outData, ref inData);
+				SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
+				return status == SX1276LR.HidCommandsStatus.SX_OK;
 			}
 		}
 
@@ -3002,27 +2257,14 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)18;
-				byte[] local_2 = new byte[11];
-				byte[] local_3 = new byte[3]
-        {
-          (byte) 0,
-          (byte) 1,
-          pinId
-        };
-				usbDevice.TxRxCommand(local_0, local_3, ref local_2);
-				SX1276LR.HidCommandsStatus local_1_1 = (SX1276LR.HidCommandsStatus)local_2[0];
-				int temp_28 = (int)local_2[1];
-				int temp_31 = (int)local_2[2];
-				int temp_34 = (int)local_2[3];
-				int temp_37 = (int)local_2[4];
-				int temp_40 = (int)local_2[5];
-				int temp_43 = (int)local_2[6];
-				int temp_46 = (int)local_2[7];
-				int temp_49 = (int)local_2[8];
-				if (local_1_1 != SX1276LR.HidCommandsStatus.SX_OK || (int)local_2[9] != 1)
+				byte command = (byte)HidCommands.HID_SK_GET_DIR;
+				byte[] inData = new byte[11];
+				byte[] outData = new byte[3] { 0, 1, pinId };
+				usbDevice.TxRxCommand(command, outData, ref inData);
+				SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
+				if (status != SX1276LR.HidCommandsStatus.SX_OK || inData[9] != 1)
 					return false;
-				dir = local_2[10];
+				dir = inData[10];
 				return true;
 			}
 		}
@@ -3031,26 +2273,12 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)19;
-				byte[] local_2 = new byte[10];
-				byte[] local_3 = new byte[4]
-        {
-          (byte) 0,
-          (byte) 2,
-          pinId,
-          dir
-        };
-				usbDevice.TxRxCommand(local_0, local_3, ref local_2);
-				SX1276LR.HidCommandsStatus local_1_1 = (SX1276LR.HidCommandsStatus)local_2[0];
-				int temp_31 = (int)local_2[1];
-				int temp_34 = (int)local_2[2];
-				int temp_37 = (int)local_2[3];
-				int temp_40 = (int)local_2[4];
-				int temp_43 = (int)local_2[5];
-				int temp_46 = (int)local_2[6];
-				int temp_49 = (int)local_2[7];
-				int temp_52 = (int)local_2[8];
-				return local_1_1 == SX1276LR.HidCommandsStatus.SX_OK;
+				byte local_0 = (byte)HidCommands.HID_SK_SET_DIR;
+				byte[] inData = new byte[10];
+				byte[] outData = new byte[4] { 0, 2, pinId, dir };
+				usbDevice.TxRxCommand(local_0, outData, ref inData);
+				SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
+				return status == SX1276LR.HidCommandsStatus.SX_OK;
 			}
 		}
 
@@ -3058,22 +2286,14 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)20;
-				byte[] local_2 = new byte[11];
-				byte[] local_3 = new byte[2];
-				usbDevice.TxRxCommand(local_0, local_3, ref local_2);
-				SX1276LR.HidCommandsStatus local_1_1 = (SX1276LR.HidCommandsStatus)local_2[0];
-				int temp_22 = (int)local_2[1];
-				int temp_25 = (int)local_2[2];
-				int temp_28 = (int)local_2[3];
-				int temp_31 = (int)local_2[4];
-				int temp_34 = (int)local_2[5];
-				int temp_37 = (int)local_2[6];
-				int temp_40 = (int)local_2[7];
-				int temp_43 = (int)local_2[8];
-				if (local_1_1 != SX1276LR.HidCommandsStatus.SX_OK || (int)local_2[9] != 1)
+				byte command = (byte)HidCommands.HID_SK_GET_PINS;
+				byte[] inData = new byte[11];
+				byte[] outData = new byte[2];
+				usbDevice.TxRxCommand(command, outData, ref inData);
+				SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
+				if (status != SX1276LR.HidCommandsStatus.SX_OK || inData[9] != 1)
 					return false;
-				pinsState = local_2[10];
+				pinsState = inData[10];
 				return true;
 			}
 		}
@@ -3082,43 +2302,28 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)112;
-				byte[] local_2 = new byte[42];
-				byte[] local_3 = new byte[5]
-        {
-          (byte) 0,
-          (byte) 3,
-          (byte) 32,
-          id,
-          address
-        };
-				int local_4 = (int)address;
-				while (local_4 < data.Length)
+				byte command = (byte)HidCommands.HID_EEPROM_READ;
+				byte[] inData = new byte[42];
+				byte[] outData = new byte[5] { 0, 3, 32, id, address };
+				int index = (int)address;
+				while (index < data.Length)
 				{
-					local_3[4] = (byte)local_4;
-					usbDevice.TxRxCommand(local_0, local_3, ref local_2);
-					SX1276LR.HidCommandsStatus local_1_1 = (SX1276LR.HidCommandsStatus)local_2[0];
-					int temp_44 = (int)local_2[1];
-					int temp_47 = (int)local_2[2];
-					int temp_50 = (int)local_2[3];
-					int temp_53 = (int)local_2[4];
-					int temp_56 = (int)local_2[5];
-					int temp_59 = (int)local_2[6];
-					int temp_62 = (int)local_2[7];
-					int temp_65 = (int)local_2[8];
-					if (local_1_1 == SX1276LR.HidCommandsStatus.SX_OK)
+					outData[4] = (byte)index;
+					usbDevice.TxRxCommand(command, outData, ref inData);
+					SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
+					if (status == SX1276LR.HidCommandsStatus.SX_OK)
 					{
-						if (32 == (int)local_2[9])
+						if (32 == inData[9])
 						{
-							Array.Copy((Array)local_2, 10, (Array)data, local_4, 32);
+							Array.Copy(inData, 10, data, index, 32);
 						}
 						else
 						{
-							data = (byte[])null;
+							data = null;
 							return false;
 						}
 					}
-					local_4 += 32;
+					index += 32;
 				}
 				return true;
 			}
@@ -3128,31 +2333,23 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			lock (syncThread)
 			{
-				byte local_0 = (byte)113;
-				byte[] local_2 = new byte[10];
-				byte[] local_3 = new byte[37];
-				local_3[0] = (byte)0;
-				local_3[1] = (byte)35;
-				local_3[2] = (byte)32;
-				local_3[3] = id;
-				int local_4 = (int)address;
-				while (local_4 < data.Length)
+				byte command = (byte)HidCommands.HID_EEPROM_WRITE;
+				byte[] inData = new byte[10];
+				byte[] outData = new byte[37];
+				outData[0] = 0;
+				outData[1] = 35;
+				outData[2] = 32;
+				outData[3] = id;
+				int index = (int)address;
+				while (index < data.Length)
 				{
-					local_3[4] = (byte)local_4;
-					Array.Copy((Array)data, local_4, (Array)local_3, 5, 32);
-					usbDevice.TxRxCommand(local_0, local_3, ref local_2);
-					SX1276LR.HidCommandsStatus local_1_1 = (SX1276LR.HidCommandsStatus)local_2[0];
-					int temp_47 = (int)local_2[1];
-					int temp_50 = (int)local_2[2];
-					int temp_53 = (int)local_2[3];
-					int temp_56 = (int)local_2[4];
-					int temp_59 = (int)local_2[5];
-					int temp_62 = (int)local_2[6];
-					int temp_65 = (int)local_2[7];
-					int temp_68 = (int)local_2[8];
-					if (local_1_1 != SX1276LR.HidCommandsStatus.SX_OK)
+					outData[4] = (byte)index;
+					Array.Copy(data, index, outData, 5, 32);
+					usbDevice.TxRxCommand(command, outData, ref inData);
+					SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
+					if (status != SX1276LR.HidCommandsStatus.SX_OK)
 						return false;
-					local_4 += 32;
+					index += 32;
 				}
 				return true;
 			}
@@ -3162,28 +2359,14 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			lock (syncThread)
 			{
-				byte command = 0x80;
+				byte command = (byte)HidCommands.HID_DEVICE_READ;
 				byte[] inData = new byte[10 + data.Length];
-				byte[] outData = new byte[4]
-				{
-					0,
-					(byte) (data.Length + 2),
-					(byte) data.Length,
-					address
-				};
+				byte[] outData = new byte[4] { 0, (byte)(data.Length + 2), (byte)data.Length, address };
 				usbDevice.TxRxCommand(command, outData, ref inData);
 				SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
-				int temp_46 = (int)inData[1];
-				int temp_49 = (int)inData[2];
-				int temp_52 = (int)inData[3];
-				int temp_55 = (int)inData[4];
-				int temp_58 = (int)inData[5];
-				int temp_61 = (int)inData[6];
-				int temp_64 = (int)inData[7];
-				int temp_67 = (int)inData[8];
 				if (status != SX1276LR.HidCommandsStatus.SX_OK || inData[9] != data.Length)
 					return false;
-				Array.Copy((Array)inData, 10, (Array)data, 0, data.Length);
+				Array.Copy(inData, 10, data, 0, data.Length);
 				return true;
 			}
 		}
@@ -3192,34 +2375,23 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			lock (syncThread)
 			{
-				byte command = (byte)129;
+				byte command = (byte)HidCommands.HID_DEVICE_WRITE;
 				byte[] inData = new byte[10];
 				byte[] outData = new byte[data.Length + 4];
 				outData[0] = 0;
 				outData[1] = (byte)(data.Length + 2);
 				outData[2] = (byte)data.Length;
 				outData[3] = address;
-				Array.Copy((Array)data, 0, (Array)outData, 4, data.Length);
+				Array.Copy(data, 0, outData, 4, data.Length);
 				usbDevice.TxRxCommand(command, outData, ref inData);
 				SX1276LR.HidCommandsStatus status = (SX1276LR.HidCommandsStatus)inData[0];
-				int temp_54 = (int)inData[1];
-				int temp_57 = (int)inData[2];
-				int temp_60 = (int)inData[3];
-				int temp_63 = (int)inData[4];
-				int temp_66 = (int)inData[5];
-				int temp_69 = (int)inData[6];
-				int temp_72 = (int)inData[7];
-				int temp_75 = (int)inData[8];
 				return status == SX1276LR.HidCommandsStatus.SX_OK;
 			}
 		}
 
 		public bool Write(byte address, byte data)
 		{
-			return SKDeviceWrite(address, new byte[1]
-			{
-				data
-			});
+			return SKDeviceWrite(address, new byte[1] { data });
 		}
 
 		public bool Write(byte address, byte[] data)
@@ -3386,26 +2558,25 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				try
 				{
-					bool local_0 = SpectrumOn;
+					bool spectrumOn = SpectrumOn;
 					if (SpectrumOn)
 						SpectrumOn = false;
 					PacketHandlerStop();
 					if (!SKReset())
 						throw new Exception("Unable to reset the SK");
 					ReadRegisters();
-					Decimal local_1 = FrequencyRf;
+					Decimal freq = FrequencyRf;
 					SetFrequencyRf(new Decimal(915000000));
 					ImageCalStart();
-					SetFrequencyRf(local_1);
+					SetFrequencyRf(freq);
 					ImageCalStart();
 					SetLoraOn(true);
 					SetDefaultValues();
 					ReadRegisters();
 					RfPaSwitchEnabled = 0;
 					RfPaSwitchSel = RfPaSwitchSelEnum.RF_IO_RFIO;
-					if (!local_0)
-						return;
-					SpectrumOn = true;
+					if (spectrumOn)
+						SpectrumOn = true;
 				}
 				catch (Exception exception_0)
 				{
@@ -3443,10 +2614,10 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				try
 				{
-					foreach (Register item_0 in registers)
+					foreach (Register register in registers)
 					{
-						if ((int)item_0.Address != 0 && !Write((byte)item_0.Address, (byte)item_0.Value))
-							throw new Exception("Writing register " + item_0.Name);
+						if (register.Address != 0 && !Write((byte)register.Address, (byte)register.Value))
+							throw new Exception("Writing register " + register.Name);
 					}
 				}
 				catch (Exception exception_0)
@@ -3458,7 +2629,7 @@ namespace SemtechLib.Devices.SX1276LR
 
 		public bool ReadRegister(Register r)
 		{
-			byte data = (byte)0;
+			byte data = 0;
 			return ReadRegister(r, ref data);
 		}
 
@@ -3473,7 +2644,7 @@ namespace SemtechLib.Devices.SX1276LR
 					{
 						if (!Read((byte)r.Address, ref data))
 							throw new Exception("Unable to read register: " + r.Name);
-						r.Value = (uint)data;
+						r.Value = data;
 					}
 					else
 						UpdateRegisterValue(r);
@@ -3498,10 +2669,10 @@ namespace SemtechLib.Devices.SX1276LR
 				try
 				{
 					++readLock;
-					foreach (Register item_0 in registers)
+					foreach (Register register in registers)
 					{
-						if ((int)item_0.Address != 0 && ((int)item_0.Address != 1 || !isPacketHandlerStarted))
-							ReadRegister(item_0);
+						if (register.Address != 0 && (register.Address != 1 || !isPacketHandlerStarted))
+							ReadRegister(register);
 					}
 				}
 				catch (Exception exception_0)
@@ -3522,10 +2693,10 @@ namespace SemtechLib.Devices.SX1276LR
 				try
 				{
 					++readLock;
-					foreach (Register item_0 in regs)
+					foreach (Register register in regs)
 					{
-						if ((int)item_0.Address != 0 && ((int)item_0.Address != 1 || !isPacketHandlerStarted))
-							ReadRegister(item_0);
+						if (register.Address != 0 && (register.Address != 1 || !isPacketHandlerStarted))
+							ReadRegister(register);
 					}
 				}
 				catch (Exception exception_0)
@@ -3549,8 +2720,8 @@ namespace SemtechLib.Devices.SX1276LR
 				if (length > 32)
 				{
 					Array.Resize<byte>(ref array, 32);
-					Array.Copy((Array)data, sourceIndex, (Array)array, 0, 32);
-					if (!Write((byte)0, array))
+					Array.Copy(data, sourceIndex, array, 0, 32);
+					if (!Write(0, array))
 						return false;
 					length -= 32;
 					sourceIndex += 32;
@@ -3558,8 +2729,8 @@ namespace SemtechLib.Devices.SX1276LR
 				else
 				{
 					Array.Resize<byte>(ref array, length);
-					Array.Copy((Array)data, sourceIndex, (Array)array, 0, length);
-					if (!Write((byte)0, array))
+					Array.Copy(data, sourceIndex, array, 0, length);
+					if (!Write(0, array))
 						return false;
 					length -= length;
 					sourceIndex += length;
@@ -3578,18 +2749,18 @@ namespace SemtechLib.Devices.SX1276LR
 				if (length > 32)
 				{
 					Array.Resize<byte>(ref numArray, 32);
-					if (!Read((byte)0, ref numArray))
+					if (!Read(0, ref numArray))
 						return false;
-					Array.Copy((Array)numArray, 0, (Array)data, destinationIndex, 32);
+					Array.Copy(numArray, 0, data, destinationIndex, 32);
 					length -= 32;
 					destinationIndex += 32;
 				}
 				else
 				{
 					Array.Resize<byte>(ref numArray, length);
-					if (!Read((byte)0, ref numArray))
+					if (!Read(0, ref numArray))
 						return false;
-					Array.Copy((Array)numArray, 0, (Array)data, destinationIndex, length);
+					Array.Copy(numArray, 0, data, destinationIndex, length);
 					length -= length;
 					destinationIndex += length;
 				}
@@ -3604,7 +2775,7 @@ namespace SemtechLib.Devices.SX1276LR
 				ReadRegister(registers["RegIrqFlags"]);
 				if (RxTimeout && PacketModeRxSingle && isPacketHandlerStarted)
 				{
-					Console.WriteLine("IRQ: RxTimeoutIrq [0x{0}] - ReadIrqFlags", (object)registers["RegIrqFlags"].Value.ToString("X02"));
+					Console.WriteLine("IRQ: RxTimeoutIrq [0x{0}] - ReadIrqFlags", registers["RegIrqFlags"].Value.ToString("X02"));
 					ClrRxTimeoutIrq();
 					PacketModeRxSingle = false;
 					PacketHandlerStop();
@@ -3612,7 +2783,7 @@ namespace SemtechLib.Devices.SX1276LR
 				int temp_13 = ValidHeader ? 1 : 0;
 				if (!FhssChangeChannel)
 					return;
-				Console.WriteLine("IRQ: FhssChangeChannelIrq [0x{0}] - ReadIrqFlags", (object)registers["RegIrqFlags"].Value.ToString("X02"));
+				Console.WriteLine("IRQ: FhssChangeChannelIrq [0x{0}] - ReadIrqFlags", registers["RegIrqFlags"].Value.ToString("X02"));
 				ClrFhssChangeChannelIrq();
 				ReadRegister(registers["RegHopChannel"]);
 			}
@@ -3626,19 +2797,19 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				case OperatingModeEnum.Tx:
 				case OperatingModeEnum.TxContinuous:
-					SKSetPinState((byte)7, (byte)1);
-					SKSetPinState((byte)8, (byte)0);
+					SKSetPinState(7, 1);
+					SKSetPinState(8, 0);
 					break;
 				case OperatingModeEnum.Rx:
 				case OperatingModeEnum.RxSingle:
 				case OperatingModeEnum.Cad:
-					SKSetPinState((byte)7, (byte)0);
-					SKSetPinState((byte)8, (byte)1);
+					SKSetPinState(7, 0);
+					SKSetPinState(8, 1);
 					break;
 				default:
-					SKSetPinState((byte)6, (byte)1);
-					SKSetPinState((byte)7, (byte)1);
-					SKSetPinState((byte)8, (byte)1);
+					SKSetPinState(6, 1);
+					SKSetPinState(7, 1);
+					SKSetPinState(8, 1);
 					break;
 			}
 		}
@@ -3647,20 +2818,16 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			if (IsOpen)
 			{
-				if (!Write((byte)registers["RegModemConfig2"].Address, new byte[2]
-        {
-          (byte) 115,
-          byte.MaxValue
-        }))
+				if (!Write((byte)registers["RegModemConfig2"].Address, new byte[2] { 115, 255 }))
 					throw new Exception("Unable to write register: " + registers["RegModemConfig2"].Name);
-				if (!Write((byte)registers["RegModemConfig3"].Address, (byte)4))
+				if (!Write((byte)registers["RegModemConfig3"].Address, 4))
 					throw new Exception("Unable to write register: " + registers["RegModemConfig3"].Name);
 			}
 			else
 			{
-				registers["RegModemConfig2"].Value = 115U;
-				registers["RegSymbTimeoutLsb"].Value = (uint)byte.MaxValue;
-				registers["RegModemConfig3"].Value = 4U;
+				registers["RegModemConfig2"].Value = 115;
+				registers["RegSymbTimeoutLsb"].Value = 255;
+				registers["RegModemConfig3"].Value = 4;
 				ReadRegisters();
 			}
 		}
@@ -3670,20 +2837,20 @@ namespace SemtechLib.Devices.SX1276LR
 			if (enable)
 			{
 				SetOperatingMode(OperatingModeEnum.Sleep);
-				byte data = (byte)0;
-				if (!Read((byte)1, ref data))
+				byte data = 0;
+				if (!Read(1, ref data))
 					throw new Exception("Unable to read LoRa mode");
-				if (!Write((byte)1, (byte)(((int)data | 128) & 248)))
+				if (!Write(1, (byte)((data | 128) & 248)))
 					throw new Exception("Unable to write LoRa mode");
 				SetOperatingMode(OperatingModeEnum.Stdby);
 			}
 			else
 			{
 				SetOperatingMode(OperatingModeEnum.Sleep);
-				byte data = (byte)0;
-				if (!Read((byte)1, ref data))
+				byte data = 0;
+				if (!Read(1, ref data))
 					throw new Exception("Unable to read FSK mode");
-				if (!Write((byte)1, (byte)((uint)data & 120U)))
+				if (!Write(1, (byte)((uint)data & 120U)))
 					throw new Exception("Unable to write FSK mode");
 				SetOperatingMode(OperatingModeEnum.Stdby);
 			}
@@ -3696,20 +2863,21 @@ namespace SemtechLib.Devices.SX1276LR
 				OperatingModeEnum local_0 = Mode;
 				try
 				{
-					byte local_1 = (byte)0;
+					byte reg59 = 0;
 					SetOperatingMode(OperatingModeEnum.Stdby);
-					Read((byte)59, ref local_1);
-					Write((byte)59, (byte)((uint)local_1 | 64U));
-					DateTime local_2 = DateTime.Now;
-					bool local_4_1;
+					Read(59, ref reg59);
+					Write(59, (byte)(reg59 | 64));
+					DateTime startTime = DateTime.Now;
+					bool timeout;
 					do
 					{
-						local_1 = (byte)0;
-						Read((byte)59, ref local_1);
-						local_4_1 = (DateTime.Now - local_2).TotalMilliseconds >= 1000.0;
+						reg59 = 0;
+						Read(59, ref reg59);
+						timeout = (DateTime.Now - startTime).TotalMilliseconds >= 1000.0;
 					}
-					while ((int)(byte)((uint)local_1 & 32U) == 32 && !local_4_1);
-					if (local_4_1)
+					while ((reg59 & 32) == 32 && !timeout)
+						;
+					if (timeout)
 						throw new Exception("Image calibration timeout.");
 				}
 				finally
@@ -3719,11 +2887,16 @@ namespace SemtechLib.Devices.SX1276LR
 			}
 		}
 
+		private void SetRegister(string name, int mask, int value)
+		{
+			registers[name].Value = (registers[name].Value & (uint)mask) | (uint)value;
+		}
+
 		public void SetAccessSharedFskReg(bool value)
 		{
 			try
 			{
-				registers["RegOpMode"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegOpMode"].Value & 191U) | (value ? 64 : 0));
+				SetRegister("RegOpMode", 191, value ? 64 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -3737,7 +2910,7 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				lock (syncThread)
 				{
-					registers["RegOpMode"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegOpMode"].Value & 247U) | (value ? 8 : 0));
+					SetRegister("RegOpMode", 247, value ? 8 : 0);
 					UpdateRegisterTable();
 				}
 			}
@@ -3758,13 +2931,13 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				if (value == OperatingModeEnum.Tx || value == OperatingModeEnum.TxContinuous)
 				{
-					SKSetPinState((byte)11, (byte)0);
-					SKSetPinState((byte)12, (byte)1);
+					SKSetPinState(11, 0);
+					SKSetPinState(12, 1);
 				}
 				else
 				{
-					SKSetPinState((byte)11, (byte)1);
-					SKSetPinState((byte)12, (byte)0);
+					SKSetPinState(11, 1);
+					SKSetPinState(12, 0);
 				}
 				if (value == OperatingModeEnum.TxContinuous)
 				{
@@ -3773,10 +2946,11 @@ namespace SemtechLib.Devices.SX1276LR
 				}
 				else
 					SetTxContinuousOn(false);
-				byte data = (byte)((uint)(byte)((uint)(byte)registers["RegOpMode"].Value & 248U) | (uint)(byte)value);
+
+				byte data = (byte)((registers["RegOpMode"].Value & 248U) | (uint)value);
 				if (!isQuiet)
 				{
-					registers["RegOpMode"].Value = (uint)data;
+					registers["RegOpMode"].Value = data;
 				}
 				else
 				{
@@ -3784,16 +2958,13 @@ namespace SemtechLib.Devices.SX1276LR
 					{
 						if (!Write((byte)registers["RegOpMode"].Address, data))
 							throw new Exception("Unable to write register " + registers["RegOpMode"].Name);
-						if (Mode != OperatingModeEnum.Rx && Mode != OperatingModeEnum.RxSingle)
+						if (Mode == OperatingModeEnum.Rx || Mode == OperatingModeEnum.RxSingle || Mode == OperatingModeEnum.Cad)
 						{
-							if (Mode != OperatingModeEnum.Cad)
-								goto label_17;
+							ReadRegister(registers["RegLna"]);
 						}
-						ReadRegister(registers["RegLna"]);
 					}
 				}
-			label_17:
-				Console.WriteLine("RegOpMode (SOM): 0x{0}", (object)data.ToString("X02"));
+				Console.WriteLine("RegOpMode (SOM): 0x{0}", data.ToString("X02"));
 			}
 			catch (Exception ex)
 			{
@@ -3806,7 +2977,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-					registers["RegFdevMsb"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegFdevMsb"].Value & 63U) | (uint)(byte)((uint)value << 6));
+					SetRegister("RegFdevMsb", 63, (int)value << 6);
 			}
 			catch (Exception ex)
 			{
@@ -3820,17 +2991,17 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				lock (syncThread)
 				{
-					byte local_0 = (byte)registers["RegFrfMsb"].Value;
-					byte local_1 = (byte)registers["RegFrfMid"].Value;
-					byte local_2 = (byte)registers["RegFrfLsb"].Value;
-					byte local_0_1 = (byte)((long)(value / frequencyStep) >> 16);
-					byte local_1_1 = (byte)((long)(value / frequencyStep) >> 8);
-					byte local_2_1 = (byte)(long)(value / frequencyStep);
+					// byte frfMsb = (byte)registers["RegFrfMsb"].Value;
+					// byte frfMid = (byte)registers["RegFrfMid"].Value;
+					// byte frfLsb = (byte)registers["RegFrfLsb"].Value;
+					byte frfMsb = (byte)((long)(value / frequencyStep) >> 16);
+					byte frfMid = (byte)((long)(value / frequencyStep) >> 8);
+					byte frfLsb = (byte)((long)(value / frequencyStep) >> 0);
 					frequencyRfCheckDisable = true;
-					registers["RegFrfMsb"].Value = (uint)local_0_1;
-					registers["RegFrfMid"].Value = (uint)local_1_1;
+					registers["RegFrfMsb"].Value = frfMsb;
+					registers["RegFrfMid"].Value = frfMid;
 					frequencyRfCheckDisable = false;
-					registers["RegFrfLsb"].Value = (uint)local_2_1;
+					registers["RegFrfLsb"].Value = frfLsb;
 					if (FrequencyRf >= new Decimal(640000000))
 					{
 						SetLowFrequencyModeOn(false);
@@ -3855,18 +3026,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					byte num = (byte)this.registers["RegPaConfig"].Value;
-					num = (byte)(num & 0x7F);
-
-					switch (value)
-					{
-						case PaSelectEnum.PA_BOOST:
-							num |= 0x80;
-							break;
-					}
-					registers["RegPaConfig"].Value = num;
-				}
+					SetRegister("RegPaConfig", 0x7F, (value == PaSelectEnum.PA_BOOST) ? 0x80 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -3879,13 +3039,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegPaConfig"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegPaConfig"].Value & 143U) | (uint)(byte)(((int)((value - new Decimal(108, 0, 0, false, (byte)1)) / new Decimal(6, 0, 0, false, (byte)1)) & 7) << 4));
-					byte num = (byte)registers["RegPaConfig"].Value;
-					num &= 0x8F;
-					num = (byte)(num | ((byte)((((int)((value - 10.8M) / 0.6M)) & 7) << 4)));
-					registers["RegPaConfig"].Value = num;
-				}
+					SetRegister("RegPaConfig", 0x8F, ((((int)((value - 10.8M) / 0.6M)) & 7) << 4));
 			}
 			catch (Exception ex)
 			{
@@ -3899,15 +3053,15 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				lock (syncThread)
 				{
-					byte local_0_1 = (byte)((uint)(byte)registers["RegPaConfig"].Value & 240U);
+					byte local_0_1 = (byte)(registers["RegPaConfig"].Value & 240U);
 					byte local_0_2;
 					if (PaSelect == PaSelectEnum.RFO)
 					{
-						if (value < MaxOutputPower - new Decimal(150, 0, 0, false, (byte)1))
-							value = MaxOutputPower - new Decimal(150, 0, 0, false, (byte)1);
+						if (value < MaxOutputPower - new Decimal(150, 0, 0, false, 1))
+							value = MaxOutputPower - new Decimal(150, 0, 0, false, 1);
 						if (value > MaxOutputPower)
 							value = MaxOutputPower;
-						local_0_2 = (byte)((uint)local_0_1 | (uint)(byte)((int)(value - MaxOutputPower + new Decimal(150, 0, 0, false, (byte)1)) & 15));
+						local_0_2 = (byte)((uint)local_0_1 | (uint)((int)(value - MaxOutputPower + new Decimal(150, 0, 0, false, 1)) & 15U));
 					}
 					else if (!Pa20dBm)
 					{
@@ -3915,7 +3069,7 @@ namespace SemtechLib.Devices.SX1276LR
 							value = new Decimal(2);
 						if (value > new Decimal(17))
 							value = new Decimal(17);
-						local_0_2 = (byte)((uint)local_0_1 | (uint)(byte)((int)(value - new Decimal(170, 0, 0, false, (byte)1) + new Decimal(150, 0, 0, false, (byte)1)) & 15));
+						local_0_2 = (byte)((uint)local_0_1 | (uint)((int)(value - new Decimal(170, 0, 0, false, 1) + new Decimal(150, 0, 0, false, 1)) & 15));
 					}
 					else
 					{
@@ -3923,7 +3077,7 @@ namespace SemtechLib.Devices.SX1276LR
 							value = new Decimal(5);
 						if (value > new Decimal(20))
 							value = new Decimal(20);
-						local_0_2 = (byte)((uint)local_0_1 | (uint)(byte)((int)(value - new Decimal(200, 0, 0, false, (byte)1) + new Decimal(150, 0, 0, false, (byte)1)) & 15));
+						local_0_2 = (byte)((uint)local_0_1 | (uint)((int)(value - new Decimal(200, 0, 0, false, 1) + new Decimal(150, 0, 0, false, 1)) & 15));
 					}
 					registers["RegPaConfig"].Value = (uint)local_0_2;
 				}
@@ -3939,13 +3093,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegPaRamp"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegPaRamp"].Value & 239U) | (value ? 16 : 0));
-					byte num = (byte)registers["RegPaRamp"].Value;
-					num = (byte)(num & 0xEF);
-					num = (byte)(num | (value ? 0x10 : 0));
-					registers["RegPaRamp"].Value = num;
-				}
+					SetRegister("RegPaRamp", 0xEF, value ? 0x10 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -3958,12 +3106,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegPaRamp"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegPaRamp"].Value & 240U) | (uint)(byte)((uint)(byte)value & 15U));
-					byte num = (byte)registers["RegPaRamp"].Value;
-					num = (byte)((num & 0xF0) | ((byte)value & 0x0F));
-					registers["RegPaRamp"].Value = num;
-				}
+					SetRegister("RegPaRamp", 0xF0, (int)value & 0x0F);
 			}
 			catch (Exception ex)
 			{
@@ -3976,12 +3119,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegOcp"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegOcp"].Value & 223U) | (value ? 32 : 0));
-					byte num = (byte)registers["RegOcp"].Value;
-					num = (byte)((num & 0xDF) | (value ? 0x20 : 0));
-					registers["RegOcp"].Value = num;
-				}
+					SetRegister("RegOcp", 0xDF, value ? 0x20 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -3995,21 +3133,13 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				lock (syncThread)
 				{
-					// byte local_0_1 = (byte)((uint)(byte)registers["RegOcp"].Value & 0xE0);
-					// registers["RegOcp"].Value = !(value <= new Decimal(1200, 0, 0, false, (byte)1)) ? (!(value > new Decimal(120)) || !(value <= new Decimal(2400, 0, 0, false, (byte)1)) ? (uint)(byte)((uint)local_0_1 | 27U) : (uint)(byte)((uint)local_0_1 | (uint)(byte)((uint)(byte)((value + new Decimal(30)) / new Decimal(10)) & 31U))) : (uint)(byte)((uint)local_0_1 | (uint)(byte)((uint)(byte)((value - new Decimal(45)) / new Decimal(5)) & 15U));
 					byte num = (byte)(registers["RegOcp"].Value & 0xE0);
 					if (value <= 120.0M)
-					{
 						num = (byte)(num | ((byte)((value - 45M) / 5M) & 0x0F));
-					}
 					else if (value > 120M && value <= 240.0M)
-					{
 						num = (byte)(num | ((byte)((value + 30M) / 10M) & 0x1F));
-					}
 					else
-					{
 						num = (byte)(num | 0x1B);
-					}
 					registers["RegOcp"].Value = num;
 				}
 			}
@@ -4024,12 +3154,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegAgcRef"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegAgcRef"].Value & 192U) | (uint)(byte)(value & 63));
-					byte num = (byte)registers["RegAgcRef"].Value;
-					num = (byte)((num & 0xC0) | ((byte)(value & 0x3F)));
-					registers["RegAgcRef"].Value = num;
-				}
+					SetRegister("RegAgcRef", 0xC0, value & 0x3F);
 			}
 			catch (Exception ex)
 			{
@@ -4096,14 +3221,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegLna"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegLna"].Value & 31U) | (uint)(byte)((uint)(byte)value << 5));
-					byte num = (byte)registers["RegLna"].Value;
-					num = (byte)((num & 0x1F) | ((byte)value << 5));
-					registers["RegLna"].Value = num;
-
-					ReadRegister(registers["RegLna"]);
-				}
+					SetRegister("RegLna", 0x1F, (int)value << 5);
 			}
 			catch (Exception ex)
 			{
@@ -4116,12 +3234,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegLna"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegLna"].Value & 251U) | (value ? 4 : 0));
-					byte num = (byte)registers["RegLna"].Value;
-					num = (byte)((num & 0xFB) | (value ? 4 : 0));
-					registers["RegLna"].Value = num;
-				}
+					SetRegister("RegLna", 0xFB, value ? 4 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4134,12 +3247,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegLna"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegLna"].Value & 252U) | (value ? 3 : 0));
-					byte num = (byte)registers["RegLna"].Value;
-					num = (byte)((num & 0xFC) | (value ? 3 : 0));
-					registers["RegLna"].Value = num;
-				}
+					SetRegister("RegLna", 0xFC, value ? 3 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4191,12 +3299,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlagsMask"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegIrqFlagsMask"].Value & (uint)sbyte.MaxValue) | (value ? 128 : 0));
-					byte num = (byte)registers["RegIrqFlagsMask"].Value;
-					num = (byte)((num & 0x7f) | (value ? 0x80 : 0));
-					registers["RegIrqFlagsMask"].Value = num;
-				}
+					SetRegister("RegIrqFlagsMask", 0x7F, value ? 0x80 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4209,12 +3312,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlagsMask"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegIrqFlagsMask"].Value & 191U) | (value ? 64 : 0));
-					byte num = (byte)registers["RegIrqFlagsMask"].Value;
-					num = (byte)((num & 0xBF) | (value ? 0x40 : 0));
-					registers["RegIrqFlagsMask"].Value = num;
-				}
+					SetRegister("RegIrqFlagsMask", 0xBF, value ? 0x40 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4227,12 +3325,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlagsMask"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegIrqFlagsMask"].Value & 223U) | (value ? 32 : 0));
-					byte num = (byte)registers["RegIrqFlagsMask"].Value;
-					num = (byte)((num & 0xDF) | (value ? 0x20 : 0));
-					registers["RegIrqFlagsMask"].Value = num;
-				}
+					SetRegister("RegIrqFlagsMask", 0xDF, value ? 0x20 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4245,12 +3338,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlagsMask"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegIrqFlagsMask"].Value & 239U) | (value ? 16 : 0));
-					byte num = (byte)registers["RegIrqFlagsMask"].Value;
-					num = (byte)((num & 0xef) | (value ? 0x10 : 0));
-					registers["RegIrqFlagsMask"].Value = num;
-				}
+					SetRegister("RegIrqFlagsMask", 0xEF, value ? 0x10 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4263,12 +3351,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlagsMask"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegIrqFlagsMask"].Value & 247U) | (value ? 8 : 0));
-					byte num = (byte)registers["RegIrqFlagsMask"].Value;
-					num = (byte)((num & 0xF7) | (value ? 8 : 0));
-					registers["RegIrqFlagsMask"].Value = num;
-				}
+					SetRegister("RegIrqFlagsMask", 0xF7, value ? 0x08 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4281,12 +3364,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlagsMask"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegIrqFlagsMask"].Value & 251U) | (value ? 4 : 0));
-					byte num = (byte)registers["RegIrqFlagsMask"].Value;
-					num = (byte)((num & 0xfb) | (value ? 4 : 0));
-					registers["RegIrqFlagsMask"].Value = num;
-				}
+					SetRegister("RegIrqFlagsMask", 0xFB, value ? 0x04 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4299,12 +3377,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlagsMask"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegIrqFlagsMask"].Value & 253U) | (value ? 2 : 0));
-					byte num = (byte)registers["RegIrqFlagsMask"].Value;
-					num = (byte)((num & 0xFD) | (value ? 2 : 0));
-					registers["RegIrqFlagsMask"].Value = num;
-				}
+					SetRegister("RegIrqFlagsMask", 0xFD, value ? 0x02 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4317,12 +3390,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlagsMask"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegIrqFlagsMask"].Value & 254U) | (value ? 1 : 0));
-					byte num = (byte)registers["RegIrqFlagsMask"].Value;
-					num = (byte)((num & 0xFE) | (value ? 1 : 0));
-					registers["RegIrqFlagsMask"].Value = num;
-				}
+					SetRegister("RegIrqFlagsMask", 0xFE, value ? 0x01 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4336,7 +3404,7 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				lock (syncThread)
 				{
-					WriteRegister(registers["RegIrqFlags"], byte.MaxValue);
+					WriteRegister(registers["RegIrqFlags"], 255);
 					ReadRegister(registers["RegIrqFlags"]);
 				}
 			}
@@ -4351,12 +3419,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlags"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegIrqFlags"].Value & (uint)sbyte.MaxValue) | 128U);
-					byte num = (byte)registers["RegIrqFlags"].Value;
-					num = (byte)((num & 0x7F) | 0x80);
-					registers["RegIrqFlags"].Value = num;
-				}
+					SetRegister("RegIrqFlags", 0x7F, 0x80);
 			}
 			catch (Exception ex)
 			{
@@ -4369,12 +3432,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlags"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegIrqFlags"].Value & 191U) | 64U);
-					byte num = (byte)registers["RegIrqFlags"].Value;
-					num = (byte)((num & 0xBF) | 0x40);
-					registers["RegIrqFlags"].Value = num;
-				}
+					SetRegister("RegIrqFlags", 0xBF, 0x40);
 			}
 			catch (Exception ex)
 			{
@@ -4387,12 +3445,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlags"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegIrqFlags"].Value & 223U) | 32U);
-					byte num = (byte)registers["RegIrqFlags"].Value;
-					num = (byte)((num & 0xDF) | 0x20);
-					registers["RegIrqFlags"].Value = num;
-				}
+					SetRegister("RegIrqFlags", 0xDF, 0x20);
 			}
 			catch (Exception ex)
 			{
@@ -4405,12 +3458,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlags"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegIrqFlags"].Value & 239U) | 16U);
-					byte num = (byte)registers["RegIrqFlags"].Value;
-					num = (byte)((num & 0xEF) | 0x10);
-					registers["RegIrqFlags"].Value = num;
-				}
+					SetRegister("RegIrqFlags", 0xEF, 0x10);
 			}
 			catch (Exception ex)
 			{
@@ -4423,12 +3471,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlags"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegIrqFlags"].Value & 247U) | 8U);
-					byte num = (byte)registers["RegIrqFlags"].Value;
-					num = (byte)((num & 0xF7) | 0x08);
-					registers["RegIrqFlags"].Value = num;
-				}
+					SetRegister("RegIrqFlags", 0xF7, 0x08);
 			}
 			catch (Exception ex)
 			{
@@ -4441,12 +3484,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlags"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegIrqFlags"].Value & 251U) | 4U);
-					byte num = (byte)registers["RegIrqFlags"].Value;
-					num = (byte)((num & 0xFB) | 4);
-					registers["RegIrqFlags"].Value = num;
-				}
+					SetRegister("RegIrqFlags", 0xFB, 0x04);
 			}
 			catch (Exception ex)
 			{
@@ -4459,12 +3497,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlags"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegIrqFlags"].Value & 253U) | 2U);
-					byte num = (byte)registers["RegIrqFlags"].Value;
-					num = (byte)((num & 0xFD) | 2);
-					registers["RegIrqFlags"].Value = num;
-				}
+					SetRegister("RegIrqFlags", 0xFD, 0x02);
 			}
 			catch (Exception ex)
 			{
@@ -4477,12 +3510,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegIrqFlags"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegIrqFlags"].Value & 254U) | 1U);
-					byte num = (byte)registers["RegIrqFlags"].Value;
-					num = (byte)((num & 0xFE) | 1);
-					registers["RegIrqFlags"].Value = num;
-				}
+					SetRegister("RegIrqFlags", 0xFE, 0x01);
 			}
 			catch (Exception ex)
 			{
@@ -4496,24 +3524,26 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				lock (syncThread)
 				{
-					if ((int)value < 7 || (int)value == 7 && ((int)SpreadingFactor == 11 || (int)SpreadingFactor == 12) || (int)value == 8 && (int)SpreadingFactor == 12)
+					if (value < 7 || value == 7 && (SpreadingFactor == 11 || SpreadingFactor == 12) || value == 8 && SpreadingFactor == 12)
 						SetLowDatarateOptimize(true);
 					else
 						SetLowDatarateOptimize(false);
-					registers["RegModemConfig1"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegModemConfig1"].Value & 15U) | (uint)(byte)((uint)value << 4));
-					if ((int)value == 9 && FrequencyRf >= new Decimal(640000000))
+
+					SetRegister("RegModemConfig1", 0x0F, (int)value << 4);
+
+					if (value == 9 && FrequencyRf >= 640000000M)
 					{
-						registers["RegTest36"].Value &= 254U;
-						registers["RegTest3A"].Value = (uint)((int)registers["RegTest3A"].Value & 192 | 36);
+						SetRegister("RegTest36", 254, 0);
+						SetRegister("RegTest3A", 192, 36);
 					}
-					else if ((int)value == 9)
+					else if (value == 9)
 					{
-						registers["RegTest36"].Value &= 254U;
-						registers["RegTest3A"].Value = (uint)((int)registers["RegTest3A"].Value & 192 | 63);
+						SetRegister("RegTest36", 254, 0);
+						SetRegister("RegTest3A", 192, 63);
 					}
 					else
 					{
-						registers["RegTest36"].Value |= 1U;
+						SetRegister("RegTest36", 255, 1);
 						ReadRegister(registers["RegTest3A"]);
 					}
 					ReadRegister(registers["RegModemConfig2"]);
@@ -4531,12 +3561,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegModemConfig1"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegModemConfig1"].Value & 241U) | (uint)(byte)((uint)value << 1));
-					byte num = (byte)registers["RegModemConfig1"].Value;
-					num = (byte)((num & 0xF1) | (value << 1));
-					registers["RegModemConfig1"].Value = num;
-				}
+					SetRegister("RegModemConfig1", 0xF1, (int)value << 1);
 			}
 			catch (Exception ex)
 			{
@@ -4549,12 +3574,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegModemConfig1"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegModemConfig1"].Value & 254U) | (value ? 1 : 0));
-					byte num = (byte)registers["RegModemConfig1"].Value;
-					num = (byte)((num & 0xFE) | (value ? 1 : 0));
-					registers["RegModemConfig1"].Value = num;
-				}
+					SetRegister("RegModemConfig1", 0xFE, value ? 1 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4568,12 +3588,12 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				lock (syncThread)
 				{
-					if ((int)Bandwidth < 7 || (int)Bandwidth == 7 && ((int)value == 11 || (int)value == 12) || (int)Bandwidth == 8 && (int)value == 12)
+					if (Bandwidth < 7 || Bandwidth == 7 && (value == 11 || value == 12) || Bandwidth == 8 && value == 12)
 						SetLowDatarateOptimize(true);
 					else
 						SetLowDatarateOptimize(false);
 
-					registers["RegModemConfig2"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegModemConfig2"].Value & 15U) | (uint)(byte)((uint)value << 4));
+					SetRegister("RegModemConfig2", 0x0F, (int)value << 4);
 					ReadRegister(registers["RegSymbTimeoutLsb"]);
 				}
 			}
@@ -4587,7 +3607,7 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			try
 			{
-				registers["RegModemConfig2"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegModemConfig2"].Value & 247U) | (value ? 8 : 0));
+				SetRegister("RegModemConfig2", 247, value ? 8 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4600,12 +3620,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegModemConfig2"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegModemConfig2"].Value & 251U) | (value ? 4 : 0));
-					byte num = (byte)registers["RegModemConfig2"].Value;
-					num = (byte)((num & 0xFB) | (value ? 4 : 0));
-					registers["RegModemConfig2"].Value = num;
-				}
+					SetRegister("RegModemConfig2", 0xFB, value ? 4 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4619,12 +3634,8 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				lock (syncThread)
 				{
-					byte local_0 = (byte)registers["RegModemConfig2"].Value;
-					byte local_1 = (byte)registers["RegSymbTimeoutLsb"].Value;
-					byte local_0_2 = (byte)((uint)(byte)((uint)local_0 & 252U) | (uint)(byte)((ulong)((long)(value / SymbolTime) >> 8) & 3UL));
-					byte local_1_1 = (byte)(long)(value / SymbolTime);
-					registers["RegModemConfig2"].Value = (uint)local_0_2;
-					registers["RegSymbTimeoutLsb"].Value = (uint)local_1_1;
+					SetRegister("RegModemConfig2", 252, (int)(((ulong)(value / SymbolTime) >> 8) & 3UL));
+					SetRegister("RegSymbTimeoutLsb", 0, (int)(value / SymbolTime));
 				}
 			}
 			catch (Exception ex)
@@ -4640,8 +3651,8 @@ namespace SemtechLib.Devices.SX1276LR
 				lock (syncThread)
 				{
 					value -= 4;
-					registers["RegPreambleMsb"].Value = (uint)(byte)(value >> 8);
-					registers["RegPreambleLsb"].Value = (uint)(byte)value;
+					registers["RegPreambleMsb"].Value = (uint)(value >> 8);
+					registers["RegPreambleLsb"].Value = (uint)value;
 				}
 			}
 			catch (Exception ex)
@@ -4694,12 +3705,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegModemConfig3"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegModemConfig3"].Value & 247U) | (value ? 8 : 0));
-					byte num = (byte)registers["RegModemConfig3"].Value;
-					num = (byte)((num & 0xF7) | (value ? 8 : 0));
-					registers["RegModemConfig3"].Value = num;
-				}
+					SetRegister("RegModemConfig3", 0xF7, value ? 8 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4712,12 +3718,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegModemConfig3"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegModemConfig3"].Value & 251U) | (value ? 4 : 0));
-					byte num = (byte)registers["RegModemConfig3"].Value;
-					num = (byte)((num & 0xFB) | (value ? 4 : 0));
-					registers["RegModemConfig3"].Value = num;
-				}
+					SetRegister("RegModemConfig3", 0xFB, value ? 4 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4731,48 +3732,48 @@ namespace SemtechLib.Devices.SX1276LR
 			{
 				lock (syncThread)
 				{
-					Register local_1;
+					Register register;
 					switch (id)
 					{
-						case (byte)0:
-						case (byte)1:
-						case (byte)2:
-						case (byte)3:
-							local_1 = registers["RegDioMapping1"];
+						case 0:
+						case 1:
+						case 2:
+						case 3:
+							register = registers["RegDioMapping1"];
 							break;
-						case (byte)4:
-						case (byte)5:
-							local_1 = registers["RegDioMapping2"];
+						case 4:
+						case 5:
+							register = registers["RegDioMapping2"];
 							break;
 						default:
 							throw new Exception("Invalid DIO ID!");
 					}
-					uint local_0 = (uint)(byte)local_1.Value;
+					uint local_0 = register.Value;
 					uint local_0_2;
 					switch (id)
 					{
-						case (byte)0:
+						case 0:
 							local_0_2 = local_0 & 63U | (uint)value << 6;
 							break;
-						case (byte)1:
+						case 1:
 							local_0_2 = local_0 & 207U | (uint)value << 4;
 							break;
-						case (byte)2:
+						case 2:
 							local_0_2 = local_0 & 243U | (uint)value << 2;
 							break;
-						case (byte)3:
+						case 3:
 							local_0_2 = (uint)((DioMappingEnum)(local_0 & 252U) | value & DioMappingEnum.DIO_MAP_11);
 							break;
-						case (byte)4:
+						case 4:
 							local_0_2 = local_0 & 63U | (uint)value << 6;
 							break;
-						case (byte)5:
+						case 5:
 							local_0_2 = local_0 & 207U | (uint)value << 4;
 							break;
 						default:
 							throw new Exception("Invalid DIO ID!");
 					}
-					local_1.Value = local_0_2;
+					register.Value = local_0_2;
 				}
 			}
 			catch (Exception ex)
@@ -4786,12 +3787,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegPllHop"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegPllHop"].Value & (uint)sbyte.MaxValue) | (value ? 128 : 0));
-					byte num = (byte)registers["RegPllHop"].Value;
-					num = (byte)((num & 0x7F) | (value ? 0x80 : 0));
-					registers["RegPllHop"].Value = num;
-				}
+					SetRegister("RegPllHop", 0x7F, value ? 0x80 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4804,7 +3800,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-					registers["RegTcxo"].Value = (uint)(byte)((int)(byte)((uint)(byte)registers["RegTcxo"].Value & 239U) | (value ? 16 : 0));
+					SetRegister("RegTcxo", 39, value ? 0x10 : 0);
 			}
 			catch (Exception ex)
 			{
@@ -4820,7 +3816,7 @@ namespace SemtechLib.Devices.SX1276LR
 				{
 					if (value == Pa20dBm)
 						return;
-					byte local_0 = (byte)registers["RegPaDac"].Value;
+
 					registers["RegPaDac"].Value = value ? 135U : 132U;
 					if (value)
 						SetPaMode(PaSelectEnum.PA_BOOST);
@@ -4839,14 +3835,7 @@ namespace SemtechLib.Devices.SX1276LR
 			try
 			{
 				lock (syncThread)
-				{
-					// registers["RegPll"].Value = (uint)(byte)((uint)(byte)((uint)(byte)registers["RegPll"].Value & 63U) | (uint)(byte)((uint)(byte)Decimal.op_Decrement(value / new Decimal(75000)) << 6));
-
-					byte num = (byte)this.registers["RegPll"].Value;
-					num = (byte)(num & 0x3f);
-					num = (byte)(num | ((byte)(((byte)Decimal.Subtract((value / 75000M), 1M) << 6))));
-					this.registers["RegPll"].Value = num;
-				}
+					SetRegister("RegPll", 0x3F, (int)((value / 75000M) - 1M) << 6);
 			}
 			catch (Exception ex)
 			{
@@ -4877,7 +3866,7 @@ namespace SemtechLib.Devices.SX1276LR
 					{
 						if ((int)PayloadLength == 0)
 						{
-							int temp_123 = (int)MessageBox.Show("Message must be at least one byte long", "SX1276SKA-PacketHandler", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+							MessageBox.Show("Message must be at least one byte long", "SX1276SKA-PacketHandler", MessageBoxButtons.OK, MessageBoxIcon.Hand);
 							throw new Exception("Message must be at least one byte long");
 						}
 						SetDioMapping((byte)0, DioMappingEnum.DIO_MAP_01);
@@ -4931,7 +3920,7 @@ namespace SemtechLib.Devices.SX1276LR
 						ReadRegister(registers["RegOpMode"]);
 						OnPacketHandlerStoped();
 					}
-					Console.WriteLine("IRQ: AllIrq [0x{0}] - Stop", (object)registers["RegIrqFlags"].Value.ToString("X02"));
+					Console.WriteLine("IRQ: AllIrq [0x{0}] - Stop", registers["RegIrqFlags"].Value.ToString("X02"));
 					ClrAllIrq();
 					ReadRegister(registers["RegIrqFlags"]);
 					SetOperatingMode(Mode);
@@ -4971,15 +3960,24 @@ namespace SemtechLib.Devices.SX1276LR
 						{
 							if ((int)PayloadLength < 9)
 								Array.Resize<byte>(ref payload, 9);
-							Payload[0] = (byte)0;
+							Payload[0] = 0;
 							Payload[1] = (byte)(packetNumber >> 24);
 							Payload[2] = (byte)(packetNumber >> 16);
 							Payload[3] = (byte)(packetNumber >> 8);
 							Payload[4] = (byte)packetNumber;
-							Payload[5] = (byte)80;
-							Payload[6] = (byte)69;
-							Payload[7] = (byte)82;
-							Payload[8] = (byte)((uint)Payload[0] + (uint)Payload[1] + (uint)Payload[2] + (uint)Payload[3] + (uint)Payload[4] + (uint)Payload[5] + (uint)Payload[6] + (uint)Payload[7]);
+							Payload[5] = 80;
+							Payload[6] = 69;
+							Payload[7] = 82;
+							Payload[8] = (byte)(
+								(uint)Payload[0] +
+								(uint)Payload[1] +
+								(uint)Payload[2] +
+								(uint)Payload[3] +
+								(uint)Payload[4] +
+								(uint)Payload[5] +
+								(uint)Payload[6] +
+								(uint)Payload[7]
+								);
 							OnPropertyChanged("Payload");
 						}
 						frameTransmitted = WriteFifo(Payload);
@@ -5048,30 +4046,32 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			if (PacketHandlerStarted == null)
 				return;
-			PacketHandlerStarted((object)this, new EventArgs());
+			PacketHandlerStarted(this, new EventArgs());
 		}
 
 		private void OnPacketHandlerStoped()
 		{
 			if (PacketHandlerStoped == null)
 				return;
-			PacketHandlerStoped((object)this, new EventArgs());
+			PacketHandlerStoped(this, new EventArgs());
 		}
 
 		private void OnPacketHandlerTransmitted()
 		{
-			if (PacketHandlerTransmitted == null)
-				return;
-			Console.WriteLine("Pkt#: {0}", (object)packetNumber);
-			PacketHandlerTransmitted((object)this, new PacketStatusEventArg(packetNumber, maxPacketNumber));
+			if (PacketHandlerTransmitted != null)
+			{
+				Console.WriteLine("Pkt#: {0}", packetNumber);
+				PacketHandlerTransmitted(this, new PacketStatusEventArg(packetNumber, maxPacketNumber));
+			}
 		}
 
 		private void OnPacketHandlerReceived()
 		{
-			if (PacketHandlerReceived == null)
-				return;
-			Console.WriteLine("Pkt#: {0} - RxPkt#: {1}", (object)packetNumber, (object)(uint)((int)registers["RegRxPacketCntValueMsb"].Value << 8 | (int)registers["RegRxPacketCntValueLsb"].Value));
-			PacketHandlerReceived((object)this, new PacketStatusEventArg(packetNumber, maxPacketNumber));
+			if (PacketHandlerReceived != null)
+			{
+				Console.WriteLine("Pkt#: {0} - RxPkt#: {1}", packetNumber, (registers["RegRxPacketCntValueMsb"].Value << 8 | registers["RegRxPacketCntValueLsb"].Value));
+				PacketHandlerReceived(this, new PacketStatusEventArg(packetNumber, maxPacketNumber));
+			}
 		}
 
 		public void SetMessageLength(int value)
@@ -5158,31 +4158,31 @@ namespace SemtechLib.Devices.SX1276LR
 		{
 			lock (syncThread)
 			{
-				if (!(e.PropertyName == "Value"))
-					return;
-				UpdateRegisterValue((Register)sender);
-				if (readLock == 0 && !Write((byte)((Register)sender).Address, (byte)((Register)sender).Value))
-					OnError(1, "Unable to write register " + ((Register)sender).Name);
-				if (!(((Register)sender).Name == "RegOpMode"))
-					return;
-				Console.WriteLine("RegOpMode (PC): 0x{0}", (object)((Register)sender).Value.ToString("X02"));
-				if (Mode == OperatingModeEnum.Rx || Mode == OperatingModeEnum.RxSingle || Mode == OperatingModeEnum.Cad)
+				if (e.PropertyName == "Value")
 				{
-					ReadRegister(registers["RegLna"]);
-					ReadRegister(registers["RegRssiValue"]);
+					UpdateRegisterValue((Register)sender);
+					if (readLock == 0 && !Write((byte)((Register)sender).Address, (byte)((Register)sender).Value))
+						OnError(1, "Unable to write register " + ((Register)sender).Name);
+					if (((Register)sender).Name == "RegOpMode")
+					{
+						Console.WriteLine("RegOpMode (PC): 0x{0}", ((Register)sender).Value.ToString("X02"));
+						if (Mode == OperatingModeEnum.Rx || Mode == OperatingModeEnum.RxSingle || Mode == OperatingModeEnum.Cad)
+						{
+							ReadRegister(registers["RegLna"]);
+							ReadRegister(registers["RegRssiValue"]);
+						}
+						ReadRegister(registers["RegIrqFlags"]);
+					}
 				}
-				ReadRegister(registers["RegIrqFlags"]);
 			}
 		}
 
 		private void device_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			switch (e.PropertyName)
+			if (e.PropertyName == "Version")
 			{
-				case "Version":
-					PopulateRegisters();
-					ReadRegisters();
-					break;
+				PopulateRegisters();
+				ReadRegisters();
 			}
 		}
 
@@ -5192,9 +4192,7 @@ namespace SemtechLib.Devices.SX1276LR
 			if (!SKGetVersion())
 				OnError(1, "Unable to read SK version.");
 			else if (!SKReset())
-			{
 				OnError(1, "Unable to reset the SK");
-			}
 			else
 			{
 				regUpdateThreadContinue = true;
@@ -5224,9 +4222,9 @@ namespace SemtechLib.Devices.SX1276LR
 					if (PacketModeTx)
 					{
 						OnPacketHandlerTransmitted();
-						Console.WriteLine("IRQ: TxDoneIrq [0x{0}] - Dio0Tx", (object)registers["RegIrqFlags"].Value.ToString("X02"));
+						Console.WriteLine("IRQ: TxDoneIrq [0x{0}] - Dio0Tx", registers["RegIrqFlags"].Value.ToString("X02"));
 						ClrAllIrq();
-						Console.WriteLine("IRQ: TxDoneIrq [0x{0}] - Dio0Tx", (object)registers["RegIrqFlags"].Value.ToString("X02"));
+						Console.WriteLine("IRQ: TxDoneIrq [0x{0}] - Dio0Tx", registers["RegIrqFlags"].Value.ToString("X02"));
 						PacketHandlerTransmit();
 					}
 					else
@@ -5242,9 +4240,9 @@ namespace SemtechLib.Devices.SX1276LR
 						ReadRegister(registers["RegPktSnrValue"]);
 						ReadRegister(registers["RegPktRssiValue"]);
 						PacketHandlerReceive();
-						Console.WriteLine("IRQ: RxDoneIrq [0x{0}] - Dio0Rx", (object)registers["RegIrqFlags"].Value.ToString("X02"));
+						Console.WriteLine("IRQ: RxDoneIrq [0x{0}] - Dio0Rx", registers["RegIrqFlags"].Value.ToString("X02"));
 						ClrAllIrq();
-						Console.WriteLine("IRQ: RxDoneIrq [0x{0}] - Dio0Rx", (object)registers["RegIrqFlags"].Value.ToString("X02"));
+						Console.WriteLine("IRQ: RxDoneIrq [0x{0}] - Dio0Rx", registers["RegIrqFlags"].Value.ToString("X02"));
 					}
 				}
 			}
@@ -5276,6 +4274,7 @@ namespace SemtechLib.Devices.SX1276LR
 			byte data1 = (byte)((long)(num / frequencyStep) >> 16);
 			byte data2 = (byte)((long)(num / frequencyStep) >> 8);
 			byte data3 = (byte)(long)(num / frequencyStep);
+
 			if (!Write((byte)registers["RegFrfMsb"].Address, data1))
 				OnError(1, "Unable to write register " + registers["RegFrfMsb"].Name);
 			if (!Write((byte)registers["RegFrfMid"].Address, data2))
@@ -5416,14 +4415,8 @@ namespace SemtechLib.Devices.SX1276LR
 
 			public bool State
 			{
-				get
-				{
-					return state;
-				}
-				private set
-				{
-					state = value;
-				}
+				get { return state; }
+				private set { state = value; }
 			}
 
 			public IoChangedEventArgs(bool state)
