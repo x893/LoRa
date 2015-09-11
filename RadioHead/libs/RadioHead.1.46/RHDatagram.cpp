@@ -18,7 +18,7 @@ bool RHDatagram::init()
 {
     bool ret = _driver.init();
     if (ret)
-	setThisAddress(_thisAddress);
+		setThisAddress(_thisAddress);
     return ret;
 }
 
@@ -40,11 +40,11 @@ bool RHDatagram::recvfrom(uint8_t* buf, uint8_t* len, uint8_t* from, uint8_t* to
 {
     if (_driver.recv(buf, len))
     {
-	if (from)  *from =  headerFrom();
-	if (to)    *to =    headerTo();
-	if (id)    *id =    headerId();
-	if (flags) *flags = headerFlags();
-	return true;
+		if (from)  *from =  headerFrom();
+		if (to)    *to =    headerTo();
+		if (id)    *id =    headerId();
+		if (flags) *flags = headerFlags();
+		return true;
     }
     return false;
 }

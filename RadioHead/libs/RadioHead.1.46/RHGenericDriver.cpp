@@ -4,6 +4,7 @@
 // $Id: RHGenericDriver.cpp,v 1.18 2015/01/02 21:38:24 mikem Exp $
 
 #include <RHGenericDriver.h>
+#include <wirish.h>
 
 RHGenericDriver::RHGenericDriver()
     :
@@ -28,7 +29,7 @@ bool RHGenericDriver::init()
 void RHGenericDriver::waitAvailable()
 {
     while (!available())
-	YIELD;
+		YIELD;
 }
 
 // Blocks until a valid message is received or timeout expires
@@ -36,12 +37,12 @@ void RHGenericDriver::waitAvailable()
 // Works correctly even on millis() rollover
 bool RHGenericDriver::waitAvailableTimeout(uint16_t timeout)
 {
-    unsigned long starttime = millis();
+    uint32_t starttime = millis();
     while ((millis() - starttime) < timeout)
     {
         if (available())
            return true;
-	YIELD;
+		YIELD;
     }
     return false;
 }
@@ -49,18 +50,18 @@ bool RHGenericDriver::waitAvailableTimeout(uint16_t timeout)
 bool RHGenericDriver::waitPacketSent()
 {
     while (_mode == RHModeTx)
-	YIELD; // Wait for any previous transmit to finish
+		YIELD; // Wait for any previous transmit to finish
     return true;
 }
 
 bool RHGenericDriver::waitPacketSent(uint16_t timeout)
 {
-    unsigned long starttime = millis();
+    uint32_t starttime = millis();
     while ((millis() - starttime) < timeout)
     {
         if (_mode != RHModeTx) // Any previous transmit finished?
            return true;
-	YIELD;
+		YIELD;
     }
     return false;
 }
@@ -139,19 +140,19 @@ bool  RHGenericDriver::sleep()
 // Diagnostic help
 void RHGenericDriver::printBuffer(const char* prompt, const uint8_t* buf, uint8_t len)
 {
+#ifdef RH_HAVE_SERIAL
     uint8_t i;
 
-#ifdef RH_HAVE_SERIAL
     Serial.println(prompt);
     for (i = 0; i < len; i++)
     {
-	if (i % 16 == 15)
-	    Serial.println(buf[i], HEX);
-	else
-	{
-	    Serial.print(buf[i], HEX);
-	    Serial.print(' ');
-	}
+		if (i % 16 == 15)
+			Serial.println(buf[i], HEX);
+		else
+		{
+			Serial.print(buf[i], HEX);
+			Serial.print(' ');
+		}
     }
     Serial.println("");
 #endif
