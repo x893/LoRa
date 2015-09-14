@@ -112,13 +112,12 @@ typedef struct _DEVICE_INFO {
 	uint8_t Current_AlternateSetting;	/* Selected Alternate Setting of current interface*/
 
 	volatile DEVICE_STATE bDeviceState;
-	volatile bool fSuspendEnabled;		/* true when suspend is possible */
 	volatile bool remotewakeupon;
-	volatile uint32_t EP[8];
 	uint32_t FrameCount;
 	volatile uint16_t SaveRState;
 	volatile uint16_t SaveTState;
 
+	volatile uint32_t EP[8];
 	ENDPOINT_INFO Ctrl_Info;
 
 } DEVICE_INFO;

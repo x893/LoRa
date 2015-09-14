@@ -5,7 +5,7 @@
   * @version V1.3.0
   * @date    31-January-2014
   * @brief   This file provides firmware functions to manage the following 
-  *          functionalities of the Independent watchdog (IWDG) peripheral:           
+  *          functionalities of the Independent watchdog (IWDG) peripheral:
   *           + Prescaler and Counter configuration
   *           + IWDG activation
   *           + Flag management
@@ -131,9 +131,9 @@
   */
 void IWDG_WriteAccessCmd(uint16_t IWDG_WriteAccess)
 {
-  /* Check the parameters */
-  assert_param(IS_IWDG_WRITE_ACCESS(IWDG_WriteAccess));
-  IWDG->KR = IWDG_WriteAccess;
+	/* Check the parameters */
+	assert_param(IS_IWDG_WRITE_ACCESS(IWDG_WriteAccess));
+	IWDG->KR = IWDG_WriteAccess;
 }
 
 /**
@@ -151,9 +151,9 @@ void IWDG_WriteAccessCmd(uint16_t IWDG_WriteAccess)
   */
 void IWDG_SetPrescaler(uint8_t IWDG_Prescaler)
 {
-  /* Check the parameters */
-  assert_param(IS_IWDG_PRESCALER(IWDG_Prescaler));
-  IWDG->PR = IWDG_Prescaler;
+	/* Check the parameters */
+	assert_param(IS_IWDG_PRESCALER(IWDG_Prescaler));
+	IWDG->PR = IWDG_Prescaler;
 }
 
 /**
@@ -164,9 +164,9 @@ void IWDG_SetPrescaler(uint8_t IWDG_Prescaler)
   */
 void IWDG_SetReload(uint16_t Reload)
 {
-  /* Check the parameters */
-  assert_param(IS_IWDG_RELOAD(Reload));
-  IWDG->RLR = Reload;
+	/* Check the parameters */
+	assert_param(IS_IWDG_RELOAD(Reload));
+	IWDG->RLR = Reload;
 }
 
 /**
@@ -177,7 +177,7 @@ void IWDG_SetReload(uint16_t Reload)
   */
 void IWDG_ReloadCounter(void)
 {
-  IWDG->KR = KR_KEY_RELOAD;
+	IWDG->KR = KR_KEY_RELOAD;
 }
 
 /**

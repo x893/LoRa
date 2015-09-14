@@ -619,39 +619,38 @@ void PWR_EnterLowPowerRunMode(FunctionalState NewState)
   */
 void PWR_EnterSleepMode(uint32_t PWR_Regulator, uint8_t PWR_SLEEPEntry)
 {
-  uint32_t tmpreg = 0;
+	uint32_t tmpreg = 0;
 
-  /* Check the parameters */
-  assert_param(IS_PWR_REGULATOR(PWR_Regulator));
+	/* Check the parameters */
+	assert_param(IS_PWR_REGULATOR(PWR_Regulator));
+	assert_param(IS_PWR_SLEEP_ENTRY(PWR_SLEEPEntry));
+  
+	/* Select the regulator state in Sleep mode ---------------------------------*/
+	tmpreg = PWR->CR;
 
-  assert_param(IS_PWR_SLEEP_ENTRY(PWR_SLEEPEntry));
-  
-  /* Select the regulator state in Sleep mode ---------------------------------*/
-  tmpreg = PWR->CR;
-  
-  /* Clear PDDS and LPDSR bits */
-  tmpreg &= CR_DS_MASK;
-  
-  /* Set LPDSR bit according to PWR_Regulator value */
-  tmpreg |= PWR_Regulator;
-  
-  /* Store the new value */
-  PWR->CR = tmpreg;
+	/* Clear PDDS and LPDSR bits */
+	tmpreg &= CR_DS_MASK;
 
-  /* Clear SLEEPDEEP bit of Cortex System Control Register */
-  SCB->SCR &= (uint32_t)~((uint32_t)SCB_SCR_SLEEPDEEP);
-  
-  /* Select SLEEP mode entry -------------------------------------------------*/
-  if(PWR_SLEEPEntry == PWR_SLEEPEntry_WFI)
-  {   
-    /* Request Wait For Interrupt */
-    __WFI();
-  }
-  else
-  {
-    /* Request Wait For Event */
-    __WFE();
-  }
+	/* Set LPDSR bit according to PWR_Regulator value */
+	tmpreg |= PWR_Regulator;
+
+	/* Store the new value */
+	PWR->CR = tmpreg;
+
+	/* Clear SLEEPDEEP bit of Cortex System Control Register */
+	SCB->SCR &= (uint32_t)~((uint32_t)SCB_SCR_SLEEPDEEP);
+
+	/* Select SLEEP mode entry -------------------------------------------------*/
+	if (PWR_SLEEPEntry == PWR_SLEEPEntry_WFI)
+	{   
+	/* Request Wait For Interrupt */
+		__WFI();
+	}
+	else
+	{
+	/* Request Wait For Event */
+		__WFE();
+	}
 }
 
 /**
@@ -696,7 +695,7 @@ void PWR_EnterSTOPMode(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry)
   SCB->SCR |= SCB_SCR_SLEEPDEEP;
   
   /* Select STOP mode entry --------------------------------------------------*/
-  if(PWR_STOPEntry == PWR_STOPEntry_WFI)
+  if (PWR_STOPEntry == PWR_STOPEntry_WFI)
   {   
     /* Request Wait For Interrupt */
     __WFI();

@@ -64,11 +64,11 @@ void NMI_Handler(void)
  */
 void HardFault_Handler(void)
 {
+	__disable_irq();
 	STM_EVAL_LEDOn(LED3);
 	/* Go to infinite loop when Hard Fault exception occurs */
 	while (1)
-	{
-	}
+	{ }
 }
 
 /******************************************************************************

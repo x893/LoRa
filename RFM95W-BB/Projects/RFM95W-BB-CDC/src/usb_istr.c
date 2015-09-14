@@ -114,16 +114,13 @@ void USB_Istr(void)
 
 #if (IMR_MSK & ISTR_SUSP)
 	if (wIstr & ISTR_SUSP & wInterrupt_Mask)
-	{	/* check if SUSPEND is possible */
-		if (pInformation->fSuspendEnabled)
-		{
-			Suspend();
-		}
-		else
-		{
-			/* if not possible then resume after xx ms */
-			Resume(RESUME_LATER);
-		}
+	{
+#ifdef USB_SUSPEND_ENABLE
+		Suspend();
+#else
+		/* if not possible then resume after xx ms */
+		Resume(RESUME_LATER);
+#endif
 		/* clear of the ISTR bit must be done after setting of CNTR_FSUSP */
 		_SetISTR((uint16_t)CLR_SUSP);
 #	ifdef SUSP_CALLBACK

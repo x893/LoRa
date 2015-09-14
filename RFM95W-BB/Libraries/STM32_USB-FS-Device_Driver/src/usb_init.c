@@ -26,10 +26,9 @@ void USB_Init(void)
 {
 	pInformation = &UsbDeviceInfo;
 	pInformation->ControlState = IN_DATA;
-	pInformation->fSuspendEnabled = true;
 
 	pUser_Standard_Requests = &User_Standard_Requests;
-
 	pProperty = &Device_Property;
+
 	pProperty->Init();	/* Initialize devices one by one */
 }

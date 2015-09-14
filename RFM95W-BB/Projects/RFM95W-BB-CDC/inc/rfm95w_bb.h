@@ -29,19 +29,19 @@ typedef enum
 /** @addtogroup RFM95W_BB_LOW_LEVEL_LED
 	* @{
 	*/
-#define LEDn				3
+#define LEDn						3
 
-#define LED1_PIN			GPIO_Pin_11
-#define LED1_GPIO_PORT		GPIOB
-#define LED1_GPIO_CLK		RCC_AHBPeriph_GPIOB
+#define LED1_PIN					GPIO_Pin_11
+#define LED1_GPIO_PORT				GPIOB
+#define LED1_GPIO_CLK				RCC_AHBPeriph_GPIOB
 	
-#define LED2_PIN			GPIO_Pin_10
-#define LED2_GPIO_PORT		GPIOB
-#define LED2_GPIO_CLK		RCC_AHBPeriph_GPIOB
+#define LED2_PIN					GPIO_Pin_10
+#define LED2_GPIO_PORT				GPIOB
+#define LED2_GPIO_CLK				RCC_AHBPeriph_GPIOB
 	
-#define LED3_PIN			GPIO_Pin_3
-#define LED3_GPIO_PORT		GPIOA
-#define LED3_GPIO_CLK		RCC_AHBPeriph_GPIOA
+#define LED3_PIN					GPIO_Pin_3
+#define LED3_GPIO_PORT				GPIOA
+#define LED3_GPIO_CLK				RCC_AHBPeriph_GPIOA
 	
 /**
  * @brief Definition for COM port1, connected to USART1
@@ -89,8 +89,9 @@ typedef enum
 #define RF95W_CS_GPIO_PORT			GPIOA
 #define RF95W_CS_GPIO_CLK			RCC_AHBPeriph_GPIOA
 
-#define STM32L15_USB_CONNECT		SYSCFG_USBPuCmd(ENABLE)
-#define STM32L15_USB_DISCONNECT		SYSCFG_USBPuCmd(DISABLE)
+//	#define USB_SUSPEND_ENABLE
+#define RFM95W_USB_CONNECT()		SYSCFG_USBPuCmd(ENABLE)
+#define RFM95W_USB_DISCONNECT()		SYSCFG_USBPuCmd(DISABLE)
 
 #define RF95W_DIO0_PIN				GPIO_Pin_6				/* PB.06 */
 #define RF95W_DIO0_GPIO_PORT		GPIOB

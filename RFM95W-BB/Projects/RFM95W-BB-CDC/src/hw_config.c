@@ -204,9 +204,9 @@ void USB_Cable_Config (FunctionalState NewState)
 #if defined(STM32L1XX_MD) || defined (STM32L1XX_HD)|| (STM32L1XX_MD_PLUS)
 
 	if (NewState != DISABLE)
-		STM32L15_USB_CONNECT;
+		RFM95W_USB_CONNECT();
 	else
-		STM32L15_USB_DISCONNECT;
+		RFM95W_USB_DISCONNECT();
 
 #else /* USE_STM3210B_EVAL or USE_STM3210E_EVAL */
 

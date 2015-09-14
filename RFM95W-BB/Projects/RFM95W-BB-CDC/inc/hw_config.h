@@ -27,6 +27,7 @@ bool USB_Get_Data(uint8_t * data);
 void USB_Receive_Data(uint8_t * src, uint8_t length);
 void USB_Send_Data(const char * src, uint16_t length);
 void USB_Send(const char * src);
+bool USB_Send_Byte(uint8_t data);
 
 void USART_Config(void);
 
@@ -34,6 +35,7 @@ bool USART_Get_Data(uint8_t * data);
 void USART_Receive_Data(void);
 void USART_Send_Data(const char * src, uint16_t length);
 void USART_Send(const char * src);
+bool USART_Send_Byte(uint8_t data);
 
 void Handle_USBAsynchXfer (void);
 void Get_SerialNum(void);

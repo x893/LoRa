@@ -29,6 +29,7 @@ static const char m_Help[]			=	"\r\nAvailable commands:\r\n"
 										"power off  POFF   power off RF\r\n"
 										;
 static const char cmd_Help[]		=	"help";
+static const char cmd_Help2[]		=	"?";
 static const char cmd_PowerOn[]		=	"power on";
 static const char cmd_PON[]			=	"pon";
 static const char cmd_PowerOff[]	=	"power off";
@@ -61,6 +62,7 @@ const CommandDef_t Commands[] = {
 	{	CmdEchoOff,		cmd_EchoOff,	},
 	{	CmdEchoOff,		cmd_EOFF,		},
 	{	CmdHelp,		cmd_Help,		},
+	{	CmdHelp,		cmd_Help2,		},
 	{	NULL,			NULL			}
 };
 
@@ -125,15 +127,37 @@ bool ProcessCommand(bool isUsb, char * cmd)
 		if (strcmp(cmd, cmds->Command) == 0)
 		{
 			if ((cmds->Fn)(isUsb, cmd))
+			{
 				MsgSend(isUsb, "OK\r\n");
-			else
-				MsgSend(isUsb, "ERROR\r\n");
-
-			return true;
+				return true;
+			}
+			break;
 		}
 		cmds++;
 	}
+	MsgSend(isUsb, "ERROR\r\n");
 	return false;
+}
+
+/******************************************************************************
+ * @brief	Initialize IWDG
+ */
+void IWDG_Init(void)
+{
+	/* Enable the LSI oscillator ************************************************/
+	RCC_LSICmd(ENABLE);
+
+	/* Wait till LSI is ready */
+	while (RCC_GetFlagStatus(RCC_FLAG_LSIRDY) == RESET)
+	{ }
+
+	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);	/* Enable write access to IWDG_PR and IWDG_RLR registers */
+
+											/* IWDG counter clock: LSI / 128 */
+	IWDG_SetPrescaler(IWDG_Prescaler_128);	/* 1 / (LSI_VALUE = 37000) * 128 = 3.5 ms */
+	IWDG_SetReload(1000);					/* 1 / (LSI_VALUE = 37000) * 128 * 1000 = 3.5 s */
+	IWDG_ReloadCounter();					/* Reload IWDG counter */
+	IWDG_Enable();			/* Enable IWDG (the LSI oscillator will be enabled by hardware) */
 }
 
 /******************************************************************************
@@ -145,15 +169,24 @@ int main(void)
 	uint8_t ch;
 	uint16_t UsbCommandIndex = 0;
 	uint16_t CdcCommandIndex = 0;
+	uint32_t iwdg_time;
+	
+	if (RCC_GetFlagStatus(RCC_FLAG_IWDGRST) != RESET)
+	{	/* IWDGRST flag set */
+		
+	}
+	RCC_ClearFlag();
 
-	DBGMCU_Config(DBGMCU_SLEEP | DBGMCU_STOP | DBGMCU_STANDBY, ENABLE);
 	SystemCoreClockUpdate();
+	DBGMCU_Config(DBGMCU_SLEEP | DBGMCU_STOP | DBGMCU_STANDBY, ENABLE);
+	DBGMCU_APB1PeriphConfig(DBGMCU_IWDG_STOP | DBGMCU_RTC_STOP, ENABLE);
 
 	STM_EVAL_LEDInit(LED1);
 	STM_EVAL_LEDInit(LED2);
 	STM_EVAL_LEDInit(LED3);
-
 	STM_EVAL_LEDOn(LED3);
+
+	IWDG_Init();
 
 	if (SystemCoreClock < 8000000
 	||	SysTick_Config(SystemCoreClock / 1000)
@@ -184,12 +217,12 @@ int main(void)
 			while (USB_Get_Data(&ch))
 			{
 				if ( ! Config.EchoDisable)
-					USB_Send_Data((const char *)&ch, 1);
+					USB_Send_Byte(ch);
 
 				if (ch == '\r')
 				{
 					if ( ! Config.EchoDisable)
-						USB_Send("\n");
+						USB_Send_Byte('\n');
 					ch = '\0';
 				}
 				if (UsbCommandIndex < (sizeof(UsbCommand) - 1))
@@ -211,12 +244,12 @@ int main(void)
 		while (USART_Get_Data(&ch))
 		{
 			if ( ! Config.EchoDisable)
-				USART_Send_Data((const char *)&ch, 1);
+				USB_Send_Byte(ch);
 
 			if (ch == '\r')
 			{
 				if ( ! Config.EchoDisable)
-					USB_Send("\n");
+					USB_Send_Byte('\n');
 				ch = '\0';
 			}
 			if (CdcCommandIndex < (sizeof(CdcCommand) - 1))
@@ -228,6 +261,11 @@ int main(void)
 			}
 		}
 		EnterSleepMode();
+		if ((millis() - iwdg_time) > 1000)
+		{
+			iwdg_time = millis();
+			IWDG_ReloadCounter();	/* Reload IWDG counter */
+		}
 	}
 }
 
@@ -247,11 +285,11 @@ void EnterSleepMode(void)
  */
 void assert_failed(uint8_t* file, uint32_t line)
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+	/* User can add his own implementation to report the file name and line number,
+		ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {}
+	/* Infinite loop */
+	while (1)
+	{}
 }
 #endif
