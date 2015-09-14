@@ -16,7 +16,15 @@ bld/
 *.b#?
 *.s#?
 *.dep
+
+*.tmp
+*.bak
+
 *.uvoptx
 *.uvguix.*
 
-[Bb]uild/
+*.uvopt
+*.uvgui.*
+
+JLinkLog.*
+JLinkSettings.*
