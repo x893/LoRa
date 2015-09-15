@@ -79,10 +79,10 @@ public:
 
 protected:
 	/// Reference to the RHGenericSPI instance to use to trasnfer data with teh SPI device
-	RHGenericSPI&		_spi;
+	RHGenericSPI&	_spi;
 
 	/// The pin number of the Slave Selct pin that is used to select the desired device.
-	uint8_t			 _slaveSelectPin;
+	uint8_t		_slaveSelectPin;
 };
 
 #endif

@@ -8,17 +8,29 @@
 #include <RHReliableDatagram.h>
 #include <RH_RF95.h>
 
+#define LED1	PB11
+#define LED2	PB10
+#define LED3	PA3
+
 #define CLIENT_ADDRESS 1
 #define SERVER_ADDRESS 2
 
 // Singleton instance of the radio driver
-RH_RF95 driver;
+//				NSS  DIO0     SPI       RESET POWER_ON
+RH_RF95 driver(PA15, PB6, hardware_spi, PB15, PB9);
 
 // Class to manage message delivery and receipt, using the driver declared above
 RHReliableDatagram manager(driver, SERVER_ADDRESS);
 
 void setup() 
 {
+	pinMode(LED1, OUTPUT);
+	digitalWrite(LED1, LOW);
+	pinMode(LED2, OUTPUT);
+	digitalWrite(LED2, LOW);
+	pinMode(LED3, OUTPUT);
+	digitalWrite(LED3, HIGH);
+
 #ifdef RH_HAVE_SERIAL
 	Serial.begin(9600);
 #endif
@@ -26,6 +38,15 @@ void setup()
 	{
 #ifdef RH_HAVE_SERIAL
 		Serial.println("init failed");
+#endif
+	}
+	else
+	{
+		digitalWrite(LED3, LOW);
+		digitalWrite(LED2, HIGH);
+#ifdef RH_HAVE_SERIAL
+		Serial.print("Revision:");
+		Serial.println(driver.revision(), HEX);
 #endif
 	}
 	// Defaults after init are 434.0MHz, 13dBm, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on

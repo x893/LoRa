@@ -7,13 +7,14 @@
 #include <stdint.h>
 
 typedef enum SPIFrequency {
-    SPI_21_0MHZ      = 0, /**< 21 MHz */
-    SPI_10_5MHZ      = 1, /**< 10.5 MHz */
-    SPI_5_25MHZ      = 2, /**< 5.25 MHz */
-    SPI_2_625MHZ     = 3, /**< 2.625 MHz */
-    SPI_1_3125MHZ    = 4, /**< 1.3125 MHz */
-    SPI_656_25KHZ    = 5, /**< 656.25 KHz */
-    SPI_328_125KHZ   = 6, /**< 328.125 KHz */
+    SPI_16_MHZ	= 0,
+    SPI_8_MHZ,
+    SPI_4_MHZ,
+    SPI_2_MHZ,
+    SPI_1_MHZ,
+    SPI_500_KHZ,
+    SPI_250_KHZ,
+    SPI_125_KHZ
 } SPIFrequency;
 
 #define SPI_MODE0 0x00
@@ -33,6 +34,5 @@ private:
     uint32_t _spiPortNumber; // Not used yet.
 };
 extern HardwareSPI SPI;
-
 
 #endif

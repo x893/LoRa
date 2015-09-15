@@ -16,25 +16,25 @@ extern "C"
 #define SPIx                           SPI1
 #define SPIx_CLK                       RCC_APB2ENR_SPI1EN
 #define SPIx_CLK_INIT                  RCC_APB2PeriphClockCmd
-#define SPIx_IRQn                      SPI2_IRQn
-#define SPIx_IRQHANDLER                SPI2_IRQHandler
+#define SPIx_IRQn                      SPI1_IRQn
+#define SPIx_IRQHANDLER                SPI1_IRQHandler
 
-#define SPIx_SCK_PIN                   GPIO_Pin_5
-#define SPIx_SCK_GPIO_PORT             GPIOA
-#define SPIx_SCK_GPIO_CLK              RCC_AHBPeriph_GPIOA
-#define SPIx_SCK_SOURCE                GPIO_PinSource5
+#define SPIx_SCK_PIN                   GPIO_Pin_3
+#define SPIx_SCK_GPIO_PORT             GPIOB
+#define SPIx_SCK_GPIO_CLK              RCC_AHBPeriph_GPIOB
+#define SPIx_SCK_SOURCE                GPIO_PinSource3
 #define SPIx_SCK_AF                    GPIO_AF_SPI1
 
-#define SPIx_MISO_PIN                  GPIO_Pin_6
-#define SPIx_MISO_GPIO_PORT            GPIOA
-#define SPIx_MISO_GPIO_CLK             RCC_AHBPeriph_GPIOA
-#define SPIx_MISO_SOURCE               GPIO_PinSource6
+#define SPIx_MISO_PIN                  GPIO_Pin_4
+#define SPIx_MISO_GPIO_PORT            GPIOB
+#define SPIx_MISO_GPIO_CLK             RCC_AHBPeriph_GPIOB
+#define SPIx_MISO_SOURCE               GPIO_PinSource4
 #define SPIx_MISO_AF                   GPIO_AF_SPI1
 
-#define SPIx_MOSI_PIN                  GPIO_Pin_7
-#define SPIx_MOSI_GPIO_PORT            GPIOA
-#define SPIx_MOSI_GPIO_CLK             RCC_AHBPeriph_GPIOA
-#define SPIx_MOSI_SOURCE               GPIO_PinSource7
+#define SPIx_MOSI_PIN                  GPIO_Pin_5
+#define SPIx_MOSI_GPIO_PORT            GPIOB
+#define SPIx_MOSI_GPIO_CLK             RCC_AHBPeriph_GPIOB
+#define SPIx_MOSI_SOURCE               GPIO_PinSource5
 #define SPIx_MOSI_AF                   GPIO_AF_SPI1
 
 HardwareSPI::HardwareSPI(uint32_t spiPortNumber) :
@@ -60,8 +60,8 @@ void HardwareSPI::begin(SPIFrequency frequency, uint32_t bitOrder, uint32_t mode
 //	GPIO_DeInit(SPIx_SCK_GPIO_PORT);
 //	GPIO_DeInit(SPIx_MISO_GPIO_PORT);
 //	GPIO_DeInit(SPIx_MOSI_GPIO_PORT);
-  
-	/* Connect SPI pins to AF1 */  
+
+	/* Connect SPI pins to AF1 */
 	GPIO_PinAFConfig(SPIx_SCK_GPIO_PORT, SPIx_SCK_SOURCE, SPIx_SCK_AF);
 	GPIO_PinAFConfig(SPIx_MISO_GPIO_PORT, SPIx_MISO_SOURCE, SPIx_MISO_AF);    
 	GPIO_PinAFConfig(SPIx_MOSI_GPIO_PORT, SPIx_MOSI_SOURCE, SPIx_MOSI_AF);
@@ -109,36 +109,40 @@ void HardwareSPI::begin(SPIFrequency frequency, uint32_t bitOrder, uint32_t mode
 	}
 
 	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-	// Prescaler is divided into PCLK2 (84MHz) to get SPI baud rate/clock speed
-	// 256 => 328.125kHz
-	// 128 => 656.25kHz
-	// 64 => 1.3125MHz
-	// 32 => 2.625MHz
-	// 16 => 5.25MHz
-	// 8  => 10.5MHz
-	// 4  => 21.0MHz
+
+	// Prescaler is divided into PCLK2 (32 MHz) to get SPI baud rate/clock speed
+	// 256 => 125 kHz
+	// 128 => 250 kHz
+	// 64 => 500 kHz
+	// 32 => 1.0 MHz
+	// 16 => 2.0 MHz
+	// 8  => 4.0 MHz
+	// 4  => 8.0 MHz
 	switch (frequency)
 	{
-	case SPI_21_0MHZ:
+	case SPI_16_MHZ:
+		SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
+		break;
+	case SPI_8_MHZ:
 		SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_4;
 		break;
-	case SPI_10_5MHZ:
+	case SPI_4_MHZ:
 		SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
 		break;
-	case SPI_5_25MHZ:
+	case SPI_2_MHZ:
 		SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;
 		break;
-	case SPI_2_625MHZ:
+	case SPI_1_MHZ:
 	default:
 		SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_32;
 		break;
-	case SPI_1_3125MHZ:
+	case SPI_500_KHZ:
 		SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_64;
 		break;
-	case SPI_656_25KHZ:
+	case SPI_250_KHZ:
 		SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_128;
 		break;
-	case SPI_328_125KHZ:
+	case SPI_125_KHZ:
 		SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_256;
 		break;
 	}
@@ -147,12 +151,11 @@ void HardwareSPI::begin(SPIFrequency frequency, uint32_t bitOrder, uint32_t mode
 		SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_LSB;
 	else
 		SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+
 	SPI_InitStructure.SPI_CRCPolynomial = 7;
 	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
 
-	/* Initializes the SPI communication */
 	SPI_Init(SPIx, &SPI_InitStructure);
-	/* Enable SPI1  */
 	SPI_Cmd(SPIx, ENABLE);
 }
 

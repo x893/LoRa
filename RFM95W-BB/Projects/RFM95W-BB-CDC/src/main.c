@@ -186,8 +186,6 @@ int main(void)
 	STM_EVAL_LEDInit(LED3);
 	STM_EVAL_LEDOn(LED3);
 
-	IWDG_Init();
-
 	if (SystemCoreClock < 8000000
 	||	SysTick_Config(SystemCoreClock / 1000)
 		)
@@ -195,9 +193,13 @@ int main(void)
 		while (1);
 	}
 
+	delay(100);
+
 	USART_Config();
 	USB_Init();
  
+	IWDG_Init();
+
 	while (1)
 	{
 		if (UsbDeviceInfo.bDeviceState == CONFIGURED)

@@ -45,14 +45,14 @@ uint8_t RHHardwareSPI::transfer(uint8_t data)
 	return SPI.transfer(data);
 }
 
-void RHHardwareSPI::attachInterrupt() 
+void RHHardwareSPI::attachInterrupt()
 {
 #if (RH_PLATFORM == RH_PLATFORM_ARDUINO)
 	SPI.attachInterrupt();
 #endif
 }
 
-void RHHardwareSPI::detachInterrupt() 
+void RHHardwareSPI::detachInterrupt()
 {
 #if (RH_PLATFORM == RH_PLATFORM_ARDUINO)
 	SPI.detachInterrupt();
@@ -64,6 +64,8 @@ void RHHardwareSPI::begin()
 	// Sigh: there are no common symbols for some of these SPI options across all platforms
 
 #if (RH_PLATFORM == RH_PLATFORM_ARDUINO) || (RH_PLATFORM == RH_PLATFORM_UNO32)
+
+	#define HARDWARE_SPI_SUPPORT
 
 	uint8_t dataMode;
 	if (_dataMode == DataMode0)
@@ -136,8 +138,12 @@ void RHHardwareSPI::begin()
 	}
 	SPI.setClockDivider(divider);
 	SPI.begin();
+#endif
 
-#elif (RH_PLATFORM == RH_PLATFORM_STM32) // Maple etc
+#if (RH_PLATFORM == RH_PLATFORM_STM32)		// Maple etc
+
+	#define HARDWARE_SPI_SUPPORT
+
 	spi_mode dataMode;
 	// Hmmm, if we do this as a switch, GCC on maple gets v confused!
 	if (_dataMode == DataMode0)
@@ -183,8 +189,11 @@ void RHHardwareSPI::begin()
 
 	}
 	SPI.begin(frequency, bitOrder, dataMode);
+#endif
 
-#elif (RH_PLATFORM == RH_PLATFORM_STM32STD) // STM32F4 discovery
+#if (RH_PLATFORM == RH_PLATFORM_STM32STD)	// STM32F4 discovery
+
+	#define HARDWARE_SPI_SUPPORT
 
 	uint8_t dataMode;
 	if (_dataMode == DataMode0)
@@ -230,8 +239,11 @@ void RHHardwareSPI::begin()
 
 	}
 	SPI.begin(frequency, bitOrder, dataMode);
+#endif
 
-#elif (RH_PLATFORM == RH_PLATFORM_STM32L1XX) // STM32L1XX
+#if (RH_PLATFORM == RH_PLATFORM_STM32L1XX)	// STM32L1XX
+
+	#define HARDWARE_SPI_SUPPORT
 
 	uint8_t dataMode;
 	if (_dataMode == DataMode0)
@@ -256,28 +268,29 @@ void RHHardwareSPI::begin()
 	{
 	case Frequency1MHz:
 	default:
-		frequency = SPI_1_3125MHZ;
+		frequency = SPI_1_MHZ;
 		break;
 
 	case Frequency2MHz:
-		frequency = SPI_2_625MHZ;
+		frequency = SPI_2_MHZ;
 		break;
 
 	case Frequency4MHz:
-		frequency = SPI_5_25MHZ;
+		frequency = SPI_4_MHZ;
 		break;
 
 	case Frequency8MHz:
-		frequency = SPI_10_5MHZ;
+		frequency = SPI_8_MHZ;
 		break;
 
 	case Frequency16MHz:
-		frequency = SPI_21_0MHZ;
+		frequency = SPI_16_MHZ;
 		break;
 	}
 	SPI.begin(frequency, bitOrder, dataMode);
+#endif
 
-#elif (RH_PLATFORM == RH_PLATFORM_RASPI) // Raspberry PI
+#if (RH_PLATFORM == RH_PLATFORM_RASPI) // Raspberry PI
 
 	uint8_t dataMode;
 	if (_dataMode == DataMode0)
@@ -316,7 +329,9 @@ void RHHardwareSPI::begin()
 		break;
 	}
 	SPI.begin(divider, bitOrder, dataMode);
-#else
+#endif
+	
+#ifndef HARDWARE_SPI_SUPPORT
 	#warning RHHardwareSPI does not support this platform yet. Consider adding it and contributing a patch.
 #endif
 }

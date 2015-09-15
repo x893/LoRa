@@ -23,17 +23,40 @@ PROGMEM static const RH_RF95::ModemConfig MODEM_CONFIG_TABLE[] =
 	{ 0x78,	0xc4,	0x00}, // Bw125Cr48Sf4096
 };
 
-RH_RF95::RH_RF95(uint8_t slaveSelectPin, uint8_t interruptPin, RHGenericSPI& spi)
+RH_RF95::RH_RF95(
+	uint8_t slaveSelectPin,
+	uint8_t interruptPin,
+	RHGenericSPI& spi,
+	uint8_t resetPin,
+	uint8_t powerPin
+	)
 	:
 	RHSPIDriver(slaveSelectPin, spi),
-	_rxBufValid(0)
+	_rxBufValid(0),
+	_resetPin(resetPin),
+	_powerPin(powerPin)
 {
 	_interruptPin = interruptPin;
-	_myInterruptIndex = 0xff; // Not allocated yet
+	_myInterruptIndex = 0xFF; // Not allocated yet
 }
 
 bool RH_RF95::init()
 {
+	if (_resetPin != PIN_UNUSED)
+		pinMode(_resetPin, INPUT);
+
+	if (_powerPin != PIN_UNUSED)
+	{
+		pinMode(_powerPin, OUTPUT);
+		digitalWrite(_powerPin, HIGH);
+		if (_resetPin != PIN_UNUSED)
+		{
+			while (digitalRead(_resetPin) != HIGH)
+				;
+		}
+		delay(20);
+	}
+
 	if (!RHSPIDriver::init())
 		return false;
 
@@ -47,6 +70,8 @@ bool RH_RF95::init()
 	// Set sleep mode, so we can also set LORA mode:
 	spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_SLEEP | RH_RF95_LONG_RANGE_MODE);
 	delay(10); // Wait for sleep mode to take over from say, CAD
+	_revision = spiRead(RH_RF95_REG_42_VERSION);
+
 	// Check we are in sleep mode, with LORA set
 	if (spiRead(RH_RF95_REG_01_OP_MODE) != (RH_RF95_MODE_SLEEP | RH_RF95_LONG_RANGE_MODE))
 	{
@@ -74,6 +99,7 @@ bool RH_RF95::init()
 			return false; // Too many devices, not enough interrupt vectors
 	}
 	_deviceForInterrupt[_myInterruptIndex] = this;
+
 	if (_myInterruptIndex == 0)
 		attachInterrupt(interruptNumber, isr0, RISING);
 	else if (_myInterruptIndex == 1)
@@ -110,6 +136,11 @@ bool RH_RF95::init()
 	return true;
 }
 
+uint8_t RH_RF95::revision(void)
+{
+	return _revision;
+}
+
 // C++ level interrupt handler for this instance
 // LORA is unusual in that it has several interrupt lines, and not a single, combined one.
 // On MiniWirelessLoRa, only one of the several interrupt lines (DI0) from the RFM95 is usefuly 
@@ -119,11 +150,12 @@ void RH_RF95::handleInterrupt()
 {
 	// Read the interrupt register
 	uint8_t irq_flags = spiRead(RH_RF95_REG_12_IRQ_FLAGS);
-	if (_mode == RHModeRx && irq_flags & (RH_RF95_RX_TIMEOUT | RH_RF95_PAYLOAD_CRC_ERROR))
+
+	if (_mode == RHModeRx && (irq_flags & (RH_RF95_RX_TIMEOUT | RH_RF95_PAYLOAD_CRC_ERROR)))
 	{
 		_rxBad++;
 	}
-	else if (_mode == RHModeRx && irq_flags & RH_RF95_RX_DONE)
+	else if (_mode == RHModeRx && (irq_flags & RH_RF95_RX_DONE))
 	{
 		// Have received a packet
 		uint8_t len = spiRead(RH_RF95_REG_13_RX_NB_BYTES);
@@ -140,16 +172,15 @@ void RH_RF95::handleInterrupt()
 		_lastRssi = spiRead(RH_RF95_REG_1A_PKT_RSSI_VALUE) - 137;
 
 		// We have received a message.
-		validateRxBuf(); 
+		validateRxBuf();
 		if (_rxBufValid)
-		setModeIdle(); // Got one 
+			setModeIdle(); // Got one 
 	}
 	else if (_mode == RHModeTx && irq_flags & RH_RF95_TX_DONE)
 	{
 		_txGood++;
 		setModeIdle();
 	}
-	
 	spiWrite(RH_RF95_REG_12_IRQ_FLAGS, 0xff); // Clear all IRQ flags
 }
 
@@ -177,6 +208,7 @@ void RH_RF95::validateRxBuf()
 {
 	if (_bufLen < 4)
 		return;	// Too short to be a real message
+
 	// Extract the 4 headers
 	_rxHeaderTo		= _buf[0];
 	_rxHeaderFrom	= _buf[1];
@@ -274,9 +306,9 @@ bool RH_RF95::setFrequency(float centre)
 {
 	// Frf = FRF / FSTEP
 	uint32_t frf = (centre * 1000000.0) / RH_RF95_FSTEP;
-	spiWrite(RH_RF95_REG_06_FRF_MSB, (frf >> 16) & 0xff);
-	spiWrite(RH_RF95_REG_07_FRF_MID, (frf >> 8) & 0xff);
-	spiWrite(RH_RF95_REG_08_FRF_LSB, frf & 0xff);
+	spiWrite(RH_RF95_REG_06_FRF_MSB, (frf >> 16) & 0xFF);
+	spiWrite(RH_RF95_REG_07_FRF_MID, (frf >> 8) & 0xFF);
+	spiWrite(RH_RF95_REG_08_FRF_LSB, frf & 0xFF);
 
 	return true;
 }
@@ -305,7 +337,7 @@ void RH_RF95::setModeRx()
 	if (_mode != RHModeRx)
 	{
 		spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_RXCONTINUOUS);
-		spiWrite(RH_RF95_REG_40_DIO_MAPPING1, 0x00); // Interrupt on RxDone
+		spiWrite(RH_RF95_REG_40_DIO_MAPPING1, 0x00);	// Interrupt on RxDone
 		_mode = RHModeRx;
 	}
 }
@@ -315,7 +347,7 @@ void RH_RF95::setModeTx()
 	if (_mode != RHModeTx)
 	{
 		spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_TX);
-		spiWrite(RH_RF95_REG_40_DIO_MAPPING1, 0x40); // Interrupt on TxDone
+		spiWrite(RH_RF95_REG_40_DIO_MAPPING1, 0x40);	// Interrupt on TxDone
 		_mode = RHModeTx;
 	}
 }
@@ -374,6 +406,5 @@ bool RH_RF95::setModemConfig(ModemConfigChoice index)
 void RH_RF95::setPreambleLength(uint16_t bytes)
 {
 	spiWrite(RH_RF95_REG_20_PREAMBLE_MSB, bytes >> 8);
-	spiWrite(RH_RF95_REG_21_PREAMBLE_LSB, bytes & 0xff);
+	spiWrite(RH_RF95_REG_21_PREAMBLE_LSB, bytes & 0xFF);
 }
-

@@ -14,7 +14,12 @@
 
 #define PROGMEM
 #define memcpy_P memcpy
-
+typedef enum WiringPin {
+	PA0 = 0x00, PA1, PA2, PA3, PA4, PA5, PA6, PA7, PA8, PA9, PA10, PA11, PA12, PA13, PA14, PA15,
+	PB0 = 0x10, PB1, PB2, PB3, PB4, PB5, PB6, PB7, PB8, PB9, PB10, PB11, PB12, PB13, PB14, PB15,
+	PC0 = 0x20, PC1, PC2, PC3, PC4, PC5, PC6, PC7, PC8, PC9, PC10, PC11, PC12, PC13, PC14, PC15,
+	PIN_UNUSED = 0xFF
+} WiringPin;
 typedef enum WiringPinMode {
 	OUTPUT, /**< Basic digital output: when the pin is HIGH, the
 				voltage is held at +3.3v (Vcc) and when it is LOW, it
@@ -86,14 +91,14 @@ extern uint8_t digitalRead(uint8_t pin);
 //extern long random(long to);
 extern long random(long from, long to);
 
-#define HIGH 0x1
-#define LOW	0x0
+#define HIGH	 0x1
+#define LOW		0x0
 
-#define LSBFIRST 0
-#define MSBFIRST 1
+#define LSBFIRST	0
+#define MSBFIRST	1
 
-#define CHANGE 1
-#define FALLING 2
-#define RISING 3
+#define CHANGE		1
+#define FALLING		2
+#define RISING		3
 
 #endif

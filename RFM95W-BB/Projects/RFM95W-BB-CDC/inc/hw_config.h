@@ -41,6 +41,8 @@ void Handle_USBAsynchXfer (void);
 void Get_SerialNum(void);
 
 uint32_t millis(void);
+void delay(uint32_t ms);
+
 void EnterSleepMode(void);
 
 #endif  /*__HW_CONFIG_H*/

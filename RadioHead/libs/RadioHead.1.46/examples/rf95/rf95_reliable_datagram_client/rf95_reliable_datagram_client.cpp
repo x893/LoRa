@@ -9,20 +9,47 @@
 #include <RH_RF95.h>
 #include <SPI.h>
 
+#define LED1	PB11
+#define LED2	PB10
+#define LED3	PA3
+
 #define CLIENT_ADDRESS 1
 #define SERVER_ADDRESS 2
 
 // Singleton instance of the radio driver
-RH_RF95 driver;
+//				NSS  DIO0     SPI       RESET POWER_ON
+RH_RF95 driver(PA15, PB6, hardware_spi, PB15, PB9);
 
 // Class to manage message delivery and receipt, using the driver declared above
 RHReliableDatagram manager(driver, CLIENT_ADDRESS);
 
 void setup() 
 {
+	pinMode(LED1, OUTPUT);
+	digitalWrite(LED1, LOW);
+	pinMode(LED2, OUTPUT);
+	digitalWrite(LED2, LOW);
+	pinMode(LED3, OUTPUT);
+	digitalWrite(LED3, HIGH);
+
+#ifdef RH_HAVE_SERIAL
 	Serial.begin(9600);
+#endif
 	if (!manager.init())
+	{
+#ifdef RH_HAVE_SERIAL
 		Serial.println("init failed");
+#endif
+	}
+	else
+	{
+		digitalWrite(LED3, LOW);
+		digitalWrite(LED2, HIGH);
+#ifdef RH_HAVE_SERIAL
+		Serial.print("Revision:");
+		Serial.println(driver.revision(), HEX);
+#endif
+	}
 	// Defaults after init are 434.0MHz, 13dBm, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on
 }
 
@@ -32,8 +59,9 @@ uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
 
 void loop()
 {
+#ifdef RH_HAVE_SERIAL
 	Serial.println("Sending to rf95_reliable_datagram_server");
-
+#endif
 	// Send a message to manager_server
 	if (manager.sendtoWait(data, sizeof(data), SERVER_ADDRESS))
 	{
@@ -42,17 +70,25 @@ void loop()
 		uint8_t from;
 		if (manager.recvfromAckTimeout(buf, &len, 2000, &from))
 		{
+#ifdef RH_HAVE_SERIAL
 			Serial.print("got reply from : 0x");
 			Serial.print(from, HEX);
 			Serial.print(": ");
 			Serial.println((char*)buf);
+#endif
 		}
 		else
 		{
+#ifdef RH_HAVE_SERIAL
 			Serial.println("No reply, is rf95_reliable_datagram_server running?");
+#endif
 		}
 	}
 	else
+	{
+#ifdef RH_HAVE_SERIAL
 		Serial.println("sendtoWait failed");
+#endif
+	}
 	delay(500);
 }

@@ -96,16 +96,16 @@
 
 #elif (RH_PLATFORM == RH_PLATFORM_STM32L1XX)	// STM32 with STM32L1xx_StdPeriph_Driver 
 	#define RH_HAVE_HARDWARE_SPI
-	#define BOARD_HAVE_SERIAL1
+	// #define BOARD_HAVE_SERIAL1
 	// #define BOARD_HAVE_SERIAL2
 	// #define BOARD_HAVE_SERIALUSB
-	#define Serial Serial1
-	#define RH_HAVE_SERIAL
+	// #define Serial Serial1
+	// #define RH_HAVE_SERIAL
 
 	#include <stdint.h>
 	#include <string.h>
 	#include <math.h>
-	#include <stm32l1xx.h>
+	#include <stm32L1xx.h>
 	#include <wirish.h>
 	#include <HardwareSPI.h>
 
@@ -172,14 +172,27 @@
 	#endif
 	#define ATOMIC_BLOCK_START	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
 	#define ATOMIC_BLOCK_END	}
+
 #elif (RH_PLATFORM == RH_PLATFORM_UNO32)
+
 	#include <peripheral/int.h>
 	#define ATOMIC_BLOCK_START	unsigned int __status = INTDisableInterrupts(); {
 	#define ATOMIC_BLOCK_END	} INTRestoreInterrupts(__status);
-#else 
+
+#else
+
 	// TO BE DONE:
-	#define ATOMIC_BLOCK_START
-	#define ATOMIC_BLOCK_END
+	extern uint32_t disable_irq_count;
+	#define ATOMIC_BLOCK_START			\
+		do {							\
+			__disable_irq();			\
+			disable_irq_count++;
+
+	#define ATOMIC_BLOCK_END			\
+			--disable_irq_count;		\
+			if (disable_irq_count == 0)	\
+				__enable_irq();			\
+		} while (0);
 #endif
 
 ////////////////////////////////////////////////////

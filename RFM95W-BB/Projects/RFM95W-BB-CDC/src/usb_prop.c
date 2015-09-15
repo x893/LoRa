@@ -27,7 +27,6 @@ DEVICE Device_Table = {
 };
 
 DEVICE_PROP Device_Property = {
-	64, /* MAX PACKET SIZE */
 	CDC_Init,
 	CDC_Reset,
 	CDC_Status_In,
@@ -38,7 +37,8 @@ DEVICE_PROP Device_Property = {
 	CDC_GetDeviceDescriptor,
 	CDC_GetConfigDescriptor,
 	CDC_GetStringDescriptor,
-	NULL
+	NULL,
+	VIRTUAL_COM_PORT_DATA_SIZE
 };
 
 USER_STANDARD_REQUESTS User_Standard_Requests = {
@@ -173,21 +173,20 @@ void CDC_Status_Out(void)
 
 /******************************************************************************
  * @brief	Handle the data class specific requests
- * @param	Input			: Request Nb.
+ * @param	Request Nb.
  * @retval	USB_UNSUPPORT or USB_SUCCESS.
  */
 USB_RESULT CDC_Data_Setup(uint8_t RequestNo)
 {
-	uint8_t	*(*CopyRoutine)(uint16_t);
-
-	CopyRoutine = NULL;
+	uint8_t	*(*CopyRoutine)(uint16_t) = NULL;
 
 	if (RequestNo == GET_LINE_CODING)
 	{
 		if (Type_Recipient == (CLASS_REQUEST | INTERFACE_RECIPIENT))
 			CopyRoutine = CDC_GetLineCoding;
 	}
-	else if (RequestNo == SET_LINE_CODING)
+	else
+	if (RequestNo == SET_LINE_CODING)
 	{
 		if (Type_Recipient == (CLASS_REQUEST | INTERFACE_RECIPIENT))
 			CopyRoutine = CDC_SetLineCoding;

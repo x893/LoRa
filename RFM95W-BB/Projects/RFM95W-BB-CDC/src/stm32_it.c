@@ -116,6 +116,13 @@ void SysTick_Handler(void)
 	sysTickCount++;
 }
 
+void delay(uint32_t ms)
+{
+	uint32_t starting = millis();
+	while ((millis() - starting) < ms)
+		EnterSleepMode();
+}
+
 uint32_t millis(void)
 {
 	return sysTickCount;

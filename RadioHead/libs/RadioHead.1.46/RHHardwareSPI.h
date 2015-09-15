@@ -27,7 +27,7 @@ public:
 	/// \param[in] bitOrder Select the SPI bus bit order, one of RHGenericSPI::BitOrderMSBFirst or 
 	/// RHGenericSPI::BitOrderLSBFirst.
 	/// \param[in] dataMode Selects the SPI bus data mode. One of RHGenericSPI::DataMode
-	RHHardwareSPI(Frequency frequency = Frequency1MHz, BitOrder bitOrder = BitOrderMSBFirst, DataMode dataMode = DataMode0);
+	RHHardwareSPI(Frequency frequency = Frequency4MHz, BitOrder bitOrder = BitOrderMSBFirst, DataMode dataMode = DataMode0);
 
 	/// Transfer a single octet to and from the SPI interface
 	/// \param[in] data The octet to send
@@ -54,9 +54,9 @@ public:
 	virtual void end();
 #else
 	// not supported on ATTiny etc
-	uint8_t transfer(uint8_t data) {return 0;}
-	void begin(){}
-	void end(){}
+	uint8_t transfer(uint8_t data) { return 0; }
+	void begin() { }
+	void end() { }
 
 #endif
 };

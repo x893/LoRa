@@ -123,8 +123,6 @@ typedef struct _DEVICE_INFO {
 } DEVICE_INFO;
 
 typedef struct _DEVICE_PROP {
-	uint8_t MaxPacketSize;
-
 	void (*Init)(void);		/* Initialize the device */
 	void (*Reset)(void);	/* Reset routine of this device */
 
@@ -178,7 +176,7 @@ typedef struct _DEVICE_PROP {
 	/* This field is not used in current library version. It is kept only for
 	compatibility with previous versions */
 	void * RxEP_buffer;
-
+	uint8_t MaxPacketSize;
 } DEVICE_PROP;
 
 typedef struct _USER_STANDARD_REQUESTS {
