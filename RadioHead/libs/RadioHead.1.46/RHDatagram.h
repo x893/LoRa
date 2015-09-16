@@ -107,12 +107,12 @@ public:
     /// or until the timeout occuers, whichever happens first
     /// \param[in] timeout Maximum time to wait in milliseconds.
     /// \return true if the radio completed transmission within the timeout period. False if it timed out.
-    bool            waitPacketSent(uint16_t timeout);
+    bool            waitPacketSent(uint32_t timeout);
 
     /// Starts the Driver receiver and blocks until a received message is available or a timeout
     /// \param[in] timeout Maximum time to wait in milliseconds.
     /// \return true if a message is available
-    bool            waitAvailableTimeout(uint16_t timeout);
+    bool            waitAvailableTimeout(uint32_t timeout);
 
     /// Sets the TO header to be sent in all subsequent messages
     /// \param[in] to The new TO header value
@@ -153,10 +153,10 @@ public:
 
 protected:
     /// The Driver we are to use
-    RHGenericDriver&        _driver;
+    RHGenericDriver& _driver;
 
     /// The address of this node
-    uint8_t         _thisAddress;
+    uint8_t _thisAddress;
 };
 
 #endif

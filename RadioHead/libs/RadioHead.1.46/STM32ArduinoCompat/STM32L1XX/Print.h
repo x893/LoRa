@@ -11,55 +11,14 @@ public:
 #define HEX 16
 #define OCT 8
 #define BIN 2
-
-	size_t print(const char* s)
-	{
-		printf(s);
-		return 0;
-	}
-
-	size_t println(const char* s)
-	{
-		print(s);
-		printf("\n");
-		return 0;
-	}
-
-	size_t print(unsigned int n, uint8_t base = DEC)
-	{
-		if (base == DEC)
-			printf("%d", n);
-		else if (base == HEX)
-			printf("%02x", n);
-		else if (base == OCT)
-			printf("%o", n);
-		// TODO: BIN
-		return 0;
-	}
-
-	size_t print(char ch)
-	{
-		printf("%c", ch);
-		return 0;
-	}
-
-	size_t println(char ch)
-	{
-		printf("%c\n", ch);
-		return 0;
-	}
-
-	size_t print(unsigned char ch, uint8_t base = DEC)
-	{
-		return print((unsigned int)ch, base);
-	}
-
-	size_t println(unsigned char ch, uint8_t base = DEC)
-	{
-		print((unsigned int)ch, base);
-		printf("\n");
-		return 0;
-	}
+	virtual size_t write(uint8_t) = NULL;
+	size_t print(const char* s);
+	size_t println(const char* s);
+	size_t print(char ch);
+	size_t println(char ch);
+	size_t print(uint32_t n, uint8_t base = DEC);
+	size_t print(uint8_t ch, uint8_t base = DEC);
+	size_t println(uint8_t ch, uint8_t base = DEC);
 };
 
 #endif

@@ -35,7 +35,7 @@ void RHGenericDriver::waitAvailable()
 // Blocks until a valid message is received or timeout expires
 // Return true if there is a message available
 // Works correctly even on millis() rollover
-bool RHGenericDriver::waitAvailableTimeout(uint16_t timeout)
+bool RHGenericDriver::waitAvailableTimeout(uint32_t timeout)
 {
     uint32_t starttime = millis();
     while ((millis() - starttime) < timeout)
@@ -54,12 +54,12 @@ bool RHGenericDriver::waitPacketSent()
     return true;
 }
 
-bool RHGenericDriver::waitPacketSent(uint16_t timeout)
+bool RHGenericDriver::waitPacketSent(uint32_t timeout)
 {
     uint32_t starttime = millis();
     while ((millis() - starttime) < timeout)
     {
-        if (_mode != RHModeTx) // Any previous transmit finished?
+        if (_mode != RHModeTx)	// Any previous transmit finished?
            return true;
 		YIELD;
     }
@@ -140,7 +140,6 @@ bool  RHGenericDriver::sleep()
 // Diagnostic help
 void RHGenericDriver::printBuffer(const char* prompt, const uint8_t* buf, uint8_t len)
 {
-#ifdef RH_HAVE_SERIAL
     uint8_t i;
 
     Serial.println(prompt);
@@ -155,7 +154,6 @@ void RHGenericDriver::printBuffer(const char* prompt, const uint8_t* buf, uint8_
 		}
     }
     Serial.println("");
-#endif
 }
 
 uint16_t RHGenericDriver::rxBad()

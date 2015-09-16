@@ -99,19 +99,12 @@
 	// #define BOARD_HAVE_SERIAL1
 	// #define BOARD_HAVE_SERIAL2
 	// #define BOARD_HAVE_SERIALUSB
-	// #define Serial Serial1
-	// #define RH_HAVE_SERIAL
-
-	#include <stdint.h>
-	#include <string.h>
-	#include <math.h>
-	#include <stm32L1xx.h>
+	#define Serial SerialNull
 	#include <wirish.h>
-	#include <HardwareSPI.h>
 
 #elif (RH_PLATFORM == RH_PLATFORM_STM32STD)		// STM32 with STM32F4xx_StdPeriph_Driver 
 	#include <stm32f4xx.h>
-	#include <wirish.h>	
+	#include <wirish.h>
 	#include <stdint.h>
 	#include <string.h>
 	#include <math.h>

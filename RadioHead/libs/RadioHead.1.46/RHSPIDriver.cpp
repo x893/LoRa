@@ -42,9 +42,21 @@ uint8_t RHSPIDriver::spiRead(uint8_t reg)
     return val;
 }
 
+uint8_t RHSPIDriver::spiReadNoneBlocking(uint8_t reg)
+{
+    uint8_t val;
+
+    digitalWrite(_slaveSelectPin, LOW);
+    _spi.transfer(reg & ~RH_SPI_WRITE_MASK);	// Send the address with the write mask off
+    val = _spi.transfer(0);						// The written value is ignored, reg value is read
+    digitalWrite(_slaveSelectPin, HIGH);
+
+    return val;
+}
+
 uint8_t RHSPIDriver::spiWrite(uint8_t reg, uint8_t val)
 {
-    uint8_t status = 0;
+    uint8_t status;
     ATOMIC_BLOCK_START;
 
     digitalWrite(_slaveSelectPin, LOW);
@@ -56,9 +68,34 @@ uint8_t RHSPIDriver::spiWrite(uint8_t reg, uint8_t val)
     return status;
 }
 
+uint8_t RHSPIDriver::spiWriteNoneBlocking(uint8_t reg, uint8_t val)
+{
+    uint8_t status;
+
+    digitalWrite(_slaveSelectPin, LOW);
+    status = _spi.transfer(reg | RH_SPI_WRITE_MASK);	// Send the address with the write mask on
+    _spi.transfer(val);									// New value follows
+    digitalWrite(_slaveSelectPin, HIGH);
+
+    return status;
+}
+
+uint8_t RHSPIDriver::spiBurstReadNoneBlocking(uint8_t reg, uint8_t* dest, uint8_t len)
+{
+    uint8_t status;
+
+    digitalWrite(_slaveSelectPin, LOW);
+    status = _spi.transfer(reg & ~RH_SPI_WRITE_MASK);	// Send the start address with the write mask off
+    while (len--)
+		*dest++ = _spi.transfer(0);
+    digitalWrite(_slaveSelectPin, HIGH);
+
+    return status;
+}
+
 uint8_t RHSPIDriver::spiBurstRead(uint8_t reg, uint8_t* dest, uint8_t len)
 {
-    uint8_t status = 0;
+    uint8_t status;
     ATOMIC_BLOCK_START;
 
     digitalWrite(_slaveSelectPin, LOW);
@@ -73,15 +110,34 @@ uint8_t RHSPIDriver::spiBurstRead(uint8_t reg, uint8_t* dest, uint8_t len)
 
 uint8_t RHSPIDriver::spiBurstWrite(uint8_t reg, const uint8_t* src, uint8_t len)
 {
-    uint8_t status = 0;
+    uint8_t status;
     ATOMIC_BLOCK_START;
 
     digitalWrite(_slaveSelectPin, LOW);
     status = _spi.transfer(reg | RH_SPI_WRITE_MASK);	// Send the start address with the write mask on
-    while (len--)
+    while (len != 0)
+	{
+		--len;
 		_spi.transfer(*src++);
+	}
     digitalWrite(_slaveSelectPin, HIGH);
 
     ATOMIC_BLOCK_END;
+    return status;
+}
+
+uint8_t RHSPIDriver::spiBurstWriteNoneBlocking(uint8_t reg, const uint8_t* src, uint8_t len)
+{
+    uint8_t status;
+
+    digitalWrite(_slaveSelectPin, LOW);
+    status = _spi.transfer(reg | RH_SPI_WRITE_MASK);	// Send the start address with the write mask on
+    while (len != 0)
+	{
+		--len;
+		_spi.transfer(*src++);
+	}
+    digitalWrite(_slaveSelectPin, HIGH);
+
     return status;
 }

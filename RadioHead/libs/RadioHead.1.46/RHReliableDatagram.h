@@ -91,7 +91,7 @@ public:
     /// For fast modulation schemes you can considerably shorten this time.
     /// The actual timeout is randomly varied between timeout and timeout*2.
     /// \param[in] timeout The new timeout period in milliseconds
-    void setTimeout(uint16_t timeout);
+    void setTimeout(int32_t timeout);
 
     /// Sets the maximum number of retries. Defaults to 3 at construction time. 
     /// If set to 0, each message will only ever be sent once.
@@ -150,7 +150,7 @@ public:
     /// \param[in] flags If present and not NULL, the referenced uint8_t will be set to the FLAGS
     /// (not just those addressed to this node).
     /// \return true if a valid message was copied to buf
-    bool recvfromAckTimeout(uint8_t* buf, uint8_t* len,  uint16_t timeout, uint8_t* from = NULL, uint8_t* to = NULL, uint8_t* id = NULL, uint8_t* flags = NULL);
+    bool recvfromAckTimeout(uint8_t* buf, uint8_t* len,  int32_t timeout, uint8_t* from = NULL, uint8_t* to = NULL, uint8_t* id = NULL, uint8_t* flags = NULL);
 
     /// Returns the number of retransmissions 
     /// we have had to send since starting or since the last call to resetRetransmissions().
@@ -181,7 +181,7 @@ private:
 
     // Retransmit timeout (milliseconds)
     /// Defaults to 200
-    uint16_t _timeout;
+    int32_t _timeout;
 
     // Retries (0 means one try only)
     /// Defaults to 3

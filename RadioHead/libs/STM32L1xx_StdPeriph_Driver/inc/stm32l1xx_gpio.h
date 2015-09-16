@@ -94,7 +94,7 @@ typedef enum
   GPIO_Speed_2MHz   = 0x01, /*!< Low Speed */
   GPIO_Speed_10MHz  = 0x02, /*!< Medium Speed */
   GPIO_Speed_40MHz  = 0x03  /*!< High Speed */
-}GPIOSpeed_TypeDef;
+} GPIOSpeed_TypeDef;
 #define IS_GPIO_SPEED(SPEED) (((SPEED) == GPIO_Speed_400KHz) || ((SPEED) == GPIO_Speed_2MHz) || \
                               ((SPEED) == GPIO_Speed_10MHz)||  ((SPEED) == GPIO_Speed_40MHz))
 /**
@@ -105,10 +105,10 @@ typedef enum
   * @{
   */ 
 typedef enum
-{ GPIO_PuPd_NOPULL = 0x00,
-  GPIO_PuPd_UP     = 0x01,
-  GPIO_PuPd_DOWN   = 0x02
-}GPIOPuPd_TypeDef;
+{	GPIO_PuPd_NOPULL = 0x00,
+	GPIO_PuPd_UP     = 0x01,
+	GPIO_PuPd_DOWN   = 0x02
+} GPIOPuPd_TypeDef;
 #define IS_GPIO_PUPD(PUPD) (((PUPD) == GPIO_PuPd_NOPULL) || ((PUPD) == GPIO_PuPd_UP) || \
                             ((PUPD) == GPIO_PuPd_DOWN))
 /**

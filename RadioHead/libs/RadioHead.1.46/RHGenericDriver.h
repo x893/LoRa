@@ -105,12 +105,12 @@ public:
 	/// or until the timeout occuers, whichever happens first
 	/// \param[in] timeout Maximum time to wait in milliseconds.
 	/// \return true if the RF22 completed transmission within the timeout period. False if it timed out.
-	virtual bool waitPacketSent(uint16_t timeout);
+	virtual bool waitPacketSent(uint32_t timeout);
 
 	/// Starts the receiver and blocks until a received message is available or a timeout
 	/// \param[in] timeout Maximum time to wait in milliseconds.
 	/// \return true if a message is available
-	virtual bool waitAvailableTimeout(uint16_t timeout);
+	virtual bool waitAvailableTimeout(uint32_t timeout);
 
 	/// Sets the address of this node. Defaults to 0xFF. Subclasses or the user may want to change this.
 	/// This will be used to test the adddress in incoming messages. In non-promiscuous mode,

@@ -24,37 +24,38 @@ RHReliableDatagram::RHReliableDatagram(RHGenericDriver& driver, uint8_t thisAddr
     _retries = RH_DEFAULT_RETRIES;
 }
 
-////////////////////////////////////////////////////////////////////
 // Public methods
-void RHReliableDatagram::setTimeout(uint16_t timeout)
+void RHReliableDatagram::setTimeout(int32_t timeout)
 {
     _timeout = timeout;
 }
 
-////////////////////////////////////////////////////////////////////
 void RHReliableDatagram::setRetries(uint8_t retries)
 {
     _retries = retries;
 }
 
-////////////////////////////////////////////////////////////////////
 uint8_t RHReliableDatagram::retries()
 {
     return _retries;
 }
 
-////////////////////////////////////////////////////////////////////
 bool RHReliableDatagram::sendtoWait(uint8_t* buf, uint8_t len, uint8_t address)
 {
-    // Assemble the message
-    uint8_t thisSequenceNumber = ++_lastSequenceNumber;
+    uint8_t sequenceNumber = ++_lastSequenceNumber;
     uint8_t retries = 0;
+	int32_t timeout;
+	int32_t timeLeft;
+	uint8_t from, to, id, flags;
+
     while (retries++ <= _retries)
     {
-		setHeaderId(thisSequenceNumber);
-		setHeaderFlags(RH_FLAGS_NONE, RH_FLAGS_ACK); // Clear the ACK flag
+		setHeaderId(sequenceNumber);
+		setHeaderFlags(RH_FLAGS_NONE, RH_FLAGS_ACK);	// Clear the ACK flag
 		sendto(buf, len, address);
-		waitPacketSent();
+
+		if (! waitPacketSent(_timeout))
+			return false;
 
 		// Never wait for ACKS to broadcasts:
 		if (address == RH_BROADCAST_ADDRESS)
@@ -62,33 +63,30 @@ bool RHReliableDatagram::sendtoWait(uint8_t* buf, uint8_t len, uint8_t address)
 
 		if (retries > 1)
 			_retransmissions++;
-		uint32_t thisSendTime = millis(); // Timeout does not include original transmit time
 
-		// Compute a new timeout, random between _timeout and _timeout*2
+		uint32_t thisSendTime = millis();	// Timeout does not include original transmit time
+
+		// Compute a new timeout, random between _timeout and _timeout * 2
 		// This is to prevent collisions on every retransmit
 		// if 2 nodes try to transmit at the same time
-		uint16_t timeout = _timeout + (_timeout * random(0, 256) / 256);
-		int32_t timeLeft;
-        while ((timeLeft = timeout - (millis() - thisSendTime)) > 0)
+		timeout = _timeout + (_timeout * random(0, 256) / 256);
+        while ((timeLeft = timeout - (int32_t)(millis() - thisSendTime)) > 0)
 		{
 			if (waitAvailableTimeout(timeLeft))
 			{
-				uint8_t from, to, id, flags;
 				if (recvfrom(0, 0, &from, &to, &id, &flags)) // Discards the message
 				{
 					// Now have a message: is it our ACK?
 					if (   from == address 
 						&& to == _thisAddress 
 						&& (flags & RH_FLAGS_ACK)
-						&& (id == thisSequenceNumber))
-					{
-						// Its the ACK we are waiting for
+						&& (id == sequenceNumber))
+					{	// Its the ACK we are waiting for
 						return true;
 					}
 					else if ( !(flags & RH_FLAGS_ACK)
 							&& (id == _seenIds[from]))
-					{
-						// This is a request we have already received. ACK it again
+					{	// This is a request we have already received. ACK it again
 						acknowledge(id, from);
 					}
 					// Else discard it
@@ -111,6 +109,7 @@ bool RHReliableDatagram::recvfromAck(uint8_t* buf, uint8_t* len, uint8_t* from, 
     uint8_t _to;
     uint8_t _id;
     uint8_t _flags;
+
     // Get the message before its clobbered by the ACK (shared rx and tx buffer in some drivers
     if (available() && recvfrom(buf, len, &_from, &_to, &_id, &_flags))
     {
@@ -141,7 +140,7 @@ bool RHReliableDatagram::recvfromAck(uint8_t* buf, uint8_t* len, uint8_t* from, 
     return false;
 }
 
-bool RHReliableDatagram::recvfromAckTimeout(uint8_t* buf, uint8_t* len, uint16_t timeout, uint8_t* from, uint8_t* to, uint8_t* id, uint8_t* flags)
+bool RHReliableDatagram::recvfromAckTimeout(uint8_t* buf, uint8_t* len, int32_t timeout, uint8_t* from, uint8_t* to, uint8_t* id, uint8_t* flags)
 {
     uint32_t starttime = millis();
     int32_t timeLeft;
@@ -177,7 +176,7 @@ void RHReliableDatagram::acknowledge(uint8_t id, uint8_t from)
     // So we send an ACK of 1 octet
     // REVISIT: should we send the RSSI for the information of the sender?
     uint8_t ack = '!';
-    sendto(&ack, sizeof(ack), from); 
+    sendto(&ack, sizeof(ack), from);
     waitPacketSent();
 }
 

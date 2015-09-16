@@ -87,6 +87,7 @@ void HardwareSPI::begin(SPIFrequency frequency, uint32_t bitOrder, uint32_t mode
 	SPI_I2S_DeInit(SPIx);
 	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
 	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
+
 	if (mode == SPI_MODE0)
 	{
 		SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;

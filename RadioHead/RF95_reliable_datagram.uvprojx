@@ -725,6 +725,11 @@
               <FileType>8</FileType>
               <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\USBSerial.cpp</FilePath>
             </File>
+            <File>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\Print.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -879,7 +884,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>1</TargetSelection>
+          <TargetSelection>6</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -893,7 +898,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>BIN\UL2CM3.DLL</Driver>
+            <Driver>Segger\JL2CM3.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -1453,6 +1458,11 @@
               <FileName>USBSerial.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\USBSerial.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\Print.cpp</FilePath>
             </File>
           </Files>
         </Group>

@@ -64,12 +64,12 @@ bool RHDatagram::waitPacketSent()
     return _driver.waitPacketSent();
 }
 
-bool RHDatagram::waitPacketSent(uint16_t timeout)
+bool RHDatagram::waitPacketSent(uint32_t timeout)
 {
     return _driver.waitPacketSent(timeout);
 }
 
-bool RHDatagram::waitAvailableTimeout(uint16_t timeout)
+bool RHDatagram::waitAvailableTimeout(uint32_t timeout)
 {
     return _driver.waitAvailableTimeout(timeout);
 }

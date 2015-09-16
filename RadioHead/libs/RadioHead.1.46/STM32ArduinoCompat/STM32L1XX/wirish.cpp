@@ -78,32 +78,35 @@ typedef struct
 {
 	uint32_t	extiline;
 	uint8_t		extiirqn;
-	void		(*handler)(void);
+// 	void		(*handler)(void);
 } IRQLine;
+
+typedef void (*IRQHandler)(void);
 
 // IRQ line data indexed by pin source number with its port
 // and the programmable handler that will handle interrupts on that line
-IRQLine irqlines[] = 
+const IRQLine irqlines[] =
 {
-	{ EXTI_Line0,	EXTI0_IRQn,		NULL	},
-	{ EXTI_Line1,	EXTI1_IRQn,		NULL	},
-	{ EXTI_Line2,	EXTI2_IRQn,		NULL	},
-	{ EXTI_Line3,	EXTI3_IRQn,		NULL	},
-	{ EXTI_Line4,	EXTI4_IRQn,		NULL	},
-	{ EXTI_Line5,	EXTI9_5_IRQn,	NULL	},
-	{ EXTI_Line6,	EXTI9_5_IRQn,	NULL	},
-	{ EXTI_Line7,	EXTI9_5_IRQn,	NULL	},
-	{ EXTI_Line8,	EXTI9_5_IRQn,	NULL	},
-	{ EXTI_Line9,	EXTI9_5_IRQn,	NULL	},
-	{ EXTI_Line10, EXTI15_10_IRQn,	NULL	},
-	{ EXTI_Line11, EXTI15_10_IRQn,	NULL	},
-	{ EXTI_Line12, EXTI15_10_IRQn,	NULL	},
-	{ EXTI_Line13, EXTI15_10_IRQn,	NULL	},
-	{ EXTI_Line14, EXTI15_10_IRQn,	NULL	},
-	{ EXTI_Line15, EXTI15_10_IRQn,	NULL	}
+	{ EXTI_Line0,	EXTI0_IRQn		},
+	{ EXTI_Line1,	EXTI1_IRQn		},
+	{ EXTI_Line2,	EXTI2_IRQn		},
+	{ EXTI_Line3,	EXTI3_IRQn		},
+	{ EXTI_Line4,	EXTI4_IRQn		},
+	{ EXTI_Line5,	EXTI9_5_IRQn	},
+	{ EXTI_Line6,	EXTI9_5_IRQn	},
+	{ EXTI_Line7,	EXTI9_5_IRQn	},
+	{ EXTI_Line8,	EXTI9_5_IRQn	},
+	{ EXTI_Line9,	EXTI9_5_IRQn	},
+	{ EXTI_Line10, EXTI15_10_IRQn	},
+	{ EXTI_Line11, EXTI15_10_IRQn	},
+	{ EXTI_Line12, EXTI15_10_IRQn	},
+	{ EXTI_Line13, EXTI15_10_IRQn	},
+	{ EXTI_Line14, EXTI15_10_IRQn	},
+	{ EXTI_Line15, EXTI15_10_IRQn	}
 };
-
 #define NUM_IRQ_LINES (sizeof(irqlines) / sizeof(IRQLine))
+
+IRQHandler irqHandlers[NUM_IRQ_LINES];
 
 // Functions we expect to find in the sketch
 extern void setup();
@@ -116,147 +119,72 @@ void SysTickConfig()
 {
 	/* Setup SysTick Timer for 1ms interrupts	*/
 	if (SysTick_Config(SystemCoreClock / 1000))
-	{
-		/* Capture error */
+	{	/* Capture error */
 		while (1);
 	}
-	
+
 	/* Configure the SysTick handler priority */
 	NVIC_SetPriority(SysTick_IRQn, 0x0);
-	// SysTick_Handler will now be called every 1 ms
 }
 
 // These interrupt handlers have to be extern C else they dont get linked in to the interrupt vectors
 extern "C"
 {
-// Called every 1 ms
-void SysTick_Handler(void)
-{
-	systick_count++;
-}
+	// Called every 1 ms
+	void SysTick_Handler(void)
+	{
+		systick_count++;
+	}
 
-// Interrupt handlers for optional external GPIO interrupts
-void EXTI0_IRQHandler(void)
-{
-	if (EXTI_GetITStatus(EXTI_Line0) != RESET)
+	// Interrupt handlers for optional external GPIO interrupts
+	static void EXTIx_IRQHandler(uint8_t irq)
 	{
-		if (irqlines[0].handler)
-			irqlines[0].handler();
-		EXTI_ClearITPendingBit(EXTI_Line0);
+		if (EXTI_GetITStatus(irqlines[irq].extiline) != RESET)
+		{
+			if (irqHandlers[irq])
+				irqHandlers[irq]();
+			EXTI_ClearITPendingBit(irqlines[irq].extiline);
+		}
 	}
-}
-void EXTI1_IRQHandler(void)
-{
-	if (EXTI_GetITStatus(EXTI_Line1) != RESET)
+
+	void EXTI0_IRQHandler(void)
 	{
-		if (irqlines[1].handler)
-			irqlines[1].handler();
-		EXTI_ClearITPendingBit(EXTI_Line1);
+		EXTIx_IRQHandler(0);
 	}
-}
-void EXTI2_IRQHandler(void)
-{
-	if (EXTI_GetITStatus(EXTI_Line2) != RESET)
+	void EXTI1_IRQHandler(void)
 	{
-		if (irqlines[2].handler)
-		irqlines[2].handler();
-		EXTI_ClearITPendingBit(EXTI_Line2);
+		EXTIx_IRQHandler(1);
 	}
-}
-void EXTI3_IRQHandler(void)
-{
-	if (EXTI_GetITStatus(EXTI_Line3) != RESET)
+	void EXTI2_IRQHandler(void)
 	{
-		if (irqlines[3].handler)
-			irqlines[3].handler();
-		EXTI_ClearITPendingBit(EXTI_Line3);
+		EXTIx_IRQHandler(2);
 	}
-}
-void EXTI4_IRQHandler(void)
-{
-	if (EXTI_GetITStatus(EXTI_Line4) != RESET)
+	void EXTI3_IRQHandler(void)
 	{
-		if (irqlines[4].handler)
-			irqlines[4].handler();
-		EXTI_ClearITPendingBit(EXTI_Line4);
+		EXTIx_IRQHandler(3);
 	}
-}
-void EXTI9_5_IRQHandler(void)
-{
-	if (EXTI_GetITStatus(EXTI_Line5) != RESET)
+	void EXTI4_IRQHandler(void)
 	{
-		if (irqlines[5].handler)
-			irqlines[5].handler();
-		EXTI_ClearITPendingBit(EXTI_Line5);
+		EXTIx_IRQHandler(4);
 	}
-	if (EXTI_GetITStatus(EXTI_Line6) != RESET)
+	void EXTI9_5_IRQHandler(void)
 	{
-		if (irqlines[6].handler)
-			irqlines[6].handler();
-		EXTI_ClearITPendingBit(EXTI_Line6);
+		EXTIx_IRQHandler(5);
+		EXTIx_IRQHandler(6);
+		EXTIx_IRQHandler(7);
+		EXTIx_IRQHandler(8);
+		EXTIx_IRQHandler(9);
 	}
-	if (EXTI_GetITStatus(EXTI_Line7) != RESET)
+	void EXTI15_10_IRQHandler(void)
 	{
-		if (irqlines[7].handler)
-			irqlines[7].handler();
-		EXTI_ClearITPendingBit(EXTI_Line7);
+		EXTIx_IRQHandler(10);
+		EXTIx_IRQHandler(11);
+		EXTIx_IRQHandler(12);
+		EXTIx_IRQHandler(13);
+		EXTIx_IRQHandler(14);
+		EXTIx_IRQHandler(15);
 	}
-	if (EXTI_GetITStatus(EXTI_Line8) != RESET)
-	{
-		if (irqlines[8].handler)
-			irqlines[8].handler();
-		EXTI_ClearITPendingBit(EXTI_Line8);
-	}
-	if (EXTI_GetITStatus(EXTI_Line9) != RESET)
-	{
-		if (irqlines[9].handler)
-			irqlines[9].handler();
-		EXTI_ClearITPendingBit(EXTI_Line9);
-	}
-}
-void EXTI15_10_IRQHandler(void)
-{
-	if (EXTI_GetITStatus(EXTI_Line10) != RESET)
-	{
-		if (irqlines[10].handler)
-			irqlines[10].handler();
-		EXTI_ClearITPendingBit(EXTI_Line10);
-	}
-	if (EXTI_GetITStatus(EXTI_Line11) != RESET)
-	{
-		if (irqlines[11].handler)
-			irqlines[11].handler();
-		EXTI_ClearITPendingBit(EXTI_Line11);
-	}
-	if (EXTI_GetITStatus(EXTI_Line12) != RESET)
-	{
-		if (irqlines[12].handler)
-		irqlines[12].handler();
-		EXTI_ClearITPendingBit(EXTI_Line12);
-	}
-	if (EXTI_GetITStatus(EXTI_Line13) != RESET)
-	{
-		if (irqlines[13].handler)
-		irqlines[13].handler();
-		EXTI_ClearITPendingBit(EXTI_Line13);
-	}
-	if (EXTI_GetITStatus(EXTI_Line14) != RESET)
-	{
-		if (irqlines[14].handler)
-			irqlines[14].handler();
-		EXTI_ClearITPendingBit(EXTI_Line14);
-	}
-	if (EXTI_GetITStatus(EXTI_Line15) != RESET)
-	{
-		if (irqlines[15].handler)
-			irqlines[15].handler();
-		EXTI_ClearITPendingBit(EXTI_Line15);
-	}
-}
 }	/*	extern "C"	*/
-
-// The sketch we want to run
-//#include "examples/rf22/rf22_client/rf22_client.pde"
 
 // Run the Arduino standard functions in the main loop
 int main(int argc, char** argv)
@@ -283,15 +211,32 @@ void pinMode(uint8_t pin, WiringPinMode mode)
 	RCC_AHBPeriphClockCmd(pins[pin].ahbperiph, ENABLE);
 	GPIO_InitTypeDef GPIO_InitStructure;
 	GPIO_InitStructure.GPIO_Pin = pins[pin].pin;
-
-	if (mode == INPUT)
-		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;	// REVISIT
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+/*
+	if (mode == INPUT || mode == INPUT_FLOATING)
+	{
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+	}
+	else
+*/
+	if (mode == INPUT_ANALOG)
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+	else if (mode == INPUT_PULLUP)
+		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	else if (mode == INPUT_PULLDOWN)
+		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
 	else if (mode == OUTPUT)
-		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;	// REVISIT
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+	else if (mode == OUTPUT_OPEN_DRAIN)
+	{
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+		GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+	}
 	else
 		return; // Unknown so far
 
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
 	GPIO_Init(pins[pin].port, &GPIO_InitStructure);
 }
@@ -318,15 +263,16 @@ void attachInterrupt(uint8_t pin, void (*handler)(void), int mode)
 {
 	EXTI_InitTypeDef EXTI_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
+	uint8_t extiPinSource = pins[pin].extipinsource;
 
 	// Record the handler to call when the interrupt occurs
-	irqlines[pins[pin].extipinsource].handler = handler;
+	irqHandlers[extiPinSource] = handler;
 
 	/* Connect EXTI Line to GPIO Pin */
-	SYSCFG_EXTILineConfig(pins[pin].extiportsource, pins[pin].extipinsource);
+	SYSCFG_EXTILineConfig(pins[pin].extiportsource, extiPinSource);
 
 	/* Configure EXTI line */
-	EXTI_InitStructure.EXTI_Line = irqlines[pins[pin].extipinsource].extiline;
+	EXTI_InitStructure.EXTI_Line = irqlines[extiPinSource].extiline;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
 
 	if (mode == RISING)
@@ -340,7 +286,7 @@ void attachInterrupt(uint8_t pin, void (*handler)(void), int mode)
 	EXTI_Init(&EXTI_InitStructure);
 
 	/* Enable and set EXTI Interrupt to the lowest priority */
-	NVIC_InitStructure.NVIC_IRQChannel = irqlines[pins[pin].extipinsource].extiirqn;
+	NVIC_InitStructure.NVIC_IRQChannel = irqlines[extiPinSource].extiirqn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -363,13 +309,13 @@ uint32_t millis()
 	return systick_count;
 }
 
-long random(long from, long to)
+int32_t random(int32_t from, int32_t to)
 {
 //!	return from + (RNG_GetRandomNumber() % (to - from));
 	return (from + to) / 2;
 }
 
-long random(long to)
+int32_t random(int32_t to)
 {
 	return random(0, to);
 }

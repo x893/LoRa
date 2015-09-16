@@ -4,7 +4,6 @@
 #ifndef _HardwareSerial_h
 #define _HardwareSerial_h
 
-#include <stdint.h>
 #include <stdio.h>
 #include <stm32l1xx.h>
 
@@ -33,19 +32,36 @@ private:
 
 // Mostly compatible wuith Arduino HardwareSerial
 // Theres just enough here to support RadioHead RH_Serial
+class HardwareSerialNull : public Print
+{
+public:
+	HardwareSerialNull(void) { }
+	void begin(uint32_t baud) { }
+	void end() { }
+	virtual int available(void)		{ return 0; }
+	virtual int read(void)			{ return 0; }
+	virtual size_t write(uint8_t)	{ return 1; }
+	inline size_t write(uint64_t n)	{ return 1; }
+	inline size_t write(int64_t n)	{ return 1; }
+	inline size_t write(uint32_t n)	{ return 1; }
+	inline size_t write(int32_t n)	{ return 1; }
+};
+
+// Mostly compatible wuith Arduino HardwareSerial
+// Theres just enough here to support RadioHead RH_Serial
 class HardwareSerial : public Print
 {
 public:
 	HardwareSerial(USART_TypeDef* usart);
-	void begin(unsigned long baud);
+	void begin(uint32_t baud);
 	void end();
 	virtual int available(void);
 	virtual int read(void);
 	virtual size_t write(uint8_t);
-	inline size_t write(unsigned long n) { return write((uint8_t)n); }
-	inline size_t write(long n) { return write((uint8_t)n); }
-	inline size_t write(unsigned int n) { return write((uint8_t)n); }
-	inline size_t write(int n) { return write((uint8_t)n); }
+	inline size_t write(uint64_t n)	{ return write((uint8_t)n); }
+	inline size_t write(int64_t n)	{ return write((uint8_t)n); }
+	inline size_t write(uint32_t n)	{ return write((uint8_t)n); }
+	inline size_t write(int32_t n)	{ return write((uint8_t)n); }
 
 	// These need to be public so the IRQ handler can read and write to them:
 	RingBuffer	 _rxRingBuffer;
@@ -53,17 +69,12 @@ public:
 
 private:
 	USART_TypeDef* _usart;
-
 };
 
 // Predefined serial ports are configured so:
 // Serial		STM32 UART	RX pin	Tx Pin	Comments
 // Serial1		USART1		PA10	 PA9		TX Conflicts with GREEN LED on Discovery
 // Serial2		USART2		PA3		PA2
-// Serial3		USART3		PD9		PD10	 
-// Serial4		UART4		PA1		PA0		TX conflicts with USER button on Discovery
-// Serial5		UART5		PD2		PC12	 TX conflicts with CS43L22 SDIN on Discovery
-// Serial6		USART6		PC7		PC6		RX conflicts with CS43L22 MCLK on Discovery
 //
 // All ports are idle HIGH, LSB first, 8 bits, No parity, 1 stop bit
 
@@ -74,6 +85,12 @@ private:
 #ifdef BOARD_HAVE_SERIAL2
 	extern HardwareSerial Serial2;
 	#define HAVE_HWSERIAL2
+#endif
+
+#if ! defined ( BOARD_HAVE_SERIAL1 )	\
+&&	! defined ( BOARD_HAVE_SERIAL2 )	\
+&&	! defined ( BOARD_HAVE_SERIALUSB )
+	extern HardwareSerialNull Serial;
 #endif
 
 #endif

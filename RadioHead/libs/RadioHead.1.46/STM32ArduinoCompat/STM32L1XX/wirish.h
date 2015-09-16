@@ -6,9 +6,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdint.h>
+
 #include <stm32l1xx.h>
 
+#include <HardwareSPI.h>
 #include <HardwareSerial.h>
 #include <USBSerial.h>
 
@@ -81,18 +82,19 @@ typedef enum WiringPinMode {
 						floating (disconnected). */
 } WiringPinMode;
 
-extern void pinMode(uint8_t pin, WiringPinMode mode);
-extern uint32_t millis();
-extern void delay(uint32_t millis);
-extern void attachInterrupt(uint8_t, void (*)(void), int mode);
-extern void digitalWrite(uint8_t pin, uint8_t val);
-extern uint8_t digitalRead(uint8_t pin);
+void pinMode(uint8_t pin, WiringPinMode mode);
+void digitalWrite(uint8_t pin, uint8_t val);
+uint8_t digitalRead(uint8_t pin);
+void attachInterrupt(uint8_t, void (*)(void), int mode);
 
-//extern long random(long to);
-extern long random(long from, long to);
+uint32_t millis();
+void delay(uint32_t millis);
 
-#define HIGH	 0x1
-#define LOW		0x0
+int32_t random(int32_t to);
+int32_t random(int32_t from, int32_t to);
+
+#define HIGH		0x1
+#define LOW			0x0
 
 #define LSBFIRST	0
 #define MSBFIRST	1

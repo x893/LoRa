@@ -1,6 +1,6 @@
 #include <RadioHead.h>
 
-void USBSerial::begin(int baud)
+void USBSerial::begin(uint32_t baud)
 {
 	
 }

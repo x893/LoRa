@@ -7,7 +7,7 @@ class USBSerial : public Print
 {
 public:
     // TODO: move these from being inlined
-    void begin(int baud);
+    void begin(uint32_t baud);
 };
 
 #if BOARD_HAVE_SERIALUSB

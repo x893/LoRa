@@ -32,23 +32,20 @@ void setup()
 	pinMode(LED3, OUTPUT);
 	digitalWrite(LED3, HIGH);
 
-#ifdef RH_HAVE_SERIAL
-	Serial.begin(9600);
-#endif
+	Serial.begin(115200);
 	if (!manager.init())
 	{
-#ifdef RH_HAVE_SERIAL
 		Serial.println("init failed");
-#endif
+		while (1)
+			;
 	}
 	else
 	{
 		digitalWrite(LED3, LOW);
 		digitalWrite(LED2, HIGH);
-#ifdef RH_HAVE_SERIAL
+
 		Serial.print("Revision:");
 		Serial.println(driver.revision(), HEX);
-#endif
 	}
 	// Defaults after init are 434.0MHz, 13dBm, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on
 }
@@ -59,10 +56,10 @@ uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
 
 void loop()
 {
-#ifdef RH_HAVE_SERIAL
 	Serial.println("Sending to rf95_reliable_datagram_server");
-#endif
+
 	// Send a message to manager_server
+	digitalWrite(LED1, HIGH);
 	if (manager.sendtoWait(data, sizeof(data), SERVER_ADDRESS))
 	{
 		// Now wait for a reply from the server
@@ -70,25 +67,29 @@ void loop()
 		uint8_t from;
 		if (manager.recvfromAckTimeout(buf, &len, 2000, &from))
 		{
-#ifdef RH_HAVE_SERIAL
+			digitalWrite(LED1, LOW);
+			digitalWrite(LED2, HIGH);
 			Serial.print("got reply from : 0x");
 			Serial.print(from, HEX);
 			Serial.print(": ");
 			Serial.println((char*)buf);
-#endif
 		}
 		else
 		{
-#ifdef RH_HAVE_SERIAL
+			digitalWrite(LED1, LOW);
+			digitalWrite(LED3, HIGH);
 			Serial.println("No reply, is rf95_reliable_datagram_server running?");
-#endif
 		}
 	}
 	else
 	{
-#ifdef RH_HAVE_SERIAL
+		digitalWrite(LED1, LOW);
+		digitalWrite(LED3, HIGH);
 		Serial.println("sendtoWait failed");
-#endif
 	}
+	delay(500);
+	digitalWrite(LED1, LOW);
+	digitalWrite(LED2, LOW);
+	digitalWrite(LED3, LOW);
 	delay(500);
 }

@@ -9,7 +9,7 @@
 // Interrupt vectors for the 3 Arduino interrupt pins
 // Each interrupt can be handled by a different instance of RH_RF95, allowing you to have
 // 2 or more LORAs per Arduino
-RH_RF95 * RH_RF95::_deviceForInterrupt[RH_RF95_NUM_INTERRUPTS] = {0, 0, 0};
+RH_RF95 * RH_RF95::_deviceForInterrupt[RH_RF95_NUM_INTERRUPTS] = {NULL, NULL, NULL};
 uint8_t RH_RF95::_interruptCount = 0; // Index into _deviceForInterrupt for next device
 
 // These are indexed by the values of ModemConfigChoice
@@ -151,37 +151,42 @@ void RH_RF95::handleInterrupt()
 	// Read the interrupt register
 	uint8_t irq_flags = spiRead(RH_RF95_REG_12_IRQ_FLAGS);
 
-	if (_mode == RHModeRx && (irq_flags & (RH_RF95_RX_TIMEOUT | RH_RF95_PAYLOAD_CRC_ERROR)))
+	if (_mode == RHModeRx)
 	{
-		_rxBad++;
+		if (irq_flags & (RH_RF95_RX_TIMEOUT | RH_RF95_PAYLOAD_CRC_ERROR))
+		{
+			_rxBad++;
+			// Stay in RX mode
+		}
+		else if (irq_flags & RH_RF95_RX_DONE)
+		{
+			// Have received a packet
+			uint8_t len = spiReadNoneBlocking(RH_RF95_REG_13_RX_NB_BYTES);
+
+			// Reset the fifo read ptr to the beginning of the packet
+			spiWriteNoneBlocking(RH_RF95_REG_0D_FIFO_ADDR_PTR, spiRead(RH_RF95_REG_10_FIFO_RX_CURRENT_ADDR));
+			spiBurstReadNoneBlocking(RH_RF95_REG_00_FIFO, _buf, len);
+			_bufLen = len;
+			spiWriteNoneBlocking(RH_RF95_REG_12_IRQ_FLAGS, 0xff); // Clear all IRQ flags
+
+			// Remember the RSSI of this packet
+			// this is according to the doc, but is it really correct?
+			// weakest receiveable signals are reported RSSI at about -66
+			_lastRssi = spiReadNoneBlocking(RH_RF95_REG_1A_PKT_RSSI_VALUE) - 137;
+
+			// We have received a message.
+			validateRxBuf();
+			if (_rxBufValid)
+				setModeIdle(); // Got one
+			// else stay in RX mode
+		}
 	}
-	else if (_mode == RHModeRx && (irq_flags & RH_RF95_RX_DONE))
-	{
-		// Have received a packet
-		uint8_t len = spiRead(RH_RF95_REG_13_RX_NB_BYTES);
-
-		// Reset the fifo read ptr to the beginning of the packet
-		spiWrite(RH_RF95_REG_0D_FIFO_ADDR_PTR, spiRead(RH_RF95_REG_10_FIFO_RX_CURRENT_ADDR));
-		spiBurstRead(RH_RF95_REG_00_FIFO, _buf, len);
-		_bufLen = len;
-		spiWrite(RH_RF95_REG_12_IRQ_FLAGS, 0xff); // Clear all IRQ flags
-
-		// Remember the RSSI of this packet
-		// this is according to the doc, but is it really correct?
-		// weakest receiveable signals are reported RSSI at about -66
-		_lastRssi = spiRead(RH_RF95_REG_1A_PKT_RSSI_VALUE) - 137;
-
-		// We have received a message.
-		validateRxBuf();
-		if (_rxBufValid)
-			setModeIdle(); // Got one 
-	}
-	else if (_mode == RHModeTx && irq_flags & RH_RF95_TX_DONE)
+	else if (_mode == RHModeTx && (irq_flags & RH_RF95_TX_DONE))
 	{
 		_txGood++;
 		setModeIdle();
 	}
-	spiWrite(RH_RF95_REG_12_IRQ_FLAGS, 0xff); // Clear all IRQ flags
+	spiWriteNoneBlocking(RH_RF95_REG_12_IRQ_FLAGS, 0xFF); // Clear all IRQ flags
 }
 
 // These are low level functions that call the interrupt handler for the correct
@@ -248,9 +253,9 @@ bool RH_RF95::recv(uint8_t* buf, uint8_t* len)
 	{
 		ATOMIC_BLOCK_START;
 		// Skip the 4 headers that are at the beginning of the rxBuf
-		if (*len > _bufLen-RH_RF95_HEADER_LEN)
-			*len = _bufLen-RH_RF95_HEADER_LEN;
-		memcpy(buf, _buf+RH_RF95_HEADER_LEN, *len);
+		if (*len > _bufLen - RH_RF95_HEADER_LEN)
+			*len = _bufLen - RH_RF95_HEADER_LEN;
+		memcpy(buf, _buf + RH_RF95_HEADER_LEN, *len);
 		ATOMIC_BLOCK_END;
 	}
 	clearRxBuf(); // This message accepted and cleared
@@ -262,28 +267,32 @@ bool RH_RF95::send(const uint8_t* data, uint8_t len)
 	if (len > RH_RF95_MAX_MESSAGE_LEN)
 		return false;
 
-	waitPacketSent(); // Make sure we dont interrupt an outgoing message
+	if (! waitPacketSent(2000))
+		return false;	// Make sure we dont interrupt an outgoing message
+
+    ATOMIC_BLOCK_START;
+
 	setModeIdle();
 
-	// Position at the beginning of the FIFO
-	spiWrite(RH_RF95_REG_0D_FIFO_ADDR_PTR, 0);
-	// The headers
-	spiWrite(RH_RF95_REG_00_FIFO, _txHeaderTo);
-	spiWrite(RH_RF95_REG_00_FIFO, _txHeaderFrom);
-	spiWrite(RH_RF95_REG_00_FIFO, _txHeaderId);
-	spiWrite(RH_RF95_REG_00_FIFO, _txHeaderFlags);
-	// The message data
-	spiBurstWrite(RH_RF95_REG_00_FIFO, data, len);
-	spiWrite(RH_RF95_REG_22_PAYLOAD_LENGTH, len + RH_RF95_HEADER_LEN);
+	spiWriteNoneBlocking(RH_RF95_REG_0D_FIFO_ADDR_PTR, 0);		// Position at the beginning of the FIFO
 
-	setModeTx(); // Start the transmitter
-	// when Tx is done, interruptHandler will fire and radio mode will return to STANDBY
+	spiWriteNoneBlocking(RH_RF95_REG_00_FIFO, _txHeaderTo);		// The headers
+	spiWriteNoneBlocking(RH_RF95_REG_00_FIFO, _txHeaderFrom);
+	spiWriteNoneBlocking(RH_RF95_REG_00_FIFO, _txHeaderId);
+	spiWriteNoneBlocking(RH_RF95_REG_00_FIFO, _txHeaderFlags);
+
+	spiBurstWriteNoneBlocking(RH_RF95_REG_00_FIFO, data, len);	// The message data
+	spiWriteNoneBlocking(RH_RF95_REG_22_PAYLOAD_LENGTH, len + RH_RF95_HEADER_LEN);
+
+	setModeTx();	// Start the transmitter
+					// when Tx is done, interruptHandler will fire
+					// and radio mode will return to STANDBY
+    ATOMIC_BLOCK_END;
 	return true;
 }
 
 bool RH_RF95::printRegisters()
 {
-#ifdef RH_HAVE_SERIAL
 	uint8_t registers[] = { 0x01, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x014, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27};
 
 	uint8_t i;
@@ -293,7 +302,6 @@ bool RH_RF95::printRegisters()
 		Serial.print(": ");
 		Serial.println(spiRead(registers[i]), HEX);
 	}
-#endif
 	return true;
 }
 
