@@ -40,6 +40,8 @@ void setup()
 	}
 	else
 	{
+		driver.setTxPower(23);
+
 		digitalWrite(LED3, LOW);
 		digitalWrite(LED2, HIGH);
 		Serial.print("Revision: 0x");
