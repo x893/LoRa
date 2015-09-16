@@ -156,11 +156,10 @@ int HardwareSerial::read(void)
 	return _rxRingBuffer.read();
 }
 
-size_t HardwareSerial::write(uint8_t ch)
+void HardwareSerial::write(uint8_t ch)
 {
 	_txRingBuffer.write(ch);						// Queue it
 	USART_ITConfig(_usart, USART_IT_TXE, ENABLE);	// Enable the TX interrupt
-	return 1;
 }
 
 extern "C"

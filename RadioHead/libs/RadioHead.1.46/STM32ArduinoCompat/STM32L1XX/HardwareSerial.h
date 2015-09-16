@@ -40,11 +40,11 @@ public:
 	void end() { }
 	virtual int available(void)		{ return 0; }
 	virtual int read(void)			{ return 0; }
-	virtual size_t write(uint8_t)	{ return 1; }
-	inline size_t write(uint64_t n)	{ return 1; }
-	inline size_t write(int64_t n)	{ return 1; }
-	inline size_t write(uint32_t n)	{ return 1; }
-	inline size_t write(int32_t n)	{ return 1; }
+	virtual void write(uint8_t)		{ }
+	inline void write(uint64_t n)	{ }
+	inline void write(int64_t n)	{ }
+	inline void write(uint32_t n)	{ }
+	inline void write(int32_t n)	{ }
 };
 
 // Mostly compatible wuith Arduino HardwareSerial
@@ -57,11 +57,11 @@ public:
 	void end();
 	virtual int available(void);
 	virtual int read(void);
-	virtual size_t write(uint8_t);
-	inline size_t write(uint64_t n)	{ return write((uint8_t)n); }
-	inline size_t write(int64_t n)	{ return write((uint8_t)n); }
-	inline size_t write(uint32_t n)	{ return write((uint8_t)n); }
-	inline size_t write(int32_t n)	{ return write((uint8_t)n); }
+	virtual void write(uint8_t);
+	inline void write(uint64_t n)	{ write((uint8_t)n); }
+	inline void write(int64_t n)	{ write((uint8_t)n); }
+	inline void write(uint32_t n)	{ write((uint8_t)n); }
+	inline void write(int32_t n)	{ write((uint8_t)n); }
 
 	// These need to be public so the IRQ handler can read and write to them:
 	RingBuffer	 _rxRingBuffer;

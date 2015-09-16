@@ -7,7 +7,6 @@
 
 #include <RHReliableDatagram.h>
 #include <RH_RF95.h>
-#include <SPI.h>
 
 #define LED1	PB11
 #define LED2	PB10
@@ -43,24 +42,59 @@ void setup()
 	{
 		digitalWrite(LED3, LOW);
 		digitalWrite(LED2, HIGH);
-
-		Serial.print("Revision:");
+		Serial.print("Revision: 0x");
 		Serial.println(driver.revision(), HEX);
 	}
+	delay(1000);
+	digitalWrite(LED2, LOW);
 	// Defaults after init are 434.0MHz, 13dBm, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on
 }
 
-uint8_t data[] = "Hello World!";
+void i2a(char * dst, uint32_t n, uint8_t base)
+{
+	char buf[20];
+	char *tmp = buf;
+	char ch;
+
+	if (n == 0)
+	{
+		*tmp++ = 0;
+	}
+	else
+		while (n > 0)
+		{
+			*tmp++ = n % base;
+			n /= base;
+		}
+
+	while (tmp != buf)
+	{
+		--tmp;
+		ch = *tmp;
+		*dst++ = (
+				ch < 10 ?
+				ch + '0' :
+				ch + ('A' - 10)
+				);
+	}
+	*dst = 0;
+}
+
+uint32_t package_count = 0;
+char data[] = "SEQ: XXXXXXXX";
 // Dont put this on the stack:
 uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
 
 void loop()
 {
-	Serial.println("Sending to rf95_reliable_datagram_server");
-
 	// Send a message to manager_server
+	i2a(data + 5, package_count, DEC);
+	Serial.print("Sending ");
+	Serial.print(data);
+
 	digitalWrite(LED1, HIGH);
-	if (manager.sendtoWait(data, sizeof(data), SERVER_ADDRESS))
+
+	if (manager.sendtoWait((uint8_t *)data, sizeof(data), SERVER_ADDRESS))
 	{
 		// Now wait for a reply from the server
 		uint8_t len = sizeof(buf);
@@ -69,27 +103,30 @@ void loop()
 		{
 			digitalWrite(LED1, LOW);
 			digitalWrite(LED2, HIGH);
-			Serial.print("got reply from : 0x");
+			Serial.print(" - Reply from : 0x");
 			Serial.print(from, HEX);
-			Serial.print(": ");
-			Serial.println((char*)buf);
+			Serial.print(" : RSSI ");
+			Serial.print(driver.lastRssi());
+			Serial.print(" : ");
+			Serial.println((char *)buf);
 		}
 		else
 		{
+			Serial.println(" - No reply");
 			digitalWrite(LED1, LOW);
 			digitalWrite(LED3, HIGH);
-			Serial.println("No reply, is rf95_reliable_datagram_server running?");
 		}
 	}
 	else
 	{
+		Serial.println(" - Failed");
 		digitalWrite(LED1, LOW);
 		digitalWrite(LED3, HIGH);
-		Serial.println("sendtoWait failed");
 	}
 	delay(500);
 	digitalWrite(LED1, LOW);
 	digitalWrite(LED2, LOW);
 	digitalWrite(LED3, LOW);
 	delay(500);
+	++package_count;
 }

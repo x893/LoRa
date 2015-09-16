@@ -1,6 +1,8 @@
 #ifndef RadioHead_h
 #define RadioHead_h
 
+#include <stdint.h>
+
 // Official version numbers are maintained automatically by Makefile:
 #define RH_VERSION_MAJOR 1
 #define RH_VERSION_MINOR 46
@@ -98,8 +100,9 @@
 	#define RH_HAVE_HARDWARE_SPI
 	// #define BOARD_HAVE_SERIAL1
 	// #define BOARD_HAVE_SERIAL2
-	// #define BOARD_HAVE_SERIALUSB
-	#define Serial SerialNull
+	#define BOARD_HAVE_SERIALUSB
+	#define Serial SerialUSB
+
 	#include <wirish.h>
 
 #elif (RH_PLATFORM == RH_PLATFORM_STM32STD)		// STM32 with STM32F4xx_StdPeriph_Driver 
@@ -175,7 +178,7 @@
 #else
 
 	// TO BE DONE:
-	extern uint32_t disable_irq_count;
+	extern volatile uint32_t disable_irq_count;
 	#define ATOMIC_BLOCK_START			\
 		do {							\
 			__disable_irq();			\

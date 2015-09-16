@@ -7,7 +7,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <stm32l1xx.h>
+#include <Radiohead.h>
 
 #include <HardwareSPI.h>
 #include <HardwareSerial.h>
@@ -87,8 +87,14 @@ void digitalWrite(uint8_t pin, uint8_t val);
 uint8_t digitalRead(uint8_t pin);
 void attachInterrupt(uint8_t, void (*)(void), int mode);
 
-uint32_t millis();
-void delay(uint32_t millis);
+#ifdef __cplusplus
+extern "C" {
+#endif
+	extern uint32_t millis(void);
+	extern void delay(uint32_t ms);
+#ifdef __cplusplus
+}
+#endif
 
 int32_t random(int32_t to);
 int32_t random(int32_t from, int32_t to);

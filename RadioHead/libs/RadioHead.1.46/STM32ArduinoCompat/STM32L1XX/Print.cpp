@@ -1,55 +1,69 @@
 #include "Print.h"
 
-size_t Print::print(const char* s)
+void Print::print(const char* s)
 {
 	while (*s != 0)
 		write(*s++);
-	return 0;
 }
 
-size_t Print::println(const char* s)
+void Print::println(const char* s)
 {
 	print(s);
 	print("\r\n");
-	return 0;
 }
 
-size_t Print::print(char ch)
+void Print::print(char ch)
 {
 	write(ch);
-	return 0;
 }
 
-size_t Print::println(char ch)
+void Print::println(char ch)
 {
 	write(ch);
 	print("\r\n");
-	return 0;
 }
 
-size_t Print::print(uint32_t n, uint8_t base)
+void Print::print(int32_t n)
 {
-	/*
-	if (base == DEC)
-		printf("%d", n);
-	else if (base == HEX)
-		printf("%02x", n);
-	else if (base == OCT)
-		printf("%o", n);
-	else if (base == BIN)
-		printf("%o", n);
-	*/
-	return 0;
+	if (n < 0)
+	{
+		write('-');
+		n = -n;
+	}
+	print((uint32_t)n, DEC);
 }
 
-size_t Print::print(uint8_t ch, uint8_t base)
+void Print::print(uint32_t n, uint8_t base)
 {
-	return print((uint32_t)ch, base);
+	char buf[20];
+    int i = 0;
+
+	if (n == 0)
+		buf[i++] = 0;
+	else
+		while (n > 0)
+		{
+			buf[i++] = n % base;
+			n /= base;
+		}
+
+	for (; i > 0; i--)
+	{
+		print((char)(
+					buf[i - 1] < 10 ?
+					buf[i - 1] + '0' :
+					buf[i - 1] + ('A' - 10))
+			);
+	}
 }
 
-size_t Print::println(uint8_t ch, uint8_t base)
+void Print::print(uint8_t ch, uint8_t base)
+{
+	print((uint32_t)ch, base);
+}
+
+void Print::println(uint8_t ch, uint8_t base)
 {
 	print((uint32_t)ch, base);
 	print("\r\n");
-	return 0;
 }

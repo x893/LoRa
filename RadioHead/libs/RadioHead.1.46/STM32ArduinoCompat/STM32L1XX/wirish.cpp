@@ -12,8 +12,8 @@ typedef struct
 	uint32_t		ahbperiph;
 	GPIO_TypeDef*	port;
 	uint16_t		pin;
-	uint8_t			extiportsource;
-	uint8_t			extipinsource;
+	uint8_t			extiPortSource;
+	uint8_t			extiPinSource;
 } GPIOPin;
 
 // These describe the registers and bits for each digital IO pin to allow us to 
@@ -76,9 +76,8 @@ const GPIOPin pins[] =
 
 typedef struct
 {
-	uint32_t	extiline;
-	uint8_t		extiirqn;
-// 	void		(*handler)(void);
+	uint32_t	extiLine;
+	uint8_t		extiIrqn;
 } IRQLine;
 
 typedef void (*IRQHandler)(void);
@@ -112,7 +111,6 @@ IRQHandler irqHandlers[NUM_IRQ_LINES];
 extern void setup();
 extern void loop();
 
-volatile uint32_t systick_count = 0;
 volatile uint32_t disable_irq_count = 0;
 
 void SysTickConfig()
@@ -130,20 +128,14 @@ void SysTickConfig()
 // These interrupt handlers have to be extern C else they dont get linked in to the interrupt vectors
 extern "C"
 {
-	// Called every 1 ms
-	void SysTick_Handler(void)
-	{
-		systick_count++;
-	}
-
 	// Interrupt handlers for optional external GPIO interrupts
 	static void EXTIx_IRQHandler(uint8_t irq)
 	{
-		if (EXTI_GetITStatus(irqlines[irq].extiline) != RESET)
+		if (EXTI_GetITStatus(irqlines[irq].extiLine) != RESET)
 		{
 			if (irqHandlers[irq])
 				irqHandlers[irq]();
-			EXTI_ClearITPendingBit(irqlines[irq].extiline);
+			EXTI_ClearITPendingBit(irqlines[irq].extiLine);
 		}
 	}
 
@@ -263,16 +255,18 @@ void attachInterrupt(uint8_t pin, void (*handler)(void), int mode)
 {
 	EXTI_InitTypeDef EXTI_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
-	uint8_t extiPinSource = pins[pin].extipinsource;
+	uint8_t extiPinSource = pins[pin].extiPinSource;
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
 
 	// Record the handler to call when the interrupt occurs
 	irqHandlers[extiPinSource] = handler;
 
 	/* Connect EXTI Line to GPIO Pin */
-	SYSCFG_EXTILineConfig(pins[pin].extiportsource, extiPinSource);
+	SYSCFG_EXTILineConfig(pins[pin].extiPortSource, extiPinSource);
 
 	/* Configure EXTI line */
-	EXTI_InitStructure.EXTI_Line = irqlines[extiPinSource].extiline;
+	EXTI_InitStructure.EXTI_Line = irqlines[extiPinSource].extiLine;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
 
 	if (mode == RISING)
@@ -286,7 +280,7 @@ void attachInterrupt(uint8_t pin, void (*handler)(void), int mode)
 	EXTI_Init(&EXTI_InitStructure);
 
 	/* Enable and set EXTI Interrupt to the lowest priority */
-	NVIC_InitStructure.NVIC_IRQChannel = irqlines[extiPinSource].extiirqn;
+	NVIC_InitStructure.NVIC_IRQChannel = irqlines[extiPinSource].extiIrqn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -300,13 +294,8 @@ void attachInterrupt(uint8_t pin, void (*handler)(void), int mode)
 void delay(uint32_t ms)
 {
 	uint32_t start = millis();
-	while (millis() - start < ms)
+	while ((millis() - start) < ms)
 		;
-}
-
-uint32_t millis()
-{
-	return systick_count;
 }
 
 int32_t random(int32_t from, int32_t to)

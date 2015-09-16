@@ -140,7 +140,7 @@
           <Target>
             <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>0</RunToMain>
+            <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -373,7 +373,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER MCU_STM32L1XX</Define>
               <Undefine></Undefine>
-              <IncludePath>.\libs\STM32L1xx_StdPeriph_Driver\inc;.\libs\RadioHead.1.46;.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX</IncludePath>
+              <IncludePath>.\libs\STM32L1xx_StdPeriph_Driver\inc;.\libs\RadioHead.1.46;.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX;.\libs\STM32_USB-FS-Device_Driver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -484,21 +484,6 @@
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\misc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32l1xx_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_aes.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_aes.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_aes_util.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_aes_util.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32l1xx_comp.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_comp.c</FilePath>
@@ -507,11 +492,6 @@
               <FileName>stm32l1xx_crc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_crc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_dac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_dac.c</FilePath>
             </File>
             <File>
               <FileName>stm32l1xx_dbgmcu.c</FileName>
@@ -586,34 +566,14 @@
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_flash_ramfunc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32l1xx_fsmc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_fsmc.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32l1xx_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>stm32l1xx_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32l1xx_iwdg.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_iwdg.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_lcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_lcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_opamp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_opamp.c</FilePath>
             </File>
             <File>
               <FileName>stm32l1xx_pwr.c</FileName>
@@ -629,11 +589,6 @@
               <FileName>stm32l1xx_rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_sdio.c</FilePath>
             </File>
             <File>
               <FileName>stm32l1xx_spi.c</FileName>
@@ -654,11 +609,6 @@
               <FileName>stm32l1xx_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_wwdg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_wwdg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -729,6 +679,71 @@
               <FileName>Print.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\Print.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>usb_prop.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\usb_prop.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_desc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\usb_desc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_endp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\usb_endp.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_istr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\usb_istr.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\usb_pwr.c</FilePath>
+            </File>
+            <File>
+              <FileName>systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\systick.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>STM32_USB-FS-Device_Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_int.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_int.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_mem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_mem.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_regs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_regs.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_sil.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_sil.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1107,7 +1122,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER MCU_STM32L1XX</Define>
               <Undefine></Undefine>
-              <IncludePath>.\libs\STM32L1xx_StdPeriph_Driver\inc;.\libs\RadioHead.1.46;.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX</IncludePath>
+              <IncludePath>.\libs\STM32L1xx_StdPeriph_Driver\inc;.\libs\RadioHead.1.46;.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX;.\libs\STM32_USB-FS-Device_Driver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1218,21 +1233,6 @@
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\misc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32l1xx_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_aes.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_aes.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_aes_util.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_aes_util.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32l1xx_comp.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_comp.c</FilePath>
@@ -1241,11 +1241,6 @@
               <FileName>stm32l1xx_crc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_crc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_dac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_dac.c</FilePath>
             </File>
             <File>
               <FileName>stm32l1xx_dbgmcu.c</FileName>
@@ -1320,34 +1315,14 @@
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_flash_ramfunc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32l1xx_fsmc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_fsmc.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32l1xx_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>stm32l1xx_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32l1xx_iwdg.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_iwdg.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_lcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_lcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_opamp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_opamp.c</FilePath>
             </File>
             <File>
               <FileName>stm32l1xx_pwr.c</FileName>
@@ -1363,11 +1338,6 @@
               <FileName>stm32l1xx_rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_sdio.c</FilePath>
             </File>
             <File>
               <FileName>stm32l1xx_spi.c</FileName>
@@ -1388,11 +1358,6 @@
               <FileName>stm32l1xx_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_wwdg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\libs\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_wwdg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1463,6 +1428,71 @@
               <FileName>Print.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\Print.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>usb_prop.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\usb_prop.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_desc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\usb_desc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_endp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\usb_endp.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_istr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\usb_istr.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\usb_pwr.c</FilePath>
+            </File>
+            <File>
+              <FileName>systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX\systick.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>STM32_USB-FS-Device_Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_int.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_int.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_mem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_mem.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_regs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_regs.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_sil.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\libs\STM32_USB-FS-Device_Driver\src\usb_sil.c</FilePath>
             </File>
           </Files>
         </Group>

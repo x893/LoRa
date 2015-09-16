@@ -8,9 +8,10 @@ class USBSerial : public Print
 public:
     // TODO: move these from being inlined
     void begin(uint32_t baud);
+	virtual void write(uint8_t);
 };
 
-#if BOARD_HAVE_SERIALUSB
+#ifdef BOARD_HAVE_SERIALUSB
 	extern USBSerial SerialUSB;
 	#define HAVE_CDCSERIAL
 #endif

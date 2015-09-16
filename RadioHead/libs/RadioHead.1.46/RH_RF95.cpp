@@ -82,7 +82,7 @@ bool RH_RF95::init()
 	// Add by Adrien van den Bossche <vandenbo@univ-tlse2.fr> for Teensy
 	// ARM M4 requires the below. else pin interrupt doesn't work properly.
 	// On all other platforms, its innocuous, belt and braces
-	pinMode(_interruptPin, INPUT);
+	pinMode(_interruptPin, INPUT_PULLDOWN);
 
 	// Set up interrupt handler
 	// Since there are a limited number of interrupt glue functions isr*() available,
@@ -167,7 +167,7 @@ void RH_RF95::handleInterrupt()
 			spiWriteNoneBlocking(RH_RF95_REG_0D_FIFO_ADDR_PTR, spiRead(RH_RF95_REG_10_FIFO_RX_CURRENT_ADDR));
 			spiBurstReadNoneBlocking(RH_RF95_REG_00_FIFO, _buf, len);
 			_bufLen = len;
-			spiWriteNoneBlocking(RH_RF95_REG_12_IRQ_FLAGS, 0xff); // Clear all IRQ flags
+			spiWriteNoneBlocking(RH_RF95_REG_12_IRQ_FLAGS, 0xFF); // Clear all IRQ flags
 
 			// Remember the RSSI of this packet
 			// this is according to the doc, but is it really correct?
@@ -293,13 +293,49 @@ bool RH_RF95::send(const uint8_t* data, uint8_t len)
 
 bool RH_RF95::printRegisters()
 {
-	uint8_t registers[] = { 0x01, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x014, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27};
+	uint8_t registers[] = {
+		RH_RF95_REG_01_OP_MODE,
+		RH_RF95_REG_06_FRF_MSB,
+		RH_RF95_REG_07_FRF_MID,
+		RH_RF95_REG_08_FRF_LSB,
+		RH_RF95_REG_09_PA_CONFIG,
+		RH_RF95_REG_0A_PA_RAMP,
+		RH_RF95_REG_0B_OCP,
+		RH_RF95_REG_0C_LNA,
+		RH_RF95_REG_0D_FIFO_ADDR_PTR,
+		RH_RF95_REG_0E_FIFO_TX_BASE_ADDR,
+		RH_RF95_REG_0F_FIFO_RX_BASE_ADDR,
+		RH_RF95_REG_10_FIFO_RX_CURRENT_ADDR,
+		RH_RF95_REG_11_IRQ_FLAGS_MASK,
+		RH_RF95_REG_12_IRQ_FLAGS,
+		RH_RF95_REG_13_RX_NB_BYTES,
+		RH_RF95_REG_14_RX_HEADER_CNT_VALUE_MSB,
+		RH_RF95_REG_15_RX_HEADER_CNT_VALUE_LSB,
+		RH_RF95_REG_16_RX_PACKET_CNT_VALUE_MSB,
+		RH_RF95_REG_17_RX_PACKET_CNT_VALUE_LSB,
+		RH_RF95_REG_18_MODEM_STAT,
+		RH_RF95_REG_19_PKT_SNR_VALUE,
+		RH_RF95_REG_1A_PKT_RSSI_VALUE,
+		RH_RF95_REG_1B_RSSI_VALUE,
+		RH_RF95_REG_1C_HOP_CHANNEL,
+		RH_RF95_REG_1D_MODEM_CONFIG1,
+		RH_RF95_REG_1E_MODEM_CONFIG2,
+		RH_RF95_REG_1F_SYMB_TIMEOUT_LSB,
+		RH_RF95_REG_20_PREAMBLE_MSB,
+		RH_RF95_REG_21_PREAMBLE_LSB,
+		RH_RF95_REG_22_PAYLOAD_LENGTH,
+		RH_RF95_REG_23_MAX_PAYLOAD_LENGTH,
+		RH_RF95_REG_24_HOP_PERIOD,
+		RH_RF95_REG_25_FIFO_RX_BYTE_ADDR,
+		RH_RF95_REG_26_MODEM_CONFIG3,
+		RH_RF95_REG_27_SYNC_CONFIG
+	};
 
 	uint8_t i;
 	for (i = 0; i < sizeof(registers); i++)
 	{
 		Serial.print(registers[i], HEX);
-		Serial.print(": ");
+		Serial.print(" : ");
 		Serial.println(spiRead(registers[i]), HEX);
 	}
 	return true;
@@ -314,10 +350,14 @@ bool RH_RF95::setFrequency(float centre)
 {
 	// Frf = FRF / FSTEP
 	uint32_t frf = (centre * 1000000.0) / RH_RF95_FSTEP;
-	spiWrite(RH_RF95_REG_06_FRF_MSB, (frf >> 16) & 0xFF);
-	spiWrite(RH_RF95_REG_07_FRF_MID, (frf >> 8) & 0xFF);
-	spiWrite(RH_RF95_REG_08_FRF_LSB, frf & 0xFF);
 
+	ATOMIC_BLOCK_START;
+
+	spiWriteNoneBlocking(RH_RF95_REG_06_FRF_MSB, (frf >> 16) & 0xFF);
+	spiWriteNoneBlocking(RH_RF95_REG_07_FRF_MID, (frf >> 8) & 0xFF);
+	spiWriteNoneBlocking(RH_RF95_REG_08_FRF_LSB, frf & 0xFF);
+	
+	ATOMIC_BLOCK_END;
 	return true;
 }
 
@@ -325,8 +365,12 @@ void RH_RF95::setModeIdle()
 {
 	if (_mode != RHModeIdle)
 	{
-		spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_STDBY);
+		ATOMIC_BLOCK_START;
+
 		_mode = RHModeIdle;
+		spiWriteNoneBlocking(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_STDBY);
+
+		ATOMIC_BLOCK_END;
 	}
 }
 
@@ -344,9 +388,13 @@ void RH_RF95::setModeRx()
 {
 	if (_mode != RHModeRx)
 	{
-		spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_RXCONTINUOUS);
-		spiWrite(RH_RF95_REG_40_DIO_MAPPING1, 0x00);	// Interrupt on RxDone
+		ATOMIC_BLOCK_START;
+
 		_mode = RHModeRx;
+		spiWriteNoneBlocking(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_RXCONTINUOUS);
+		spiWriteNoneBlocking(RH_RF95_REG_40_DIO_MAPPING1, 0x00);	// Interrupt on RxDone
+
+		ATOMIC_BLOCK_END;
 	}
 }
 
@@ -354,9 +402,13 @@ void RH_RF95::setModeTx()
 {
 	if (_mode != RHModeTx)
 	{
-		spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_TX);
-		spiWrite(RH_RF95_REG_40_DIO_MAPPING1, 0x40);	// Interrupt on TxDone
+		ATOMIC_BLOCK_START;
+
 		_mode = RHModeTx;
+		spiWriteNoneBlocking(RH_RF95_REG_40_DIO_MAPPING1, 0x40);		// Interrupt on TxDone
+		spiWriteNoneBlocking(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_TX);	// Set TX mode
+
+		ATOMIC_BLOCK_END;
 	}
 }
 
@@ -367,17 +419,19 @@ void RH_RF95::setTxPower(int8_t power)
 	if (power < 5)
 		power = 5;
 
+	ATOMIC_BLOCK_START;
+	
 	// For RH_RF95_PA_DAC_ENABLE, manual says '+20dBm on PA_BOOST when OutputPower=0xf'
 	// RH_RF95_PA_DAC_ENABLE actually adds about 3dBm to all power levels. We will us it
 	// for 21, 22 and 23dBm
 	if (power > 20)
 	{
-		spiWrite(RH_RF95_REG_4D_PA_DAC, RH_RF95_PA_DAC_ENABLE);
+		spiWriteNoneBlocking(RH_RF95_REG_4D_PA_DAC, RH_RF95_PA_DAC_ENABLE);
 		power -= 3;
 	}
 	else
 	{
-		spiWrite(RH_RF95_REG_4D_PA_DAC, RH_RF95_PA_DAC_DISABLE);
+		spiWriteNoneBlocking(RH_RF95_REG_4D_PA_DAC, RH_RF95_PA_DAC_DISABLE);
 	}
 
 	// RFM95/96/97/98 does not have RFO pins connected to anything. Only PA_BOOST
@@ -386,15 +440,22 @@ void RH_RF95::setTxPower(int8_t power)
 	// The documentation is pretty confusing on this topic: PaSelect says the max power is 20dBm,
 	// but OutputPower claims it would be 17dBm.
 	// My measurements show 20dBm is correct
-	spiWrite(RH_RF95_REG_09_PA_CONFIG, RH_RF95_PA_SELECT | (power-5));
+	spiWriteNoneBlocking(RH_RF95_REG_09_PA_CONFIG, RH_RF95_PA_SELECT | (power - 5));
+
+	ATOMIC_BLOCK_END;
+
 }
 
 // Sets registers from a canned modem configuration structure
 void RH_RF95::setModemRegisters(const ModemConfig* config)
 {
-	spiWrite(RH_RF95_REG_1D_MODEM_CONFIG1,		config->reg_1d);
-	spiWrite(RH_RF95_REG_1E_MODEM_CONFIG2,		config->reg_1e);
-	spiWrite(RH_RF95_REG_26_MODEM_CONFIG3,		config->reg_26);
+	ATOMIC_BLOCK_START;
+
+	spiWriteNoneBlocking(RH_RF95_REG_1D_MODEM_CONFIG1,		config->reg_1d);
+	spiWriteNoneBlocking(RH_RF95_REG_1E_MODEM_CONFIG2,		config->reg_1e);
+	spiWriteNoneBlocking(RH_RF95_REG_26_MODEM_CONFIG3,		config->reg_26);
+
+	ATOMIC_BLOCK_END;
 }
 
 // Set one of the canned FSK Modem configs
@@ -406,13 +467,17 @@ bool RH_RF95::setModemConfig(ModemConfigChoice index)
 
 	ModemConfig cfg;
 	memcpy_P(&cfg, &MODEM_CONFIG_TABLE[index], sizeof(RH_RF95::ModemConfig));
-	setModemRegisters(&cfg);
 
+	setModemRegisters(&cfg);
 	return true;
 }
 
 void RH_RF95::setPreambleLength(uint16_t bytes)
 {
-	spiWrite(RH_RF95_REG_20_PREAMBLE_MSB, bytes >> 8);
-	spiWrite(RH_RF95_REG_21_PREAMBLE_LSB, bytes & 0xFF);
+	ATOMIC_BLOCK_START;
+
+	spiWriteNoneBlocking(RH_RF95_REG_20_PREAMBLE_MSB, bytes >> 8);
+	spiWriteNoneBlocking(RH_RF95_REG_21_PREAMBLE_LSB, bytes & 0xFF);
+
+	ATOMIC_BLOCK_END;
 }
