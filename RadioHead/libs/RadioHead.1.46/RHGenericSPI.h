@@ -7,7 +7,7 @@
 #ifndef RHGenericSPI_h
 #define RHGenericSPI_h
 
-#include <RadioHead.h>
+#include "RadioHead.h"
 
 /////////////////////////////////////////////////////////////////////
 /// \class RHGenericSPI RHGenericSPI.h <RHGenericSPI.h>

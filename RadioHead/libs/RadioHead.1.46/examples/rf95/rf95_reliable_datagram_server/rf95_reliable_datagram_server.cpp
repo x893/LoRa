@@ -5,8 +5,8 @@
 // It is designed to work with the other example rf95_reliable_datagram_client
 // Tested with Anarduino MiniWirelessLoRa
 
-#include <RHReliableDatagram.h>
-#include <RH_RF95.h>
+#include "RHReliableDatagram.h"
+#include "RH_RF95.h"
 
 #define LED1	PB11
 #define LED2	PB10
@@ -69,7 +69,7 @@ void loop()
 			Serial.print("Request from : 0x");
 			Serial.print(from, HEX);
 			Serial.print(" : RSSI ");
-			Serial.print((uint8_t)driver.lastRssi(), DEC);
+			Serial.print(driver.lastRssi());
 			Serial.print(" : ");
 			Serial.println((char*)buf);
 

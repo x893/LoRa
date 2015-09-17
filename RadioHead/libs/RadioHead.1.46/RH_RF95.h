@@ -12,7 +12,7 @@
 #ifndef RH_RF95_h
 #define RH_RF95_h
 
-#include <RHSPIDriver.h>
+#include "RHSPIDriver.h"
 
 // This is the maximum number of interrupts the driver can support
 // Most Arduinos can handle 2, Megas can handle more

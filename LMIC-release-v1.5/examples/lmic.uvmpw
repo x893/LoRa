@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ProjectWorkspace xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_mpw.xsd">
+
+  <SchemaVersion>1.0</SchemaVersion>
+
+  <Header>### uVision Project, (C) Keil Software</Header>
+
+  <WorkspaceName>WorkSpace</WorkspaceName>
+
+  <project>
+    <PathAndName>.\beacon\beacon.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
+  </project>
+
+  <project>
+    <PathAndName>.\hello\hello.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\interrupt\interrupt.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\join\join.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\periodic\periodic.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\ping\ping.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\transmit\transmit.uvprojx</PathAndName>
+  </project>
+
+</ProjectWorkspace>

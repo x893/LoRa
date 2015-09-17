@@ -7,7 +7,7 @@
 #ifndef RHHardwareSPI_h
 #define RHHardwareSPI_h
 
-#include <RHGenericSPI.h>
+#include "RHGenericSPI.h"
 
 /////////////////////////////////////////////////////////////////////
 /// \class RHHardwareSPI RHHardwareSPI.h <RHHardwareSPI.h>

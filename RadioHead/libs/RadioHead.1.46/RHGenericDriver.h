@@ -6,7 +6,7 @@
 #ifndef RHGenericDriver_h
 #define RHGenericDriver_h
 
-#include <RadioHead.h>
+#include "RadioHead.h"
 
 // Defines bits of the FLAGS header reserved for use by the RadioHead library and 
 // the flags available for use by applications

@@ -1,7 +1,7 @@
 #ifndef __USB_SERIAL_H__
 #define __USB_SERIAL_H__
 
-#include <Print.h>
+#include "Print.h"
 
 class USBSerial : public Print
 {

@@ -4,7 +4,7 @@
 // Contributed by Joanna Rutkowska
 // $Id: RHHardwareSPI.cpp,v 1.12 2015/07/01 00:46:05 mikem Exp $
 
-#include <RHHardwareSPI.h>
+#include "RHHardwareSPI.h"
 
 // Declare a single default instance of the hardware SPI interface class
 RHHardwareSPI hardware_spi;

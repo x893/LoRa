@@ -3,7 +3,7 @@
 // Arduino-like API for STM32F4 Discovery and similar
 // using STM32F4xx_DSP_StdPeriph_Lib_V1.3.0
 
-#include <wirish.h>
+#include "wirish.h"
 
 // Describes all the STM32 things we need to know about a digital IO pin to
 // make it input or output or to configure as an interrupt

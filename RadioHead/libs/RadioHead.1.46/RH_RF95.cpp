@@ -3,8 +3,8 @@
 // Copyright (C) 2011 Mike McCauley
 // $Id: RH_RF95.cpp,v 1.8 2015/08/12 23:18:51 mikem Exp $
 
-#include <RH_RF95.h>
-#include <wirish.h>
+#include "RH_RF95.h"
+#include "wirish.h"
 
 // Interrupt vectors for the 3 Arduino interrupt pins
 // Each interrupt can be handled by a different instance of RH_RF95, allowing you to have

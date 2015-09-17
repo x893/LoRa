@@ -7,11 +7,11 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <Radiohead.h>
+#include "Radiohead.h"
 
-#include <HardwareSPI.h>
-#include <HardwareSerial.h>
-#include <USBSerial.h>
+#include "HardwareSPI.h"
+#include "HardwareSerial.h"
+#include "USBSerial.h"
 
 #define PROGMEM
 #define memcpy_P memcpy

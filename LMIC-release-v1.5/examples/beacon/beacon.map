@@ -1,0 +1,1427 @@
+Component: ARM Compiler 5.05 update 2 (build 169) Tool: armlink [4d0f33]
+
+==============================================================================
+
+Section Cross References
+
+    main.o(i.initfunc) refers to lmic.o(i.LMIC_reset) for LMIC_reset
+    main.o(i.initfunc) refers to lmic.o(i.LMIC_startJoining) for LMIC_startJoining
+    main.o(i.main) refers to oslmic.o(i.os_init) for os_init
+    main.o(i.main) refers to debug.o(i.debug_init) for debug_init
+    main.o(i.main) refers to oslmic.o(i.os_setCallback) for os_setCallback
+    main.o(i.main) refers to oslmic.o(i.os_runloop) for os_runloop
+    main.o(i.main) refers to main.o(i.initfunc) for initfunc
+    main.o(i.onEvent) refers to debug.o(i.debug_event) for debug_event
+    main.o(i.onEvent) refers to lmic.o(i.LMIC_enableTracking) for LMIC_enableTracking
+    main.o(i.onEvent) refers to debug.o(i.debug_str) for debug_str
+    main.o(i.onEvent) refers to debug.o(i.debug_led) for debug_led
+    main.o(i.onEvent) refers to debug.o(i.debug_val) for debug_val
+    main.o(i.onEvent) refers to lmic.o(.bss) for LMIC
+    main.o(i.os_getArtEui) refers to main.o(.constdata) for APPEUI
+    main.o(i.os_getDevEui) refers to main.o(.constdata) for DEVEUI
+    main.o(i.os_getDevKey) refers to memcpya.o(.text) for __aeabi_memcpy
+    main.o(i.os_getDevKey) refers to main.o(.constdata) for DEVKEY
+    aes.o(i.aesroundkeys) refers to aes.o(.bss) for AESKEY
+    aes.o(i.aesroundkeys) refers to aes.o(.constdata) for AES_S
+    aes.o(i.os_aes) refers to aes.o(i.aesroundkeys) for aesroundkeys
+    aes.o(i.os_aes) refers to aes.o(.bss) for AESAUX
+    aes.o(i.os_aes) refers to aes.o(.constdata) for AES_E4
+    lmic.o(i.LMIC_clrTxData) refers to oslmic.o(i.os_clearCallback) for os_clearCallback
+    lmic.o(i.LMIC_clrTxData) refers to radio.o(i.os_radio) for os_radio
+    lmic.o(i.LMIC_clrTxData) refers to lmic.o(i.engineUpdate) for engineUpdate
+    lmic.o(i.LMIC_clrTxData) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_disableChannel) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_disableTracking) refers to lmic.o(i.engineUpdate) for engineUpdate
+    lmic.o(i.LMIC_disableTracking) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_enableTracking) refers to lmic.o(i.startScan) for startScan
+    lmic.o(i.LMIC_enableTracking) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_init) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_reset) refers to radio.o(i.os_radio) for os_radio
+    lmic.o(i.LMIC_reset) refers to oslmic.o(i.os_clearCallback) for os_clearCallback
+    lmic.o(i.LMIC_reset) refers to memseta.o(.text) for __aeabi_memclr4
+    lmic.o(i.LMIC_reset) refers to radio.o(i.radio_rand1) for radio_rand1
+    lmic.o(i.LMIC_reset) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_sendAlive) refers to lmic.o(i.engineUpdate) for engineUpdate
+    lmic.o(i.LMIC_sendAlive) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_setAdrMode) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_setDrTxpow) refers to lmic.o(i.setDrTxpow) for setDrTxpow
+    lmic.o(i.LMIC_setLinkCheckMode) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_setPingable) refers to lmic.o(i.LMIC_enableTracking) for LMIC_enableTracking
+    lmic.o(i.LMIC_setPingable) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_setSession) refers to memcpya.o(.text) for __aeabi_memcpy
+    lmic.o(i.LMIC_setSession) refers to lmic.o(i.initDefaultChannels) for initDefaultChannels
+    lmic.o(i.LMIC_setSession) refers to lmic.o(i.stateJustJoined) for stateJustJoined
+    lmic.o(i.LMIC_setSession) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_setTxData) refers to lmic.o(i.engineUpdate) for engineUpdate
+    lmic.o(i.LMIC_setTxData) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_setTxData2) refers to memcpya.o(.text) for __aeabi_memcpy
+    lmic.o(i.LMIC_setTxData2) refers to lmic.o(i.LMIC_setTxData) for LMIC_setTxData
+    lmic.o(i.LMIC_setTxData2) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_setupBand) refers to oslmic.o(i.os_getTime) for os_getTime
+    lmic.o(i.LMIC_setupBand) refers to radio.o(i.radio_rand1) for radio_rand1
+    lmic.o(i.LMIC_setupBand) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_setupChannel) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_shutdown) refers to oslmic.o(i.os_clearCallback) for os_clearCallback
+    lmic.o(i.LMIC_shutdown) refers to radio.o(i.os_radio) for os_radio
+    lmic.o(i.LMIC_shutdown) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_startJoining) refers to hal.o(i.hal_failed) for hal_failed
+    lmic.o(i.LMIC_startJoining) refers to lmic.o(i.initJoinLoop) for initJoinLoop
+    lmic.o(i.LMIC_startJoining) refers to oslmic.o(i.os_setCallback) for os_setCallback
+    lmic.o(i.LMIC_startJoining) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_startJoining) refers to lmic.o(i.startJoining) for startJoining
+    lmic.o(i.LMIC_stopPingable) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.LMIC_tryRejoin) refers to lmic.o(i.engineUpdate) for engineUpdate
+    lmic.o(i.LMIC_tryRejoin) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.aes_appendMic) refers to lmic.o(i.micB0) for micB0
+    lmic.o(i.aes_appendMic) refers to memcpya.o(.text) for __aeabi_memcpy
+    lmic.o(i.aes_appendMic) refers to aes.o(i.os_aes) for os_aes
+    lmic.o(i.aes_appendMic) refers to lmic.o(i.os_wmsbf4) for os_wmsbf4
+    lmic.o(i.aes_appendMic) refers to aes.o(.bss) for AESKEY
+    lmic.o(i.aes_appendMic0) refers to main.o(i.os_getDevKey) for os_getDevKey
+    lmic.o(i.aes_appendMic0) refers to aes.o(i.os_aes) for os_aes
+    lmic.o(i.aes_appendMic0) refers to lmic.o(i.os_wmsbf4) for os_wmsbf4
+    lmic.o(i.aes_appendMic0) refers to aes.o(.bss) for AESKEY
+    lmic.o(i.aes_cipher) refers to lmic.o(i.os_wlsbf4) for os_wlsbf4
+    lmic.o(i.aes_cipher) refers to memcpya.o(.text) for __aeabi_memcpy
+    lmic.o(i.aes_cipher) refers to aes.o(i.os_aes) for os_aes
+    lmic.o(i.aes_cipher) refers to aes.o(.bss) for AESAUX
+    lmic.o(i.aes_encrypt) refers to main.o(i.os_getDevKey) for os_getDevKey
+    lmic.o(i.aes_encrypt) refers to aes.o(i.os_aes) for os_aes
+    lmic.o(i.aes_encrypt) refers to aes.o(.bss) for AESKEY
+    lmic.o(i.aes_sessKeys) refers to memseta.o(.text) for __aeabi_memclr
+    lmic.o(i.aes_sessKeys) refers to lmic.o(i.os_wlsbf2) for os_wlsbf2
+    lmic.o(i.aes_sessKeys) refers to memcpya.o(.text) for __aeabi_memcpy
+    lmic.o(i.aes_sessKeys) refers to main.o(i.os_getDevKey) for os_getDevKey
+    lmic.o(i.aes_sessKeys) refers to aes.o(i.os_aes) for os_aes
+    lmic.o(i.aes_sessKeys) refers to aes.o(.bss) for AESKEY
+    lmic.o(i.aes_verifyMic) refers to lmic.o(i.micB0) for micB0
+    lmic.o(i.aes_verifyMic) refers to memcpya.o(.text) for __aeabi_memcpy
+    lmic.o(i.aes_verifyMic) refers to aes.o(i.os_aes) for os_aes
+    lmic.o(i.aes_verifyMic) refers to lmic.o(i.os_rmsbf4) for os_rmsbf4
+    lmic.o(i.aes_verifyMic) refers to aes.o(.bss) for AESKEY
+    lmic.o(i.aes_verifyMic0) refers to main.o(i.os_getDevKey) for os_getDevKey
+    lmic.o(i.aes_verifyMic0) refers to aes.o(i.os_aes) for os_aes
+    lmic.o(i.aes_verifyMic0) refers to lmic.o(i.os_rmsbf4) for os_rmsbf4
+    lmic.o(i.aes_verifyMic0) refers to aes.o(.bss) for AESKEY
+    lmic.o(i.buildDataFrame) refers to lmic.o(i.os_getBattLevel) for os_getBattLevel
+    lmic.o(i.buildDataFrame) refers to hal.o(i.hal_failed) for hal_failed
+    lmic.o(i.buildDataFrame) refers to lmic.o(i.os_wlsbf4) for os_wlsbf4
+    lmic.o(i.buildDataFrame) refers to lmic.o(i.os_wlsbf2) for os_wlsbf2
+    lmic.o(i.buildDataFrame) refers to memcpya.o(.text) for __aeabi_memcpy
+    lmic.o(i.buildDataFrame) refers to lmic.o(i.aes_cipher) for aes_cipher
+    lmic.o(i.buildDataFrame) refers to lmic.o(i.aes_appendMic) for aes_appendMic
+    lmic.o(i.buildDataFrame) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.buildJoinRequest) refers to main.o(i.os_getArtEui) for os_getArtEui
+    lmic.o(i.buildJoinRequest) refers to main.o(i.os_getDevEui) for os_getDevEui
+    lmic.o(i.buildJoinRequest) refers to lmic.o(i.os_wlsbf2) for os_wlsbf2
+    lmic.o(i.buildJoinRequest) refers to lmic.o(i.aes_appendMic0) for aes_appendMic0
+    lmic.o(i.buildJoinRequest) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.calcAirTime) refers to lmic.o(i.getBw) for getBw
+    lmic.o(i.calcAirTime) refers to lmic.o(i.getNocrc) for getNocrc
+    lmic.o(i.calcAirTime) refers to lmic.o(i.getCr) for getCr
+    lmic.o(i.calcBcnRxWindowFromMillis) refers to ldiv.o(.text) for __aeabi_ldivmod
+    lmic.o(i.calcBcnRxWindowFromMillis) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.calcBcnRxWindowFromMillis) refers to lmic.o(.constdata) for DR2HSYM_osticks
+    lmic.o(i.calcRxWindow) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.calcRxWindow) refers to lmic.o(.constdata) for DR2HSYM_osticks
+    lmic.o(i.convFreq) refers to lmic.o(i.os_rlsbf4) for os_rlsbf4
+    lmic.o(i.decodeBeacon) refers to hal.o(i.hal_failed) for hal_failed
+    lmic.o(i.decodeBeacon) refers to lmic.o(i.os_crc16) for os_crc16
+    lmic.o(i.decodeBeacon) refers to lmic.o(i.os_rlsbf4) for os_rlsbf4
+    lmic.o(i.decodeBeacon) refers to lmic.o(i.os_rlsbf2) for os_rlsbf2
+    lmic.o(i.decodeBeacon) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.decodeFrame) refers to lmic.o(i.os_rlsbf4) for os_rlsbf4
+    lmic.o(i.decodeFrame) refers to lmic.o(i.os_rlsbf2) for os_rlsbf2
+    lmic.o(i.decodeFrame) refers to lmic.o(i.aes_verifyMic) for aes_verifyMic
+    lmic.o(i.decodeFrame) refers to lmic.o(i.getSensitivity) for getSensitivity
+    lmic.o(i.decodeFrame) refers to lmic.o(i.mapChannels) for mapChannels
+    lmic.o(i.decodeFrame) refers to lmic.o(i.validDR) for validDR
+    lmic.o(i.decodeFrame) refers to lmic.o(i.setDrTxpow) for setDrTxpow
+    lmic.o(i.decodeFrame) refers to lmic.o(i.convFreq) for convFreq
+    lmic.o(i.decodeFrame) refers to oslmic.o(i.os_getTime) for os_getTime
+    lmic.o(i.decodeFrame) refers to lmic.o(i.LMIC_setupChannel) for LMIC_setupChannel
+    lmic.o(i.decodeFrame) refers to hal.o(i.hal_failed) for hal_failed
+    lmic.o(i.decodeFrame) refers to ldiv.o(.text) for __aeabi_ldivmod
+    lmic.o(i.decodeFrame) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.decodeFrame) refers to lmic.o(.constdata) for TXPOWLEVELS
+    lmic.o(i.decodeFrame) refers to lmic.o(i.calcBcnRxWindowFromMillis) for calcBcnRxWindowFromMillis
+    lmic.o(i.decodeFrame) refers to lmic.o(i.aes_cipher) for aes_cipher
+    lmic.o(i.engineUpdate) refers to lmic.o(i.LMIC_startJoining) for LMIC_startJoining
+    lmic.o(i.engineUpdate) refers to oslmic.o(i.os_getTime) for os_getTime
+    lmic.o(i.engineUpdate) refers to hal.o(i.hal_failed) for hal_failed
+    lmic.o(i.engineUpdate) refers to lmic.o(i.nextTx) for nextTx
+    lmic.o(i.engineUpdate) refers to lmic.o(i.txDelay) for txDelay
+    lmic.o(i.engineUpdate) refers to lmic.o(i.lowerDR) for lowerDR
+    lmic.o(i.engineUpdate) refers to lmic.o(i.buildJoinRequest) for buildJoinRequest
+    lmic.o(i.engineUpdate) refers to oslmic.o(i.os_setCallback) for os_setCallback
+    lmic.o(i.engineUpdate) refers to lmic.o(i.buildDataFrame) for buildDataFrame
+    lmic.o(i.engineUpdate) refers to lmic.o(i.updr2rps) for updr2rps
+    lmic.o(i.engineUpdate) refers to lmic.o(i.setCr) for setCr
+    lmic.o(i.engineUpdate) refers to lmic.o(i.updateTx) for updateTx
+    lmic.o(i.engineUpdate) refers to radio.o(i.os_radio) for os_radio
+    lmic.o(i.engineUpdate) refers to lmic.o(i.rxschedNext) for rxschedNext
+    lmic.o(i.engineUpdate) refers to lmic.o(i.dndr2rps) for dndr2rps
+    lmic.o(i.engineUpdate) refers to oslmic.o(i.os_setTimedCallback) for os_setTimedCallback
+    lmic.o(i.engineUpdate) refers to lmic.o(i.setBcnRxParams) for setBcnRxParams
+    lmic.o(i.engineUpdate) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.engineUpdate) refers to lmic.o(i.jreqDone) for jreqDone
+    lmic.o(i.engineUpdate) refers to lmic.o(i.runReset) for runReset
+    lmic.o(i.engineUpdate) refers to lmic.o(i.updataDone) for updataDone
+    lmic.o(i.engineUpdate) refers to lmic.o(i.startRxPing) for startRxPing
+    lmic.o(i.engineUpdate) refers to lmic.o(i.processBeacon) for processBeacon
+    lmic.o(i.engineUpdate) refers to lmic.o(i.startRxBcn) for startRxBcn
+    lmic.o(i.engineUpdate) refers to lmic.o(i.runEngineUpdate) for runEngineUpdate
+    lmic.o(i.getSensitivity) refers to lmic.o(i.getBw) for getBw
+    lmic.o(i.getSensitivity) refers to lmic.o(.constdata) for SENSITIVITY
+    lmic.o(i.initDefaultChannels) refers to memseta.o(.text) for __aeabi_memclr4
+    lmic.o(i.initDefaultChannels) refers to radio.o(i.radio_rand1) for radio_rand1
+    lmic.o(i.initDefaultChannels) refers to oslmic.o(i.os_getTime) for os_getTime
+    lmic.o(i.initDefaultChannels) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.initDefaultChannels) refers to lmic.o(.constdata) for iniChannelFreq
+    lmic.o(i.initJoinLoop) refers to radio.o(i.radio_rand1) for radio_rand1
+    lmic.o(i.initJoinLoop) refers to lmic.o(i.setDrJoin) for setDrJoin
+    lmic.o(i.initJoinLoop) refers to lmic.o(i.initDefaultChannels) for initDefaultChannels
+    lmic.o(i.initJoinLoop) refers to hal.o(i.hal_failed) for hal_failed
+    lmic.o(i.initJoinLoop) refers to lmic.o(i.rndDelay) for rndDelay
+    lmic.o(i.initJoinLoop) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.jreqDone) refers to lmic.o(i.txDone) for txDone
+    lmic.o(i.jreqDone) refers to lmic.o(i.setupRx1Jacc) for setupRx1Jacc
+    lmic.o(i.mapChannels) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.micB0) refers to lmic.o(i.os_wlsbf4) for os_wlsbf4
+    lmic.o(i.micB0) refers to aes.o(.bss) for AESAUX
+    lmic.o(i.nextJoinState) refers to lmic.o(i.decDR) for decDR
+    lmic.o(i.nextJoinState) refers to lmic.o(i.setDrJoin) for setDrJoin
+    lmic.o(i.nextJoinState) refers to oslmic.o(i.os_getTime) for os_getTime
+    lmic.o(i.nextJoinState) refers to lmic.o(i.rndDelay) for rndDelay
+    lmic.o(i.nextJoinState) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.nextTx) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.onBcnRx) refers to radio.o(i.os_radio) for os_radio
+    lmic.o(i.onBcnRx) refers to oslmic.o(i.os_clearCallback) for os_clearCallback
+    lmic.o(i.onBcnRx) refers to lmic.o(i.reportEvent) for reportEvent
+    lmic.o(i.onBcnRx) refers to lmic.o(i.decodeBeacon) for decodeBeacon
+    lmic.o(i.onBcnRx) refers to oslmic.o(i.os_setTimedCallback) for os_setTimedCallback
+    lmic.o(i.onBcnRx) refers to lmic.o(i.calcBcnRxWindowFromMillis) for calcBcnRxWindowFromMillis
+    lmic.o(i.onBcnRx) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.onJoinFailed) refers to lmic.o(i.reportEvent) for reportEvent
+    lmic.o(i.processBeacon) refers to lmic.o(i.decodeBeacon) for decodeBeacon
+    lmic.o(i.processBeacon) refers to lmic.o(i.calcBcnRxWindowFromMillis) for calcBcnRxWindowFromMillis
+    lmic.o(i.processBeacon) refers to hal.o(i.hal_failed) for hal_failed
+    lmic.o(i.processBeacon) refers to lmic.o(i.txDelay) for txDelay
+    lmic.o(i.processBeacon) refers to lmic.o(i.reportEvent) for reportEvent
+    lmic.o(i.processBeacon) refers to lmic.o(i.calcRxWindow) for calcRxWindow
+    lmic.o(i.processBeacon) refers to lmic.o(i.rxschedInit) for rxschedInit
+    lmic.o(i.processBeacon) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.processDnData) refers to hal.o(i.hal_failed) for hal_failed
+    lmic.o(i.processDnData) refers to lmic.o(i.lowerDR) for lowerDR
+    lmic.o(i.processDnData) refers to lmic.o(i.setDrTxpow) for setDrTxpow
+    lmic.o(i.processDnData) refers to lmic.o(i.txDelay) for txDelay
+    lmic.o(i.processDnData) refers to lmic.o(i.engineUpdate) for engineUpdate
+    lmic.o(i.processDnData) refers to lmic.o(i.reportEvent) for reportEvent
+    lmic.o(i.processDnData) refers to lmic.o(i.decDR) for decDR
+    lmic.o(i.processDnData) refers to lmic.o(i.startScan) for startScan
+    lmic.o(i.processDnData) refers to lmic.o(i.decodeFrame) for decodeFrame
+    lmic.o(i.processDnData) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.processDnData) refers to lmic.o(.constdata) for DRADJUST
+    lmic.o(i.processJoinAccept) refers to hal.o(i.hal_failed) for hal_failed
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.reportEvent) for reportEvent
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.nextJoinState) for nextJoinState
+    lmic.o(i.processJoinAccept) refers to oslmic.o(i.os_getTime) for os_getTime
+    lmic.o(i.processJoinAccept) refers to oslmic.o(i.os_setTimedCallback) for os_setTimedCallback
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.os_rlsbf4) for os_rlsbf4
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.aes_encrypt) for aes_encrypt
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.aes_verifyMic0) for aes_verifyMic0
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.initDefaultChannels) for initDefaultChannels
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.convFreq) for convFreq
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.LMIC_setupChannel) for LMIC_setupChannel
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.aes_sessKeys) for aes_sessKeys
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.lowerDR) for lowerDR
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.stateJustJoined) for stateJustJoined
+    lmic.o(i.processJoinAccept) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.onJoinFailed) for onJoinFailed
+    lmic.o(i.processJoinAccept) refers to lmic.o(i.runEngineUpdate) for runEngineUpdate
+    lmic.o(i.processPingRx) refers to lmic.o(i.decodeFrame) for decodeFrame
+    lmic.o(i.processPingRx) refers to lmic.o(i.reportEvent) for reportEvent
+    lmic.o(i.processPingRx) refers to lmic.o(i.engineUpdate) for engineUpdate
+    lmic.o(i.processPingRx) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.processRx1DnData) refers to lmic.o(i.processDnData) for processDnData
+    lmic.o(i.processRx1DnData) refers to lmic.o(i.schedRx2) for schedRx2
+    lmic.o(i.processRx1DnData) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.processRx1DnData) refers to lmic.o(i.setupRx2DnData) for setupRx2DnData
+    lmic.o(i.processRx1Jacc) refers to lmic.o(i.processJoinAccept) for processJoinAccept
+    lmic.o(i.processRx1Jacc) refers to lmic.o(i.schedRx2) for schedRx2
+    lmic.o(i.processRx1Jacc) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.processRx1Jacc) refers to lmic.o(i.setupRx2Jacc) for setupRx2Jacc
+    lmic.o(i.processRx2DnData) refers to oslmic.o(i.os_getTime) for os_getTime
+    lmic.o(i.processRx2DnData) refers to lmic.o(i.rndDelay) for rndDelay
+    lmic.o(i.processRx2DnData) refers to oslmic.o(i.os_setTimedCallback) for os_setTimedCallback
+    lmic.o(i.processRx2DnData) refers to lmic.o(i.processDnData) for processDnData
+    lmic.o(i.processRx2DnData) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.processRx2DnData) refers to lmic.o(i.processRx2DnDataDelay) for processRx2DnDataDelay
+    lmic.o(i.processRx2DnDataDelay) refers to lmic.o(i.processDnData) for processDnData
+    lmic.o(i.processRx2Jacc) refers to lmic.o(i.processJoinAccept) for processJoinAccept
+    lmic.o(i.processRx2Jacc) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.reportEvent) refers to main.o(i.onEvent) for onEvent
+    lmic.o(i.reportEvent) refers to lmic.o(i.engineUpdate) for engineUpdate
+    lmic.o(i.rndDelay) refers to radio.o(i.radio_rand1) for radio_rand1
+    lmic.o(i.runEngineUpdate) refers to lmic.o(i.engineUpdate) for engineUpdate
+    lmic.o(i.runReset) refers to lmic.o(i.LMIC_reset) for LMIC_reset
+    lmic.o(i.runReset) refers to lmic.o(i.LMIC_startJoining) for LMIC_startJoining
+    lmic.o(i.runReset) refers to lmic.o(i.reportEvent) for reportEvent
+    lmic.o(i.rxschedInit) refers to lmic.o(i.os_wlsbf4) for os_wlsbf4
+    lmic.o(i.rxschedInit) refers to aes.o(i.os_aes) for os_aes
+    lmic.o(i.rxschedInit) refers to lmic.o(i.os_rlsbf2) for os_rlsbf2
+    lmic.o(i.rxschedInit) refers to ldiv.o(.text) for __aeabi_ldivmod
+    lmic.o(i.rxschedInit) refers to lmic.o(i.calcRxWindow) for calcRxWindow
+    lmic.o(i.rxschedInit) refers to aes.o(.bss) for AESKEY
+    lmic.o(i.rxschedInit) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.rxschedNext) refers to lmic.o(i.calcRxWindow) for calcRxWindow
+    lmic.o(i.rxschedNext) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.schedRx2) refers to oslmic.o(i.os_setTimedCallback) for os_setTimedCallback
+    lmic.o(i.schedRx2) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.schedRx2) refers to lmic.o(.constdata) for DR2HSYM_osticks
+    lmic.o(i.setBcnRxParams) refers to lmic.o(i.dndr2rps) for dndr2rps
+    lmic.o(i.setBcnRxParams) refers to lmic.o(i.setNocrc) for setNocrc
+    lmic.o(i.setBcnRxParams) refers to lmic.o(i.setIh) for setIh
+    lmic.o(i.setBcnRxParams) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.setDrJoin) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.setDrTxpow) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.setupRx1) refers to lmic.o(i.setNocrc) for setNocrc
+    lmic.o(i.setupRx1) refers to radio.o(i.os_radio) for os_radio
+    lmic.o(i.setupRx1) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.setupRx1DnData) refers to lmic.o(i.setupRx1) for setupRx1
+    lmic.o(i.setupRx1DnData) refers to lmic.o(i.processRx1DnData) for processRx1DnData
+    lmic.o(i.setupRx1Jacc) refers to lmic.o(i.setupRx1) for setupRx1
+    lmic.o(i.setupRx1Jacc) refers to lmic.o(i.processRx1Jacc) for processRx1Jacc
+    lmic.o(i.setupRx2) refers to lmic.o(i.dndr2rps) for dndr2rps
+    lmic.o(i.setupRx2) refers to radio.o(i.os_radio) for os_radio
+    lmic.o(i.setupRx2) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.setupRx2DnData) refers to lmic.o(i.setupRx2) for setupRx2
+    lmic.o(i.setupRx2DnData) refers to lmic.o(i.processRx2DnData) for processRx2DnData
+    lmic.o(i.setupRx2DnData) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.setupRx2Jacc) refers to lmic.o(i.setupRx2) for setupRx2
+    lmic.o(i.setupRx2Jacc) refers to lmic.o(i.processRx2Jacc) for processRx2Jacc
+    lmic.o(i.setupRx2Jacc) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.startJoining) refers to lmic.o(i.reportEvent) for reportEvent
+    lmic.o(i.startRxBcn) refers to radio.o(i.os_radio) for os_radio
+    lmic.o(i.startRxBcn) refers to lmic.o(i.processBeacon) for processBeacon
+    lmic.o(i.startRxBcn) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.startRxPing) refers to radio.o(i.os_radio) for os_radio
+    lmic.o(i.startRxPing) refers to lmic.o(i.processPingRx) for processPingRx
+    lmic.o(i.startRxPing) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.startScan) refers to hal.o(i.hal_failed) for hal_failed
+    lmic.o(i.startScan) refers to lmic.o(i.setBcnRxParams) for setBcnRxParams
+    lmic.o(i.startScan) refers to oslmic.o(i.os_getTime) for os_getTime
+    lmic.o(i.startScan) refers to oslmic.o(i.os_setTimedCallback) for os_setTimedCallback
+    lmic.o(i.startScan) refers to radio.o(i.os_radio) for os_radio
+    lmic.o(i.startScan) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.startScan) refers to lmic.o(i.onBcnRx) for onBcnRx
+    lmic.o(i.stateJustJoined) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.txDelay) refers to lmic.o(i.rndDelay) for rndDelay
+    lmic.o(i.txDelay) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.txDone) refers to lmic.o(i.rxschedInit) for rxschedInit
+    lmic.o(i.txDone) refers to oslmic.o(i.os_setTimedCallback) for os_setTimedCallback
+    lmic.o(i.txDone) refers to lmic.o(.bss) for LMIC
+    lmic.o(i.txDone) refers to lmic.o(.constdata) for DR2HSYM_osticks
+    lmic.o(i.updataDone) refers to lmic.o(i.txDone) for txDone
+    lmic.o(i.updataDone) refers to lmic.o(i.setupRx1DnData) for setupRx1DnData
+    lmic.o(i.updateTx) refers to lmic.o(i.calcAirTime) for calcAirTime
+    lmic.o(i.updateTx) refers to lmic.o(.bss) for LMIC
+    oslmic.o(i.os_clearCallback) refers to hal.o(i.hal_disableIRQs) for hal_disableIRQs
+    oslmic.o(i.os_clearCallback) refers to oslmic.o(i.unlinkjob) for unlinkjob
+    oslmic.o(i.os_clearCallback) refers to hal.o(i.hal_enableIRQs) for hal_enableIRQs
+    oslmic.o(i.os_clearCallback) refers to oslmic.o(.data) for OS
+    oslmic.o(i.os_getTime) refers to hal.o(i.hal_ticks) for hal_ticks
+    oslmic.o(i.os_init) refers to hal.o(i.hal_init) for hal_init
+    oslmic.o(i.os_init) refers to radio.o(i.radio_init) for radio_init
+    oslmic.o(i.os_init) refers to lmic.o(i.LMIC_init) for LMIC_init
+    oslmic.o(i.os_init) refers to oslmic.o(.data) for OS
+    oslmic.o(i.os_runloop) refers to hal.o(i.hal_disableIRQs) for hal_disableIRQs
+    oslmic.o(i.os_runloop) refers to hal.o(i.hal_checkTimer) for hal_checkTimer
+    oslmic.o(i.os_runloop) refers to hal.o(i.hal_sleep) for hal_sleep
+    oslmic.o(i.os_runloop) refers to hal.o(i.hal_enableIRQs) for hal_enableIRQs
+    oslmic.o(i.os_runloop) refers to oslmic.o(.data) for OS
+    oslmic.o(i.os_setCallback) refers to hal.o(i.hal_disableIRQs) for hal_disableIRQs
+    oslmic.o(i.os_setCallback) refers to oslmic.o(i.os_clearCallback) for os_clearCallback
+    oslmic.o(i.os_setCallback) refers to hal.o(i.hal_enableIRQs) for hal_enableIRQs
+    oslmic.o(i.os_setCallback) refers to oslmic.o(.data) for OS
+    oslmic.o(i.os_setTimedCallback) refers to hal.o(i.hal_disableIRQs) for hal_disableIRQs
+    oslmic.o(i.os_setTimedCallback) refers to oslmic.o(i.os_clearCallback) for os_clearCallback
+    oslmic.o(i.os_setTimedCallback) refers to hal.o(i.hal_enableIRQs) for hal_enableIRQs
+    oslmic.o(i.os_setTimedCallback) refers to oslmic.o(.data) for OS
+    radio.o(i.configChannel) refers to uldiv.o(.text) for __aeabi_uldivmod
+    radio.o(i.configChannel) refers to radio.o(i.writeReg) for writeReg
+    radio.o(i.configChannel) refers to lmic.o(.bss) for LMIC
+    radio.o(i.configLoraModem) refers to lmic.o(i.getSf) for getSf
+    radio.o(i.configLoraModem) refers to lmic.o(i.getBw) for getBw
+    radio.o(i.configLoraModem) refers to radio.o(i.writeReg) for writeReg
+    radio.o(i.configLoraModem) refers to lmic.o(.bss) for LMIC
+    radio.o(i.configPower) refers to radio.o(i.writeReg) for writeReg
+    radio.o(i.configPower) refers to lmic.o(.bss) for LMIC
+    radio.o(i.opmode) refers to radio.o(i.readReg) for readReg
+    radio.o(i.opmode) refers to radio.o(i.writeReg) for writeReg
+    radio.o(i.opmodeFSK) refers to radio.o(i.writeReg) for writeReg
+    radio.o(i.opmodeLora) refers to radio.o(i.writeReg) for writeReg
+    radio.o(i.os_radio) refers to hal.o(i.hal_disableIRQs) for hal_disableIRQs
+    radio.o(i.os_radio) refers to radio.o(i.opmode) for opmode
+    radio.o(i.os_radio) refers to radio.o(i.starttx) for starttx
+    radio.o(i.os_radio) refers to radio.o(i.startrx) for startrx
+    radio.o(i.os_radio) refers to hal.o(i.hal_enableIRQs) for hal_enableIRQs
+    radio.o(i.radio_init) refers to hal.o(i.hal_disableIRQs) for hal_disableIRQs
+    radio.o(i.radio_init) refers to hal.o(i.hal_pin_rst) for hal_pin_rst
+    radio.o(i.radio_init) refers to oslmic.o(i.os_getTime) for os_getTime
+    radio.o(i.radio_init) refers to hal.o(i.hal_waitUntil) for hal_waitUntil
+    radio.o(i.radio_init) refers to radio.o(i.opmode) for opmode
+    radio.o(i.radio_init) refers to radio.o(i.readReg) for readReg
+    radio.o(i.radio_init) refers to hal.o(i.hal_failed) for hal_failed
+    radio.o(i.radio_init) refers to radio.o(i.rxlora) for rxlora
+    radio.o(i.radio_init) refers to hal.o(i.hal_enableIRQs) for hal_enableIRQs
+    radio.o(i.radio_init) refers to radio.o(.bss) for randbuf
+    radio.o(i.radio_irq_handler) refers to oslmic.o(i.os_getTime) for os_getTime
+    radio.o(i.radio_irq_handler) refers to radio.o(i.readReg) for readReg
+    radio.o(i.radio_irq_handler) refers to lmic.o(i.getBw) for getBw
+    radio.o(i.radio_irq_handler) refers to lmic.o(i.getSf) for getSf
+    radio.o(i.radio_irq_handler) refers to radio.o(i.writeReg) for writeReg
+    radio.o(i.radio_irq_handler) refers to radio.o(i.readBuf) for readBuf
+    radio.o(i.radio_irq_handler) refers to radio.o(i.opmode) for opmode
+    radio.o(i.radio_irq_handler) refers to oslmic.o(i.os_setCallback) for os_setCallback
+    radio.o(i.radio_irq_handler) refers to lmic.o(.bss) for LMIC
+    radio.o(i.radio_irq_handler) refers to radio.o(.constdata) for LORA_RXDONE_FIXUP
+    radio.o(i.radio_rand1) refers to hal.o(i.hal_failed) for hal_failed
+    radio.o(i.radio_rand1) refers to aes.o(i.os_aes) for os_aes
+    radio.o(i.radio_rand1) refers to radio.o(.bss) for randbuf
+    radio.o(i.radio_rssi) refers to hal.o(i.hal_disableIRQs) for hal_disableIRQs
+    radio.o(i.radio_rssi) refers to radio.o(i.readReg) for readReg
+    radio.o(i.radio_rssi) refers to hal.o(i.hal_enableIRQs) for hal_enableIRQs
+    radio.o(i.readBuf) refers to hal.o(i.hal_pin_nss) for hal_pin_nss
+    radio.o(i.readBuf) refers to hal.o(i.hal_spi) for hal_spi
+    radio.o(i.readReg) refers to hal.o(i.hal_pin_nss) for hal_pin_nss
+    radio.o(i.readReg) refers to hal.o(i.hal_spi) for hal_spi
+    radio.o(i.rxfsk) refers to hal.o(i.hal_failed) for hal_failed
+    radio.o(i.rxfsk) refers to radio.o(i.opmodeFSK) for opmodeFSK
+    radio.o(i.rxfsk) refers to radio.o(i.readReg) for readReg
+    radio.o(i.rxfsk) refers to radio.o(i.opmode) for opmode
+    radio.o(i.rxfsk) refers to radio.o(i.configChannel) for configChannel
+    radio.o(i.rxfsk) refers to radio.o(i.writeReg) for writeReg
+    radio.o(i.rxfsk) refers to hal.o(i.hal_pin_rxtx) for hal_pin_rxtx
+    radio.o(i.rxfsk) refers to hal.o(i.hal_waitUntil) for hal_waitUntil
+    radio.o(i.rxfsk) refers to lmic.o(.bss) for LMIC
+    radio.o(i.rxlora) refers to radio.o(i.opmodeLora) for opmodeLora
+    radio.o(i.rxlora) refers to radio.o(i.readReg) for readReg
+    radio.o(i.rxlora) refers to hal.o(i.hal_failed) for hal_failed
+    radio.o(i.rxlora) refers to radio.o(i.opmode) for opmode
+    radio.o(i.rxlora) refers to radio.o(i.writeReg) for writeReg
+    radio.o(i.rxlora) refers to radio.o(i.configLoraModem) for configLoraModem
+    radio.o(i.rxlora) refers to radio.o(i.configChannel) for configChannel
+    radio.o(i.rxlora) refers to hal.o(i.hal_pin_rxtx) for hal_pin_rxtx
+    radio.o(i.rxlora) refers to hal.o(i.hal_waitUntil) for hal_waitUntil
+    radio.o(i.rxlora) refers to lmic.o(.bss) for LMIC
+    radio.o(i.rxlora) refers to radio.o(.constdata) for rxlorairqmask
+    radio.o(i.startrx) refers to radio.o(i.readReg) for readReg
+    radio.o(i.startrx) refers to hal.o(i.hal_failed) for hal_failed
+    radio.o(i.startrx) refers to lmic.o(i.getSf) for getSf
+    radio.o(i.startrx) refers to radio.o(i.rxfsk) for rxfsk
+    radio.o(i.startrx) refers to radio.o(i.rxlora) for rxlora
+    radio.o(i.startrx) refers to lmic.o(.bss) for LMIC
+    radio.o(i.starttx) refers to radio.o(i.readReg) for readReg
+    radio.o(i.starttx) refers to hal.o(i.hal_failed) for hal_failed
+    radio.o(i.starttx) refers to lmic.o(i.getSf) for getSf
+    radio.o(i.starttx) refers to radio.o(i.txfsk) for txfsk
+    radio.o(i.starttx) refers to radio.o(i.txlora) for txlora
+    radio.o(i.starttx) refers to lmic.o(.bss) for LMIC
+    radio.o(i.txfsk) refers to radio.o(i.writeReg) for writeReg
+    radio.o(i.txfsk) refers to radio.o(i.readReg) for readReg
+    radio.o(i.txfsk) refers to hal.o(i.hal_failed) for hal_failed
+    radio.o(i.txfsk) refers to radio.o(i.opmode) for opmode
+    radio.o(i.txfsk) refers to radio.o(i.configChannel) for configChannel
+    radio.o(i.txfsk) refers to radio.o(i.configPower) for configPower
+    radio.o(i.txfsk) refers to radio.o(i.writeBuf) for writeBuf
+    radio.o(i.txfsk) refers to hal.o(i.hal_pin_rxtx) for hal_pin_rxtx
+    radio.o(i.txfsk) refers to lmic.o(.bss) for LMIC
+    radio.o(i.txlora) refers to radio.o(i.opmodeLora) for opmodeLora
+    radio.o(i.txlora) refers to radio.o(i.readReg) for readReg
+    radio.o(i.txlora) refers to hal.o(i.hal_failed) for hal_failed
+    radio.o(i.txlora) refers to radio.o(i.opmode) for opmode
+    radio.o(i.txlora) refers to radio.o(i.configLoraModem) for configLoraModem
+    radio.o(i.txlora) refers to radio.o(i.configChannel) for configChannel
+    radio.o(i.txlora) refers to radio.o(i.writeReg) for writeReg
+    radio.o(i.txlora) refers to radio.o(i.configPower) for configPower
+    radio.o(i.txlora) refers to radio.o(i.writeBuf) for writeBuf
+    radio.o(i.txlora) refers to hal.o(i.hal_pin_rxtx) for hal_pin_rxtx
+    radio.o(i.txlora) refers to lmic.o(.bss) for LMIC
+    radio.o(i.writeBuf) refers to hal.o(i.hal_pin_nss) for hal_pin_nss
+    radio.o(i.writeBuf) refers to hal.o(i.hal_spi) for hal_spi
+    radio.o(i.writeReg) refers to hal.o(i.hal_pin_nss) for hal_pin_nss
+    radio.o(i.writeReg) refers to hal.o(i.hal_spi) for hal_spi
+    debug.o(i.debug_buf) refers to debug.o(i.debug_hex) for debug_hex
+    debug.o(i.debug_buf) refers to debug.o(i.debug_char) for debug_char
+    debug.o(i.debug_event) refers to debug.o(i.debug_str) for debug_str
+    debug.o(i.debug_event) refers to debug.o(i.debug_char) for debug_char
+    debug.o(i.debug_event) refers to debug.o(.data) for evnames
+    debug.o(i.debug_hex) refers to debug.o(i.debug_char) for debug_char
+    debug.o(i.debug_init) refers to hw.o(i.hw_cfg_pin) for hw_cfg_pin
+    debug.o(i.debug_init) refers to debug.o(i.debug_led) for debug_led
+    debug.o(i.debug_init) refers to debug.o(i.debug_str) for debug_str
+    debug.o(i.debug_led) refers to hw.o(i.hw_set_pin) for hw_set_pin
+    debug.o(i.debug_str) refers to debug.o(i.debug_char) for debug_char
+    debug.o(i.debug_uint) refers to debug.o(i.debug_hex) for debug_hex
+    debug.o(i.debug_val) refers to debug.o(i.debug_str) for debug_str
+    debug.o(i.debug_val) refers to debug.o(i.debug_uint) for debug_uint
+    debug.o(i.debug_val) refers to debug.o(i.debug_char) for debug_char
+    debug.o(.data) refers to debug.o(.conststring) for .conststring
+    hal.o(i.EXTI0_IRQHandler) refers to hal.o(i.EXTI_IRQHandler) for EXTI_IRQHandler
+    hal.o(i.EXTI15_10_IRQHandler) refers to hal.o(i.EXTI_IRQHandler) for EXTI_IRQHandler
+    hal.o(i.EXTI1_IRQHandler) refers to hal.o(i.EXTI_IRQHandler) for EXTI_IRQHandler
+    hal.o(i.EXTI2_IRQHandler) refers to hal.o(i.EXTI_IRQHandler) for EXTI_IRQHandler
+    hal.o(i.EXTI3_IRQHandler) refers to hal.o(i.EXTI_IRQHandler) for EXTI_IRQHandler
+    hal.o(i.EXTI4_IRQHandler) refers to hal.o(i.EXTI_IRQHandler) for EXTI_IRQHandler
+    hal.o(i.EXTI9_5_IRQHandler) refers to hal.o(i.EXTI_IRQHandler) for EXTI_IRQHandler
+    hal.o(i.EXTI_IRQHandler) refers to radio.o(i.radio_irq_handler) for radio_irq_handler
+    hal.o(i.TIM9_IRQHandler) refers to hal.o(.data) for HAL
+    hal.o(i.deltaticks) refers to hal.o(i.hal_ticks) for hal_ticks
+    hal.o(i.hal_checkTimer) refers to hal.o(i.deltaticks) for deltaticks
+    hal.o(i.hal_disableIRQs) refers to hal.o(.data) for HAL
+    hal.o(i.hal_enableIRQs) refers to hal.o(.data) for HAL
+    hal.o(i.hal_failed) refers to hal.o(i.hal_disableIRQs) for hal_disableIRQs
+    hal.o(i.hal_failed) refers to hal.o(i.hal_sleep) for hal_sleep
+    hal.o(i.hal_init) refers to hal.o(i.hal_disableIRQs) for hal_disableIRQs
+    hal.o(i.hal_init) refers to hal.o(i.hal_io_init) for hal_io_init
+    hal.o(i.hal_init) refers to hal.o(i.hal_spi_init) for hal_spi_init
+    hal.o(i.hal_init) refers to hal.o(i.hal_time_init) for hal_time_init
+    hal.o(i.hal_init) refers to hal.o(i.hal_enableIRQs) for hal_enableIRQs
+    hal.o(i.hal_init) refers to hal.o(.data) for HAL
+    hal.o(i.hal_io_init) refers to hw.o(i.hw_cfg_pin) for hw_cfg_pin
+    hal.o(i.hal_io_init) refers to hw.o(i.hw_set_pin) for hw_set_pin
+    hal.o(i.hal_io_init) refers to hw.o(i.hw_cfg_extirq) for hw_cfg_extirq
+    hal.o(i.hal_io_init) refers to hal.o(.constdata) for outputpins
+    hal.o(i.hal_pin_nss) refers to hw.o(i.hw_set_pin) for hw_set_pin
+    hal.o(i.hal_pin_rst) refers to hw.o(i.hw_cfg_pin) for hw_cfg_pin
+    hal.o(i.hal_pin_rst) refers to hw.o(i.hw_set_pin) for hw_set_pin
+    hal.o(i.hal_pin_rxtx) refers to hal.o(i.hal_failed) for hal_failed
+    hal.o(i.hal_pin_rxtx) refers to hw.o(i.hw_set_pin) for hw_set_pin
+    hal.o(i.hal_spi_init) refers to hw.o(i.hw_cfg_pin) for hw_cfg_pin
+    hal.o(i.hal_ticks) refers to hal.o(i.hal_disableIRQs) for hal_disableIRQs
+    hal.o(i.hal_ticks) refers to hal.o(i.hal_enableIRQs) for hal_enableIRQs
+    hal.o(i.hal_ticks) refers to hal.o(.data) for HAL
+    hal.o(i.hal_waitUntil) refers to hal.o(i.deltaticks) for deltaticks
+    startup_stm32l1xx_md_keil.o(RESET) refers to startup_stm32l1xx_md_keil.o(STACK) for __initial_sp
+    startup_stm32l1xx_md_keil.o(RESET) refers to startup_stm32l1xx_md_keil.o(.text) for Reset_Handler
+    startup_stm32l1xx_md_keil.o(RESET) refers to hal.o(i.EXTI0_IRQHandler) for EXTI0_IRQHandler
+    startup_stm32l1xx_md_keil.o(RESET) refers to hal.o(i.EXTI1_IRQHandler) for EXTI1_IRQHandler
+    startup_stm32l1xx_md_keil.o(RESET) refers to hal.o(i.EXTI2_IRQHandler) for EXTI2_IRQHandler
+    startup_stm32l1xx_md_keil.o(RESET) refers to hal.o(i.EXTI3_IRQHandler) for EXTI3_IRQHandler
+    startup_stm32l1xx_md_keil.o(RESET) refers to hal.o(i.EXTI4_IRQHandler) for EXTI4_IRQHandler
+    startup_stm32l1xx_md_keil.o(RESET) refers to hal.o(i.EXTI9_5_IRQHandler) for EXTI9_5_IRQHandler
+    startup_stm32l1xx_md_keil.o(RESET) refers to hal.o(i.TIM9_IRQHandler) for TIM9_IRQHandler
+    startup_stm32l1xx_md_keil.o(RESET) refers to hal.o(i.EXTI15_10_IRQHandler) for EXTI15_10_IRQHandler
+    startup_stm32l1xx_md_keil.o(.text) refers to system_stm32l1xx.o(i.SystemInit) for SystemInit
+    startup_stm32l1xx_md_keil.o(.text) refers to entry.o(.ARM.Collect$$$$00000000) for __main
+    system_stm32l1xx.o(i.SystemCoreClockUpdate) refers to system_stm32l1xx.o(.data) for SystemCoreClock
+    system_stm32l1xx.o(i.SystemInit) refers to system_stm32l1xx.o(i.SetSysClock) for SetSysClock
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000D) for __rt_final_cpp
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$0000000F) for __rt_final_exit
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry7b.o(.ARM.Collect$$$$00000008) for _main_clock
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry8b.o(.ARM.Collect$$$$0000000A) for _main_cpp_init
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry9a.o(.ARM.Collect$$$$0000000B) for _main_init
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry5.o(.ARM.Collect$$$$00000004) for _main_scatterload
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry2.o(.ARM.Collect$$$$00000001) for _main_stk
+    uldiv.o(.text) refers to llushr.o(.text) for __aeabi_llsr
+    uldiv.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    ldiv.o(.text) refers to uldiv.o(.text) for __aeabi_uldivmod
+    entry2.o(.ARM.Collect$$$$00000001) refers to entry2.o(.ARM.Collect$$$$00002712) for __lit__00000000
+    entry2.o(.ARM.Collect$$$$00002712) refers to startup_stm32l1xx_md_keil.o(STACK) for __initial_sp
+    entry2.o(__vectab_stack_and_reset_area) refers to startup_stm32l1xx_md_keil.o(STACK) for __initial_sp
+    entry2.o(__vectab_stack_and_reset_area) refers to entry.o(.ARM.Collect$$$$00000000) for __main
+    entry5.o(.ARM.Collect$$$$00000004) refers to init.o(.text) for __scatterload
+    entry9a.o(.ARM.Collect$$$$0000000B) refers to main.o(i.main) for main
+    entry9b.o(.ARM.Collect$$$$0000000C) refers to main.o(i.main) for main
+    init.o(.text) refers to entry5.o(.ARM.Collect$$$$00000004) for __main_after_scatterload
+    lmic.o(i.updr2rps) refers to lmic.o(.constdata) for _DR2RPS_CRC
+    lmic.o(i.dndr2rps) refers to lmic.o(i.updr2rps) for updr2rps
+    lmic.o(i.dndr2rps) refers to lmic.o(i.setNocrc) for setNocrc
+    lmic.o(i.incDR) refers to lmic.o(.constdata) for _DR2RPS_CRC
+    lmic.o(i.decDR) refers to lmic.o(.constdata) for _DR2RPS_CRC
+    lmic.o(i.assertDR) refers to lmic.o(.constdata) for _DR2RPS_CRC
+    lmic.o(i.validDR) refers to lmic.o(.constdata) for _DR2RPS_CRC
+    lmic.o(i.lowerDR) refers to lmic.o(i.decDR) for decDR
+
+
+==============================================================================
+
+Removing Unused input sections from the image.
+
+    Removing lmic.o(i.LMIC_clrTxData), (64 bytes).
+    Removing lmic.o(i.LMIC_disableChannel), (40 bytes).
+    Removing lmic.o(i.LMIC_disableTracking), (36 bytes).
+    Removing lmic.o(i.LMIC_sendAlive), (28 bytes).
+    Removing lmic.o(i.LMIC_setAdrMode), (20 bytes).
+    Removing lmic.o(i.LMIC_setDrTxpow), (18 bytes).
+    Removing lmic.o(i.LMIC_setLinkCheckMode), (32 bytes).
+    Removing lmic.o(i.LMIC_setPingable), (60 bytes).
+    Removing lmic.o(i.LMIC_setSession), (100 bytes).
+    Removing lmic.o(i.LMIC_setTxData), (48 bytes).
+    Removing lmic.o(i.LMIC_setTxData2), (64 bytes).
+    Removing lmic.o(i.LMIC_setupBand), (68 bytes).
+    Removing lmic.o(i.LMIC_shutdown), (40 bytes).
+    Removing lmic.o(i.LMIC_stopPingable), (24 bytes).
+    Removing lmic.o(i.LMIC_tryRejoin), (28 bytes).
+    Removing radio.o(i.radio_rssi), (22 bytes).
+    Removing debug.o(.rev16_text), (4 bytes).
+    Removing debug.o(.revsh_text), (4 bytes).
+    Removing debug.o(.rrx_text), (6 bytes).
+    Removing debug.o(i.debug_buf), (46 bytes).
+    Removing hal.o(.rev16_text), (4 bytes).
+    Removing hal.o(.revsh_text), (4 bytes).
+    Removing hal.o(.rrx_text), (6 bytes).
+    Removing hw.o(.rev16_text), (4 bytes).
+    Removing hw.o(.revsh_text), (4 bytes).
+    Removing hw.o(.rrx_text), (6 bytes).
+    Removing startup_stm32l1xx_md_keil.o(HEAP), (512 bytes).
+    Removing system_stm32l1xx.o(.rev16_text), (4 bytes).
+    Removing system_stm32l1xx.o(.revsh_text), (4 bytes).
+    Removing system_stm32l1xx.o(.rrx_text), (6 bytes).
+    Removing system_stm32l1xx.o(i.SystemCoreClockUpdate), (220 bytes).
+    Removing system_stm32l1xx.o(.data), (29 bytes).
+    Removing lmic.o(i.setSf), (10 bytes).
+    Removing lmic.o(i.setBw), (12 bytes).
+    Removing lmic.o(i.getIh), (6 bytes).
+    Removing lmic.o(i.makeRps), (32 bytes).
+    Removing lmic.o(i.sameSfBw), (20 bytes).
+    Removing lmic.o(i.isFasterDR), (14 bytes).
+    Removing lmic.o(i.isSlowerDR), (14 bytes).
+    Removing lmic.o(i.incDR), (28 bytes).
+    Removing lmic.o(i.assertDR), (24 bytes).
+
+41 unused section(s) (total 1715 bytes) removed from the image.
+
+==============================================================================
+
+Image Symbol Table
+
+    Local Symbols
+
+    Symbol Name                              Value     Ov Type        Size  Object(Section)
+
+    ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  ldiv.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
+    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpya.o ABSOLUTE
+    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
+    ../clib/microlib/string/memset.c         0x00000000   Number         0  memseta.o ABSOLUTE
+    ..\..\lmic\aes.c                         0x00000000   Number         0  aes.o ABSOLUTE
+    ..\..\lmic\lmic.c                        0x00000000   Number         0  lmic.o ABSOLUTE
+    ..\..\lmic\oslmic.c                      0x00000000   Number         0  oslmic.o ABSOLUTE
+    ..\..\lmic\radio.c                       0x00000000   Number         0  radio.o ABSOLUTE
+    ..\..\stm32\debug.c                      0x00000000   Number         0  debug.o ABSOLUTE
+    ..\..\stm32\hal.c                        0x00000000   Number         0  hal.o ABSOLUTE
+    ..\..\stm32\hw.c                         0x00000000   Number         0  hw.o ABSOLUTE
+    ..\..\stm32\startup_stm32l1xx_md_keil.s  0x00000000   Number         0  startup_stm32l1xx_md_keil.o ABSOLUTE
+    ..\..\stm32\system_stm32l1xx.c           0x00000000   Number         0  system_stm32l1xx.o ABSOLUTE
+    ..\\..\\stm32\\debug.c                   0x00000000   Number         0  debug.o ABSOLUTE
+    ..\\..\\stm32\\hal.c                     0x00000000   Number         0  hal.o ABSOLUTE
+    ..\\..\\stm32\\hw.c                      0x00000000   Number         0  hw.o ABSOLUTE
+    ..\\..\\stm32\\system_stm32l1xx.c        0x00000000   Number         0  system_stm32l1xx.o ABSOLUTE
+    dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
+    handlers.s                               0x00000000   Number         0  handlers.o ABSOLUTE
+    init.s                                   0x00000000   Number         0  init.o ABSOLUTE
+    main.c                                   0x00000000   Number         0  main.o ABSOLUTE
+    RESET                                    0x08000000   Section      244  startup_stm32l1xx_md_keil.o(RESET)
+    .ARM.Collect$$$$00000000                 0x080000f4   Section        0  entry.o(.ARM.Collect$$$$00000000)
+    .ARM.Collect$$$$00000001                 0x080000f4   Section        4  entry2.o(.ARM.Collect$$$$00000001)
+    .ARM.Collect$$$$00000004                 0x080000f8   Section        4  entry5.o(.ARM.Collect$$$$00000004)
+    .ARM.Collect$$$$00000008                 0x080000fc   Section        0  entry7b.o(.ARM.Collect$$$$00000008)
+    .ARM.Collect$$$$0000000A                 0x080000fc   Section        0  entry8b.o(.ARM.Collect$$$$0000000A)
+    .ARM.Collect$$$$0000000B                 0x080000fc   Section        8  entry9a.o(.ARM.Collect$$$$0000000B)
+    .ARM.Collect$$$$0000000D                 0x08000104   Section        0  entry10a.o(.ARM.Collect$$$$0000000D)
+    .ARM.Collect$$$$0000000F                 0x08000104   Section        0  entry11a.o(.ARM.Collect$$$$0000000F)
+    .ARM.Collect$$$$00002712                 0x08000104   Section        4  entry2.o(.ARM.Collect$$$$00002712)
+    __lit__00000000                          0x08000104   Data           4  entry2.o(.ARM.Collect$$$$00002712)
+    .text                                    0x08000108   Section       36  startup_stm32l1xx_md_keil.o(.text)
+    .text                                    0x0800012c   Section        0  uldiv.o(.text)
+    .text                                    0x0800018e   Section        0  ldiv.o(.text)
+    .text                                    0x080001f0   Section        0  memcpya.o(.text)
+    .text                                    0x08000214   Section        0  memseta.o(.text)
+    .text                                    0x08000238   Section        0  llshl.o(.text)
+    .text                                    0x08000256   Section        0  llushr.o(.text)
+    .text                                    0x08000278   Section       36  init.o(.text)
+    i.EXTI0_IRQHandler                       0x0800029c   Section        0  hal.o(i.EXTI0_IRQHandler)
+    i.EXTI15_10_IRQHandler                   0x080002a4   Section        0  hal.o(i.EXTI15_10_IRQHandler)
+    i.EXTI1_IRQHandler                       0x080002ac   Section        0  hal.o(i.EXTI1_IRQHandler)
+    i.EXTI2_IRQHandler                       0x080002b4   Section        0  hal.o(i.EXTI2_IRQHandler)
+    i.EXTI3_IRQHandler                       0x080002bc   Section        0  hal.o(i.EXTI3_IRQHandler)
+    i.EXTI4_IRQHandler                       0x080002c4   Section        0  hal.o(i.EXTI4_IRQHandler)
+    i.EXTI9_5_IRQHandler                     0x080002cc   Section        0  hal.o(i.EXTI9_5_IRQHandler)
+    i.EXTI_IRQHandler                        0x080002d4   Section        0  hal.o(i.EXTI_IRQHandler)
+    i.LMIC_enableTracking                    0x08000324   Section        0  lmic.o(i.LMIC_enableTracking)
+    i.LMIC_init                              0x0800034c   Section        0  lmic.o(i.LMIC_init)
+    i.LMIC_reset                             0x0800035c   Section        0  lmic.o(i.LMIC_reset)
+    i.LMIC_setupChannel                      0x080003dc   Section        0  lmic.o(i.LMIC_setupChannel)
+    i.LMIC_startJoining                      0x08000478   Section        0  lmic.o(i.LMIC_startJoining)
+    i.SetSysClock                            0x080004e8   Section        0  system_stm32l1xx.o(i.SetSysClock)
+    SetSysClock                              0x080004e9   Thumb Code   252  system_stm32l1xx.o(i.SetSysClock)
+    i.SystemInit                             0x080005f0   Section        0  system_stm32l1xx.o(i.SystemInit)
+    i.TIM9_IRQHandler                        0x08000658   Section        0  hal.o(i.TIM9_IRQHandler)
+    i.__scatterload_copy                     0x0800068c   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x0800069a   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x0800069c   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.aes_appendMic                          0x080006ac   Section        0  lmic.o(i.aes_appendMic)
+    aes_appendMic                            0x080006ad   Thumb Code    64  lmic.o(i.aes_appendMic)
+    i.aes_appendMic0                         0x080006f0   Section        0  lmic.o(i.aes_appendMic0)
+    aes_appendMic0                           0x080006f1   Thumb Code    34  lmic.o(i.aes_appendMic0)
+    i.aes_cipher                             0x08000718   Section        0  lmic.o(i.aes_cipher)
+    aes_cipher                               0x08000719   Thumb Code    98  lmic.o(i.aes_cipher)
+    i.aes_encrypt                            0x08000784   Section        0  lmic.o(i.aes_encrypt)
+    aes_encrypt                              0x08000785   Thumb Code    24  lmic.o(i.aes_encrypt)
+    i.aes_sessKeys                           0x080007a0   Section        0  lmic.o(i.aes_sessKeys)
+    aes_sessKeys                             0x080007a1   Thumb Code    94  lmic.o(i.aes_sessKeys)
+    i.aes_verifyMic                          0x08000804   Section        0  lmic.o(i.aes_verifyMic)
+    aes_verifyMic                            0x08000805   Thumb Code    72  lmic.o(i.aes_verifyMic)
+    i.aes_verifyMic0                         0x08000850   Section        0  lmic.o(i.aes_verifyMic0)
+    aes_verifyMic0                           0x08000851   Thumb Code    42  lmic.o(i.aes_verifyMic0)
+    i.aesroundkeys                           0x08000880   Section        0  aes.o(i.aesroundkeys)
+    aesroundkeys                             0x08000881   Thumb Code   170  aes.o(i.aesroundkeys)
+    i.buildDataFrame                         0x08000938   Section        0  lmic.o(i.buildDataFrame)
+    buildDataFrame                           0x08000939   Thumb Code   652  lmic.o(i.buildDataFrame)
+    i.buildJoinRequest                       0x08000bcc   Section        0  lmic.o(i.buildJoinRequest)
+    buildJoinRequest                         0x08000bcd   Thumb Code    70  lmic.o(i.buildJoinRequest)
+    i.calcAirTime                            0x08000c18   Section        0  lmic.o(i.calcAirTime)
+    i.calcBcnRxWindowFromMillis              0x08000cd8   Section        0  lmic.o(i.calcBcnRxWindowFromMillis)
+    calcBcnRxWindowFromMillis                0x08000cd9   Thumb Code   120  lmic.o(i.calcBcnRxWindowFromMillis)
+    i.calcRxWindow                           0x08000d58   Section        0  lmic.o(i.calcRxWindow)
+    calcRxWindow                             0x08000d59   Thumb Code    90  lmic.o(i.calcRxWindow)
+    i.configChannel                          0x08000dbc   Section        0  radio.o(i.configChannel)
+    configChannel                            0x08000dbd   Thumb Code    72  radio.o(i.configChannel)
+    i.configLoraModem                        0x08000e0c   Section        0  radio.o(i.configLoraModem)
+    configLoraModem                          0x08000e0d   Thumb Code   164  radio.o(i.configLoraModem)
+    i.configPower                            0x08000eb4   Section        0  radio.o(i.configPower)
+    configPower                              0x08000eb5   Thumb Code    38  radio.o(i.configPower)
+    i.convFreq                               0x08000ee0   Section        0  lmic.o(i.convFreq)
+    convFreq                                 0x08000ee1   Thumb Code    36  lmic.o(i.convFreq)
+    i.debug_char                             0x08000f0c   Section        0  debug.o(i.debug_char)
+    i.debug_event                            0x08000f28   Section        0  debug.o(i.debug_event)
+    i.debug_hex                              0x08000f48   Section        0  debug.o(i.debug_hex)
+    i.debug_init                             0x08000f7c   Section        0  debug.o(i.debug_init)
+    i.debug_led                              0x08000ffc   Section        0  debug.o(i.debug_led)
+    i.debug_str                              0x08001010   Section        0  debug.o(i.debug_str)
+    i.debug_uint                             0x08001026   Section        0  debug.o(i.debug_uint)
+    i.debug_val                              0x08001044   Section        0  debug.o(i.debug_val)
+    i.decDR                                  0x08001064   Section        0  lmic.o(i.decDR)
+    i.decodeBeacon                           0x0800107c   Section        0  lmic.o(i.decodeBeacon)
+    decodeBeacon                             0x0800107d   Thumb Code   216  lmic.o(i.decodeBeacon)
+    i.decodeFrame                            0x0800115c   Section        0  lmic.o(i.decodeFrame)
+    decodeFrame                              0x0800115d   Thumb Code  1234  lmic.o(i.decodeFrame)
+    i.deltaticks                             0x08001638   Section        0  hal.o(i.deltaticks)
+    deltaticks                               0x08001639   Thumb Code    34  hal.o(i.deltaticks)
+    i.dndr2rps                               0x0800165a   Section        0  lmic.o(i.dndr2rps)
+    i.engineUpdate                           0x08001670   Section        0  lmic.o(i.engineUpdate)
+    engineUpdate                             0x08001671   Thumb Code   682  lmic.o(i.engineUpdate)
+    i.getBw                                  0x08001944   Section        0  lmic.o(i.getBw)
+    i.getCr                                  0x0800194c   Section        0  lmic.o(i.getCr)
+    i.getNocrc                               0x08001954   Section        0  lmic.o(i.getNocrc)
+    i.getSensitivity                         0x0800195c   Section        0  lmic.o(i.getSensitivity)
+    i.getSf                                  0x08001980   Section        0  lmic.o(i.getSf)
+    i.hal_checkTimer                         0x08001988   Section        0  hal.o(i.hal_checkTimer)
+    i.hal_disableIRQs                        0x080019f0   Section        0  hal.o(i.hal_disableIRQs)
+    i.hal_enableIRQs                         0x08001a04   Section        0  hal.o(i.hal_enableIRQs)
+    i.hal_failed                             0x08001a18   Section        0  hal.o(i.hal_failed)
+    i.hal_init                               0x08001a24   Section        0  hal.o(i.hal_init)
+    i.hal_io_init                            0x08001a48   Section        0  hal.o(i.hal_io_init)
+    hal_io_init                              0x08001a49   Thumb Code   126  hal.o(i.hal_io_init)
+    i.hal_pin_nss                            0x08001ad8   Section        0  hal.o(i.hal_pin_nss)
+    i.hal_pin_rst                            0x08001aec   Section        0  hal.o(i.hal_pin_rst)
+    i.hal_pin_rxtx                           0x08001b20   Section        0  hal.o(i.hal_pin_rxtx)
+    i.hal_sleep                              0x08001b50   Section        0  hal.o(i.hal_sleep)
+    i.hal_spi                                0x08001b64   Section        0  hal.o(i.hal_spi)
+    i.hal_spi_init                           0x08001b84   Section        0  hal.o(i.hal_spi_init)
+    hal_spi_init                             0x08001b85   Thumb Code    60  hal.o(i.hal_spi_init)
+    i.hal_ticks                              0x08001bcc   Section        0  hal.o(i.hal_ticks)
+    i.hal_time_init                          0x08001c04   Section        0  hal.o(i.hal_time_init)
+    hal_time_init                            0x08001c05   Thumb Code   144  hal.o(i.hal_time_init)
+    i.hal_waitUntil                          0x08001ca8   Section        0  hal.o(i.hal_waitUntil)
+    i.hw_cfg_extirq                          0x08001cbc   Section        0  hw.o(i.hw_cfg_extirq)
+    i.hw_cfg_pin                             0x08001ddc   Section        0  hw.o(i.hw_cfg_pin)
+    i.hw_set_pin                             0x08001e5c   Section        0  hw.o(i.hw_set_pin)
+    i.initDefaultChannels                    0x08001e74   Section        0  lmic.o(i.initDefaultChannels)
+    initDefaultChannels                      0x08001e75   Thumb Code   248  lmic.o(i.initDefaultChannels)
+    i.initJoinLoop                           0x08001f74   Section        0  lmic.o(i.initJoinLoop)
+    initJoinLoop                             0x08001f75   Thumb Code    76  lmic.o(i.initJoinLoop)
+    i.initfunc                               0x08001fc4   Section        0  main.o(i.initfunc)
+    initfunc                                 0x08001fc5   Thumb Code    14  main.o(i.initfunc)
+    i.jreqDone                               0x08001fd4   Section        0  lmic.o(i.jreqDone)
+    jreqDone                                 0x08001fd5   Thumb Code    16  lmic.o(i.jreqDone)
+    i.lowerDR                                0x08001fe8   Section        0  lmic.o(i.lowerDR)
+    i.main                                   0x08002008   Section        0  main.o(i.main)
+    i.mapChannels                            0x08002028   Section        0  lmic.o(i.mapChannels)
+    mapChannels                              0x08002029   Thumb Code    68  lmic.o(i.mapChannels)
+    i.micB0                                  0x08002070   Section        0  lmic.o(i.micB0)
+    micB0                                    0x08002071   Thumb Code    62  lmic.o(i.micB0)
+    i.nextJoinState                          0x080020b4   Section        0  lmic.o(i.nextJoinState)
+    nextJoinState                            0x080020b5   Thumb Code   148  lmic.o(i.nextJoinState)
+    i.nextTx                                 0x0800214c   Section        0  lmic.o(i.nextTx)
+    nextTx                                   0x0800214d   Thumb Code   194  lmic.o(i.nextTx)
+    i.onBcnRx                                0x08002218   Section        0  lmic.o(i.onBcnRx)
+    onBcnRx                                  0x08002219   Thumb Code   148  lmic.o(i.onBcnRx)
+    i.onEvent                                0x080022b4   Section        0  main.o(i.onEvent)
+    i.onJoinFailed                           0x08002324   Section        0  lmic.o(i.onJoinFailed)
+    onJoinFailed                             0x08002325   Thumb Code    12  lmic.o(i.onJoinFailed)
+    i.opmode                                 0x08002330   Section        0  radio.o(i.opmode)
+    opmode                                   0x08002331   Thumb Code    28  radio.o(i.opmode)
+    i.opmodeFSK                              0x0800234c   Section        0  radio.o(i.opmodeFSK)
+    opmodeFSK                                0x0800234d   Thumb Code    14  radio.o(i.opmodeFSK)
+    i.opmodeLora                             0x0800235a   Section        0  radio.o(i.opmodeLora)
+    opmodeLora                               0x0800235b   Thumb Code    14  radio.o(i.opmodeLora)
+    i.os_aes                                 0x08002368   Section        0  aes.o(i.os_aes)
+    i.os_clearCallback                       0x08002b38   Section        0  oslmic.o(i.os_clearCallback)
+    i.os_crc16                               0x08002b60   Section        0  lmic.o(i.os_crc16)
+    i.os_getArtEui                           0x08002ba0   Section        0  main.o(i.os_getArtEui)
+    i.os_getBattLevel                        0x08002bb0   Section        0  lmic.o(i.os_getBattLevel)
+    i.os_getDevEui                           0x08002bb4   Section        0  main.o(i.os_getDevEui)
+    i.os_getDevKey                           0x08002bc4   Section        0  main.o(i.os_getDevKey)
+    i.os_getTime                             0x08002bd8   Section        0  oslmic.o(i.os_getTime)
+    i.os_init                                0x08002be0   Section        0  oslmic.o(i.os_init)
+    i.os_radio                               0x08002bfc   Section        0  radio.o(i.os_radio)
+    i.os_rlsbf2                              0x08002c3a   Section        0  lmic.o(i.os_rlsbf2)
+    i.os_rlsbf4                              0x08002c46   Section        0  lmic.o(i.os_rlsbf4)
+    i.os_rmsbf4                              0x08002c5e   Section        0  lmic.o(i.os_rmsbf4)
+    i.os_runloop                             0x08002c78   Section        0  oslmic.o(i.os_runloop)
+    i.os_setCallback                         0x08002cc8   Section        0  oslmic.o(i.os_setCallback)
+    i.os_setTimedCallback                    0x08002cf8   Section        0  oslmic.o(i.os_setTimedCallback)
+    i.os_wlsbf2                              0x08002d40   Section        0  lmic.o(i.os_wlsbf2)
+    i.os_wlsbf4                              0x08002d48   Section        0  lmic.o(i.os_wlsbf4)
+    i.os_wmsbf4                              0x08002d58   Section        0  lmic.o(i.os_wmsbf4)
+    i.processBeacon                          0x08002d68   Section        0  lmic.o(i.processBeacon)
+    processBeacon                            0x08002d69   Thumb Code   412  lmic.o(i.processBeacon)
+    i.processDnData                          0x08002f10   Section        0  lmic.o(i.processDnData)
+    processDnData                            0x08002f11   Thumb Code   412  lmic.o(i.processDnData)
+    i.processJoinAccept                      0x080030b4   Section        0  lmic.o(i.processJoinAccept)
+    processJoinAccept                        0x080030b5   Thumb Code   470  lmic.o(i.processJoinAccept)
+    i.processPingRx                          0x0800329c   Section        0  lmic.o(i.processPingRx)
+    processPingRx                            0x0800329d   Thumb Code    42  lmic.o(i.processPingRx)
+    i.processRx1DnData                       0x080032cc   Section        0  lmic.o(i.processRx1DnData)
+    processRx1DnData                         0x080032cd   Thumb Code    30  lmic.o(i.processRx1DnData)
+    i.processRx1Jacc                         0x080032f4   Section        0  lmic.o(i.processRx1Jacc)
+    processRx1Jacc                           0x080032f5   Thumb Code    30  lmic.o(i.processRx1Jacc)
+    i.processRx2DnData                       0x0800331c   Section        0  lmic.o(i.processRx2DnData)
+    processRx2DnData                         0x0800331d   Thumb Code    58  lmic.o(i.processRx2DnData)
+    i.processRx2DnDataDelay                  0x08003360   Section        0  lmic.o(i.processRx2DnDataDelay)
+    processRx2DnDataDelay                    0x08003361   Thumb Code    10  lmic.o(i.processRx2DnDataDelay)
+    i.processRx2Jacc                         0x0800336c   Section        0  lmic.o(i.processRx2Jacc)
+    processRx2Jacc                           0x0800336d   Thumb Code    26  lmic.o(i.processRx2Jacc)
+    i.radio_init                             0x0800338c   Section        0  radio.o(i.radio_init)
+    i.radio_irq_handler                      0x0800343c   Section        0  radio.o(i.radio_irq_handler)
+    i.radio_rand1                            0x0800358c   Section        0  radio.o(i.radio_rand1)
+    i.readBuf                                0x080035c0   Section        0  radio.o(i.readBuf)
+    readBuf                                  0x080035c1   Thumb Code    54  radio.o(i.readBuf)
+    i.readReg                                0x080035f6   Section        0  radio.o(i.readReg)
+    readReg                                  0x080035f7   Thumb Code    36  radio.o(i.readReg)
+    i.reportEvent                            0x0800361a   Section        0  lmic.o(i.reportEvent)
+    reportEvent                              0x0800361b   Thumb Code    16  lmic.o(i.reportEvent)
+    i.rndDelay                               0x0800362a   Section        0  lmic.o(i.rndDelay)
+    rndDelay                                 0x0800362b   Thumb Code    66  lmic.o(i.rndDelay)
+    i.runEngineUpdate                        0x0800366c   Section        0  lmic.o(i.runEngineUpdate)
+    runEngineUpdate                          0x0800366d   Thumb Code    10  lmic.o(i.runEngineUpdate)
+    i.runReset                               0x08003676   Section        0  lmic.o(i.runReset)
+    runReset                                 0x08003677   Thumb Code    20  lmic.o(i.runReset)
+    i.rxfsk                                  0x0800368c   Section        0  radio.o(i.rxfsk)
+    rxfsk                                    0x0800368d   Thumb Code   198  radio.o(i.rxfsk)
+    i.rxlora                                 0x08003758   Section        0  radio.o(i.rxlora)
+    rxlora                                   0x08003759   Thumb Code   174  radio.o(i.rxlora)
+    i.rxschedInit                            0x08003810   Section        0  lmic.o(i.rxschedInit)
+    rxschedInit                              0x08003811   Thumb Code   160  lmic.o(i.rxschedInit)
+    i.rxschedNext                            0x080038c0   Section        0  lmic.o(i.rxschedNext)
+    rxschedNext                              0x080038c1   Thumb Code    92  lmic.o(i.rxschedNext)
+    i.schedRx2                               0x08003924   Section        0  lmic.o(i.schedRx2)
+    schedRx2                                 0x08003925   Thumb Code    54  lmic.o(i.schedRx2)
+    i.setBcnRxParams                         0x08003964   Section        0  lmic.o(i.setBcnRxParams)
+    setBcnRxParams                           0x08003965   Thumb Code    58  lmic.o(i.setBcnRxParams)
+    i.setCr                                  0x080039a4   Section        0  lmic.o(i.setCr)
+    i.setDrJoin                              0x080039b0   Section        0  lmic.o(i.setDrJoin)
+    setDrJoin                                0x080039b1   Thumb Code     8  lmic.o(i.setDrJoin)
+    i.setDrTxpow                             0x080039bc   Section        0  lmic.o(i.setDrTxpow)
+    setDrTxpow                               0x080039bd   Thumb Code    46  lmic.o(i.setDrTxpow)
+    i.setIh                                  0x080039f0   Section        0  lmic.o(i.setIh)
+    i.setNocrc                               0x080039fc   Section        0  lmic.o(i.setNocrc)
+    i.setupRx1                               0x08003a0c   Section        0  lmic.o(i.setupRx1)
+    setupRx1                                 0x08003a0d   Thumb Code    42  lmic.o(i.setupRx1)
+    i.setupRx1DnData                         0x08003a3c   Section        0  lmic.o(i.setupRx1DnData)
+    setupRx1DnData                           0x08003a3d   Thumb Code    12  lmic.o(i.setupRx1DnData)
+    i.setupRx1Jacc                           0x08003a4c   Section        0  lmic.o(i.setupRx1Jacc)
+    setupRx1Jacc                             0x08003a4d   Thumb Code    12  lmic.o(i.setupRx1Jacc)
+    i.setupRx2                               0x08003a5c   Section        0  lmic.o(i.setupRx2)
+    setupRx2                                 0x08003a5d   Thumb Code    44  lmic.o(i.setupRx2)
+    i.setupRx2DnData                         0x08003a8c   Section        0  lmic.o(i.setupRx2DnData)
+    setupRx2DnData                           0x08003a8d   Thumb Code    16  lmic.o(i.setupRx2DnData)
+    i.setupRx2Jacc                           0x08003aa4   Section        0  lmic.o(i.setupRx2Jacc)
+    setupRx2Jacc                             0x08003aa5   Thumb Code    16  lmic.o(i.setupRx2Jacc)
+    i.startJoining                           0x08003abc   Section        0  lmic.o(i.startJoining)
+    startJoining                             0x08003abd   Thumb Code    12  lmic.o(i.startJoining)
+    i.startRxBcn                             0x08003ac8   Section        0  lmic.o(i.startRxBcn)
+    startRxBcn                               0x08003ac9   Thumb Code    18  lmic.o(i.startRxBcn)
+    i.startRxPing                            0x08003ae4   Section        0  lmic.o(i.startRxPing)
+    startRxPing                              0x08003ae5   Thumb Code    18  lmic.o(i.startRxPing)
+    i.startScan                              0x08003b00   Section        0  lmic.o(i.startScan)
+    startScan                                0x08003b01   Thumb Code   116  lmic.o(i.startScan)
+    i.startrx                                0x08003b7c   Section        0  radio.o(i.startrx)
+    startrx                                  0x08003b7d   Thumb Code    46  radio.o(i.startrx)
+    i.starttx                                0x08003bb0   Section        0  radio.o(i.starttx)
+    starttx                                  0x08003bb1   Thumb Code    40  radio.o(i.starttx)
+    i.stateJustJoined                        0x08003bdc   Section        0  lmic.o(i.stateJustJoined)
+    stateJustJoined                          0x08003bdd   Thumb Code    98  lmic.o(i.stateJustJoined)
+    i.txDelay                                0x08003c48   Section        0  lmic.o(i.txDelay)
+    txDelay                                  0x08003c49   Thumb Code    56  lmic.o(i.txDelay)
+    i.txDone                                 0x08003c84   Section        0  lmic.o(i.txDone)
+    txDone                                   0x08003c85   Thumb Code   124  lmic.o(i.txDone)
+    i.txfsk                                  0x08003d0c   Section        0  radio.o(i.txfsk)
+    txfsk                                    0x08003d0d   Thumb Code   200  radio.o(i.txfsk)
+    i.txlora                                 0x08003dd8   Section        0  radio.o(i.txlora)
+    txlora                                   0x08003dd9   Thumb Code   152  radio.o(i.txlora)
+    i.unlinkjob                              0x08003e74   Section        0  oslmic.o(i.unlinkjob)
+    unlinkjob                                0x08003e75   Thumb Code    30  oslmic.o(i.unlinkjob)
+    i.updataDone                             0x08003e94   Section        0  lmic.o(i.updataDone)
+    updataDone                               0x08003e95   Thumb Code    16  lmic.o(i.updataDone)
+    i.updateTx                               0x08003ea8   Section        0  lmic.o(i.updateTx)
+    updateTx                                 0x08003ea9   Thumb Code    92  lmic.o(i.updateTx)
+    i.updr2rps                               0x08003f08   Section        0  lmic.o(i.updr2rps)
+    i.validDR                                0x08003f18   Section        0  lmic.o(i.validDR)
+    i.writeBuf                               0x08003f30   Section        0  radio.o(i.writeBuf)
+    writeBuf                                 0x08003f31   Thumb Code    52  radio.o(i.writeBuf)
+    i.writeReg                               0x08003f64   Section        0  radio.o(i.writeReg)
+    writeReg                                 0x08003f65   Thumb Code    34  radio.o(i.writeReg)
+    .constdata                               0x08003f86   Section       32  main.o(.constdata)
+    APPEUI                                   0x08003f86   Data           8  main.o(.constdata)
+    DEVEUI                                   0x08003f8e   Data           8  main.o(.constdata)
+    DEVKEY                                   0x08003f96   Data          16  main.o(.constdata)
+    .constdata                               0x08003fa8   Section     4392  aes.o(.constdata)
+    AES_RCON                                 0x08003fa8   Data          40  aes.o(.constdata)
+    AES_S                                    0x08003fd0   Data         256  aes.o(.constdata)
+    AES_E1                                   0x080040d0   Data        1024  aes.o(.constdata)
+    AES_E2                                   0x080044d0   Data        1024  aes.o(.constdata)
+    AES_E3                                   0x080048d0   Data        1024  aes.o(.constdata)
+    AES_E4                                   0x08004cd0   Data        1024  aes.o(.constdata)
+    .constdata                               0x080050d0   Section      144  lmic.o(.constdata)
+    TXPOWLEVELS                              0x080050de   Data          16  lmic.o(.constdata)
+    SENSITIVITY                              0x080050ee   Data          21  lmic.o(.constdata)
+    DRADJUST                                 0x08005103   Data          10  lmic.o(.constdata)
+    DR2HSYM_osticks                          0x08005110   Data          32  lmic.o(.constdata)
+    iniChannelFreq                           0x08005130   Data          48  lmic.o(.constdata)
+    .constdata                               0x08005160   Section       18  radio.o(.constdata)
+    rxlorairqmask                            0x08005160   Data           3  radio.o(.constdata)
+    LORA_RXDONE_FIXUP                        0x08005164   Data          14  radio.o(.constdata)
+    .constdata                               0x08005172   Section       12  hal.o(.constdata)
+    outputpins                               0x08005172   Data           6  hal.o(.constdata)
+    inputpins                                0x08005178   Data           6  hal.o(.constdata)
+    .conststring                             0x08005180   Section      181  debug.o(.conststring)
+    .data                                    0x20000000   Section        8  oslmic.o(.data)
+    OS                                       0x20000000   Data           8  oslmic.o(.data)
+    .data                                    0x20000008   Section       64  debug.o(.data)
+    evnames                                  0x20000008   Data          64  debug.o(.data)
+    .data                                    0x20000048   Section        8  hal.o(.data)
+    HAL                                      0x20000048   Data           8  hal.o(.data)
+    .bss                                     0x20000050   Section      192  aes.o(.bss)
+    .bss                                     0x20000110   Section      424  lmic.o(.bss)
+    .bss                                     0x200002b8   Section       16  radio.o(.bss)
+    randbuf                                  0x200002b8   Data          16  radio.o(.bss)
+    STACK                                    0x200002c8   Section     1024  startup_stm32l1xx_md_keil.o(STACK)
+
+    Global Symbols
+
+    Symbol Name                              Value     Ov Type        Size  Object(Section)
+
+    BuildAttributes$$THM_ISAv4$P$D$K$B$S$PE$A:L22UL41UL21$X:L11$S22US41US21$IEEE1$IW$USESV6$~STKCKD$USESV7$~SHL$OSPACE$EBA8$MICROLIB$REQ8$PRES8$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
+    __ARM_use_no_argv                        0x00000000   Number         0  main.o ABSOLUTE
+    __cpp_initialize__aeabi_                  - Undefined Weak Reference
+    __cxa_finalize                            - Undefined Weak Reference
+    __decompress                              - Undefined Weak Reference
+    _clock_init                               - Undefined Weak Reference
+    _microlib_exit                            - Undefined Weak Reference
+    __Vectors_Size                           0x000000f4   Number         0  startup_stm32l1xx_md_keil.o ABSOLUTE
+    __Vectors                                0x08000000   Data           4  startup_stm32l1xx_md_keil.o(RESET)
+    __Vectors_End                            0x080000f4   Data           0  startup_stm32l1xx_md_keil.o(RESET)
+    __main                                   0x080000f5   Thumb Code     0  entry.o(.ARM.Collect$$$$00000000)
+    _main_stk                                0x080000f5   Thumb Code     0  entry2.o(.ARM.Collect$$$$00000001)
+    _main_scatterload                        0x080000f9   Thumb Code     0  entry5.o(.ARM.Collect$$$$00000004)
+    __main_after_scatterload                 0x080000fd   Thumb Code     0  entry5.o(.ARM.Collect$$$$00000004)
+    _main_clock                              0x080000fd   Thumb Code     0  entry7b.o(.ARM.Collect$$$$00000008)
+    _main_cpp_init                           0x080000fd   Thumb Code     0  entry8b.o(.ARM.Collect$$$$0000000A)
+    _main_init                               0x080000fd   Thumb Code     0  entry9a.o(.ARM.Collect$$$$0000000B)
+    __rt_final_cpp                           0x08000105   Thumb Code     0  entry10a.o(.ARM.Collect$$$$0000000D)
+    __rt_final_exit                          0x08000105   Thumb Code     0  entry11a.o(.ARM.Collect$$$$0000000F)
+    Reset_Handler                            0x08000109   Thumb Code     8  startup_stm32l1xx_md_keil.o(.text)
+    NMI_Handler                              0x08000111   Thumb Code     2  startup_stm32l1xx_md_keil.o(.text)
+    HardFault_Handler                        0x08000113   Thumb Code     2  startup_stm32l1xx_md_keil.o(.text)
+    MemManage_Handler                        0x08000115   Thumb Code     2  startup_stm32l1xx_md_keil.o(.text)
+    BusFault_Handler                         0x08000117   Thumb Code     2  startup_stm32l1xx_md_keil.o(.text)
+    UsageFault_Handler                       0x08000119   Thumb Code     2  startup_stm32l1xx_md_keil.o(.text)
+    SVC_Handler                              0x0800011b   Thumb Code     2  startup_stm32l1xx_md_keil.o(.text)
+    DebugMon_Handler                         0x0800011d   Thumb Code     2  startup_stm32l1xx_md_keil.o(.text)
+    PendSV_Handler                           0x0800011f   Thumb Code     2  startup_stm32l1xx_md_keil.o(.text)
+    SysTick_Handler                          0x08000121   Thumb Code     2  startup_stm32l1xx_md_keil.o(.text)
+    ADC1_IRQHandler                          0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    COMP_IRQHandler                          0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    DAC_IRQHandler                           0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    DMA1_Channel1_IRQHandler                 0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    DMA1_Channel2_IRQHandler                 0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    DMA1_Channel3_IRQHandler                 0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    DMA1_Channel4_IRQHandler                 0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    DMA1_Channel5_IRQHandler                 0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    DMA1_Channel6_IRQHandler                 0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    DMA1_Channel7_IRQHandler                 0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    FLASH_IRQHandler                         0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    I2C1_ER_IRQHandler                       0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    I2C1_EV_IRQHandler                       0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    I2C2_ER_IRQHandler                       0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    I2C2_EV_IRQHandler                       0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    LCD_IRQHandler                           0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    PVD_IRQHandler                           0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    RCC_IRQHandler                           0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    RTC_Alarm_IRQHandler                     0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    RTC_WKUP_IRQHandler                      0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    SPI1_IRQHandler                          0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    SPI2_IRQHandler                          0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    TAMPER_STAMP_IRQHandler                  0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    TIM10_IRQHandler                         0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    TIM11_IRQHandler                         0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    TIM2_IRQHandler                          0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    TIM3_IRQHandler                          0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    TIM4_IRQHandler                          0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    TIM6_IRQHandler                          0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    TIM7_IRQHandler                          0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    USART1_IRQHandler                        0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    USART2_IRQHandler                        0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    USART3_IRQHandler                        0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    USB_FS_WKUP_IRQHandler                   0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    USB_HP_IRQHandler                        0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    USB_LP_IRQHandler                        0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    WWDG_IRQHandler                          0x08000123   Thumb Code     0  startup_stm32l1xx_md_keil.o(.text)
+    __aeabi_uldivmod                         0x0800012d   Thumb Code    98  uldiv.o(.text)
+    __aeabi_ldivmod                          0x0800018f   Thumb Code    98  ldiv.o(.text)
+    __aeabi_memcpy                           0x080001f1   Thumb Code    36  memcpya.o(.text)
+    __aeabi_memcpy4                          0x080001f1   Thumb Code     0  memcpya.o(.text)
+    __aeabi_memcpy8                          0x080001f1   Thumb Code     0  memcpya.o(.text)
+    __aeabi_memset                           0x08000215   Thumb Code    14  memseta.o(.text)
+    __aeabi_memset4                          0x08000215   Thumb Code     0  memseta.o(.text)
+    __aeabi_memset8                          0x08000215   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr                           0x08000223   Thumb Code     4  memseta.o(.text)
+    __aeabi_memclr4                          0x08000223   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr8                          0x08000223   Thumb Code     0  memseta.o(.text)
+    _memset$wrapper                          0x08000227   Thumb Code    18  memseta.o(.text)
+    __aeabi_llsl                             0x08000239   Thumb Code    30  llshl.o(.text)
+    _ll_shift_l                              0x08000239   Thumb Code     0  llshl.o(.text)
+    __aeabi_llsr                             0x08000257   Thumb Code    32  llushr.o(.text)
+    _ll_ushift_r                             0x08000257   Thumb Code     0  llushr.o(.text)
+    __scatterload                            0x08000279   Thumb Code    28  init.o(.text)
+    __scatterload_rt2                        0x08000279   Thumb Code     0  init.o(.text)
+    EXTI0_IRQHandler                         0x0800029d   Thumb Code     8  hal.o(i.EXTI0_IRQHandler)
+    EXTI15_10_IRQHandler                     0x080002a5   Thumb Code     8  hal.o(i.EXTI15_10_IRQHandler)
+    EXTI1_IRQHandler                         0x080002ad   Thumb Code     8  hal.o(i.EXTI1_IRQHandler)
+    EXTI2_IRQHandler                         0x080002b5   Thumb Code     8  hal.o(i.EXTI2_IRQHandler)
+    EXTI3_IRQHandler                         0x080002bd   Thumb Code     8  hal.o(i.EXTI3_IRQHandler)
+    EXTI4_IRQHandler                         0x080002c5   Thumb Code     8  hal.o(i.EXTI4_IRQHandler)
+    EXTI9_5_IRQHandler                       0x080002cd   Thumb Code     8  hal.o(i.EXTI9_5_IRQHandler)
+    EXTI_IRQHandler                          0x080002d5   Thumb Code    74  hal.o(i.EXTI_IRQHandler)
+    LMIC_enableTracking                      0x08000325   Thumb Code    36  lmic.o(i.LMIC_enableTracking)
+    LMIC_init                                0x0800034d   Thumb Code    10  lmic.o(i.LMIC_init)
+    LMIC_reset                               0x0800035d   Thumb Code   118  lmic.o(i.LMIC_reset)
+    LMIC_setupChannel                        0x080003dd   Thumb Code   128  lmic.o(i.LMIC_setupChannel)
+    LMIC_startJoining                        0x08000479   Thumb Code   104  lmic.o(i.LMIC_startJoining)
+    SystemInit                               0x080005f1   Thumb Code    88  system_stm32l1xx.o(i.SystemInit)
+    TIM9_IRQHandler                          0x08000659   Thumb Code    44  hal.o(i.TIM9_IRQHandler)
+    __scatterload_copy                       0x0800068d   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x0800069b   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x0800069d   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    calcAirTime                              0x08000c19   Thumb Code   190  lmic.o(i.calcAirTime)
+    debug_char                               0x08000f0d   Thumb Code    22  debug.o(i.debug_char)
+    debug_event                              0x08000f29   Thumb Code    28  debug.o(i.debug_event)
+    debug_hex                                0x08000f49   Thumb Code    30  debug.o(i.debug_hex)
+    debug_init                               0x08000f7d   Thumb Code    68  debug.o(i.debug_init)
+    debug_led                                0x08000ffd   Thumb Code    16  debug.o(i.debug_led)
+    debug_str                                0x08001011   Thumb Code    22  debug.o(i.debug_str)
+    debug_uint                               0x08001027   Thumb Code    30  debug.o(i.debug_uint)
+    debug_val                                0x08001045   Thumb Code    32  debug.o(i.debug_val)
+    decDR                                    0x08001065   Thumb Code    20  lmic.o(i.decDR)
+    dndr2rps                                 0x0800165b   Thumb Code    20  lmic.o(i.dndr2rps)
+    getBw                                    0x08001945   Thumb Code     8  lmic.o(i.getBw)
+    getCr                                    0x0800194d   Thumb Code     8  lmic.o(i.getCr)
+    getNocrc                                 0x08001955   Thumb Code     8  lmic.o(i.getNocrc)
+    getSensitivity                           0x0800195d   Thumb Code    30  lmic.o(i.getSensitivity)
+    getSf                                    0x08001981   Thumb Code     8  lmic.o(i.getSf)
+    hal_checkTimer                           0x08001989   Thumb Code    98  hal.o(i.hal_checkTimer)
+    hal_disableIRQs                          0x080019f1   Thumb Code    14  hal.o(i.hal_disableIRQs)
+    hal_enableIRQs                           0x08001a05   Thumb Code    16  hal.o(i.hal_enableIRQs)
+    hal_failed                               0x08001a19   Thumb Code    12  hal.o(i.hal_failed)
+    hal_init                                 0x08001a25   Thumb Code    32  hal.o(i.hal_init)
+    hal_pin_nss                              0x08001ad9   Thumb Code    16  hal.o(i.hal_pin_nss)
+    hal_pin_rst                              0x08001aed   Thumb Code    48  hal.o(i.hal_pin_rst)
+    hal_pin_rxtx                             0x08001b21   Thumb Code    38  hal.o(i.hal_pin_rxtx)
+    hal_sleep                                0x08001b51   Thumb Code    16  hal.o(i.hal_sleep)
+    hal_spi                                  0x08001b65   Thumb Code    28  hal.o(i.hal_spi)
+    hal_ticks                                0x08001bcd   Thumb Code    46  hal.o(i.hal_ticks)
+    hal_waitUntil                            0x08001ca9   Thumb Code    18  hal.o(i.hal_waitUntil)
+    hw_cfg_extirq                            0x08001cbd   Thumb Code   272  hw.o(i.hw_cfg_extirq)
+    hw_cfg_pin                               0x08001ddd   Thumb Code   128  hw.o(i.hw_cfg_pin)
+    hw_set_pin                               0x08001e5d   Thumb Code    22  hw.o(i.hw_set_pin)
+    lowerDR                                  0x08001fe9   Thumb Code    30  lmic.o(i.lowerDR)
+    main                                     0x08002009   Thumb Code    26  main.o(i.main)
+    onEvent                                  0x080022b5   Thumb Code    80  main.o(i.onEvent)
+    os_aes                                   0x08002369   Thumb Code  1974  aes.o(i.os_aes)
+    os_clearCallback                         0x08002b39   Thumb Code    34  oslmic.o(i.os_clearCallback)
+    os_crc16                                 0x08002b61   Thumb Code    64  lmic.o(i.os_crc16)
+    os_getArtEui                             0x08002ba1   Thumb Code    12  main.o(i.os_getArtEui)
+    os_getBattLevel                          0x08002bb1   Thumb Code     4  lmic.o(i.os_getBattLevel)
+    os_getDevEui                             0x08002bb5   Thumb Code    12  main.o(i.os_getDevEui)
+    os_getDevKey                             0x08002bc5   Thumb Code    16  main.o(i.os_getDevKey)
+    os_getTime                               0x08002bd9   Thumb Code     8  oslmic.o(i.os_getTime)
+    os_init                                  0x08002be1   Thumb Code    24  oslmic.o(i.os_init)
+    os_radio                                 0x08002bfd   Thumb Code    62  radio.o(i.os_radio)
+    os_rlsbf2                                0x08002c3b   Thumb Code    12  lmic.o(i.os_rlsbf2)
+    os_rlsbf4                                0x08002c47   Thumb Code    24  lmic.o(i.os_rlsbf4)
+    os_rmsbf4                                0x08002c5f   Thumb Code    24  lmic.o(i.os_rmsbf4)
+    os_runloop                               0x08002c79   Thumb Code    76  oslmic.o(i.os_runloop)
+    os_setCallback                           0x08002cc9   Thumb Code    42  oslmic.o(i.os_setCallback)
+    os_setTimedCallback                      0x08002cf9   Thumb Code    68  oslmic.o(i.os_setTimedCallback)
+    os_wlsbf2                                0x08002d41   Thumb Code     8  lmic.o(i.os_wlsbf2)
+    os_wlsbf4                                0x08002d49   Thumb Code    16  lmic.o(i.os_wlsbf4)
+    os_wmsbf4                                0x08002d59   Thumb Code    16  lmic.o(i.os_wmsbf4)
+    radio_init                               0x0800338d   Thumb Code   170  radio.o(i.radio_init)
+    radio_irq_handler                        0x0800343d   Thumb Code   328  radio.o(i.radio_irq_handler)
+    radio_rand1                              0x0800358d   Thumb Code    46  radio.o(i.radio_rand1)
+    setCr                                    0x080039a5   Thumb Code    12  lmic.o(i.setCr)
+    setIh                                    0x080039f1   Thumb Code    12  lmic.o(i.setIh)
+    setNocrc                                 0x080039fd   Thumb Code    14  lmic.o(i.setNocrc)
+    updr2rps                                 0x08003f09   Thumb Code    10  lmic.o(i.updr2rps)
+    validDR                                  0x08003f19   Thumb Code    20  lmic.o(i.validDR)
+    maxFrameLens                             0x080050d0   Data           4  lmic.o(.constdata)
+    _DR2RPS_CRC                              0x080050d4   Data          10  lmic.o(.constdata)
+    Region$$Table$$Base                      0x08005238   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08005258   Number         0  anon$$obj.o(Region$$Table)
+    AESAUX                                   0x20000050   Data          16  aes.o(.bss)
+    AESKEY                                   0x20000060   Data         176  aes.o(.bss)
+    LMIC                                     0x20000110   Data         424  lmic.o(.bss)
+    __initial_sp                             0x200006c8   Data           0  startup_stm32l1xx_md_keil.o(STACK)
+
+
+
+==============================================================================
+
+Memory Map of the image
+
+  Image Entry point : 0x08000109
+
+  Load Region LR_1 (Base: 0x08000000, Size: 0x000052a8, Max: 0xffffffff, ABSOLUTE)
+
+    Execution Region ER_RO (Base: 0x08000000, Size: 0x00005258, Max: 0xffffffff, ABSOLUTE)
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x08000000   0x000000f4   Data   RO         1245    RESET               startup_stm32l1xx_md_keil.o
+    0x080000f4   0x00000000   Code   RO         1291  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x080000f4   0x00000004   Code   RO         1304    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x080000f8   0x00000004   Code   RO         1307    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x080000fc   0x00000000   Code   RO         1309    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x080000fc   0x00000000   Code   RO         1311    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x080000fc   0x00000008   Code   RO         1312    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x08000104   0x00000000   Code   RO         1314    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x08000104   0x00000000   Code   RO         1316    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x08000104   0x00000004   Code   RO         1305    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x08000108   0x00000024   Code   RO         1246  * .text               startup_stm32l1xx_md_keil.o
+    0x0800012c   0x00000062   Code   RO         1294    .text               mc_w.l(uldiv.o)
+    0x0800018e   0x00000062   Code   RO         1296    .text               mc_w.l(ldiv.o)
+    0x080001f0   0x00000024   Code   RO         1298    .text               mc_w.l(memcpya.o)
+    0x08000214   0x00000024   Code   RO         1300    .text               mc_w.l(memseta.o)
+    0x08000238   0x0000001e   Code   RO         1318    .text               mc_w.l(llshl.o)
+    0x08000256   0x00000020   Code   RO         1320    .text               mc_w.l(llushr.o)
+    0x08000276   0x00000002   PAD
+    0x08000278   0x00000024   Code   RO         1322    .text               mc_w.l(init.o)
+    0x0800029c   0x00000008   Code   RO         1039    i.EXTI0_IRQHandler  hal.o
+    0x080002a4   0x00000008   Code   RO         1040    i.EXTI15_10_IRQHandler  hal.o
+    0x080002ac   0x00000008   Code   RO         1041    i.EXTI1_IRQHandler  hal.o
+    0x080002b4   0x00000008   Code   RO         1042    i.EXTI2_IRQHandler  hal.o
+    0x080002bc   0x00000008   Code   RO         1043    i.EXTI3_IRQHandler  hal.o
+    0x080002c4   0x00000008   Code   RO         1044    i.EXTI4_IRQHandler  hal.o
+    0x080002cc   0x00000008   Code   RO         1045    i.EXTI9_5_IRQHandler  hal.o
+    0x080002d4   0x00000050   Code   RO         1046    i.EXTI_IRQHandler   hal.o
+    0x08000324   0x00000028   Code   RO           94    i.LMIC_enableTracking  lmic.o
+    0x0800034c   0x00000010   Code   RO           95    i.LMIC_init         lmic.o
+    0x0800035c   0x00000080   Code   RO           96    i.LMIC_reset        lmic.o
+    0x080003dc   0x0000009c   Code   RO          106    i.LMIC_setupChannel  lmic.o
+    0x08000478   0x00000070   Code   RO          108    i.LMIC_startJoining  lmic.o
+    0x080004e8   0x00000108   Code   RO         1253    i.SetSysClock       system_stm32l1xx.o
+    0x080005f0   0x00000068   Code   RO         1255    i.SystemInit        system_stm32l1xx.o
+    0x08000658   0x00000034   Code   RO         1047    i.TIM9_IRQHandler   hal.o
+    0x0800068c   0x0000000e   Code   RO         1326    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x0800069a   0x00000002   Code   RO         1327    i.__scatterload_null  mc_w.l(handlers.o)
+    0x0800069c   0x0000000e   Code   RO         1328    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x080006aa   0x00000002   PAD
+    0x080006ac   0x00000044   Code   RO          111    i.aes_appendMic     lmic.o
+    0x080006f0   0x00000028   Code   RO          112    i.aes_appendMic0    lmic.o
+    0x08000718   0x0000006c   Code   RO          113    i.aes_cipher        lmic.o
+    0x08000784   0x0000001c   Code   RO          114    i.aes_encrypt       lmic.o
+    0x080007a0   0x00000064   Code   RO          115    i.aes_sessKeys      lmic.o
+    0x08000804   0x0000004c   Code   RO          116    i.aes_verifyMic     lmic.o
+    0x08000850   0x00000030   Code   RO          117    i.aes_verifyMic0    lmic.o
+    0x08000880   0x000000b8   Code   RO           64    i.aesroundkeys      aes.o
+    0x08000938   0x00000294   Code   RO          118    i.buildDataFrame    lmic.o
+    0x08000bcc   0x0000004c   Code   RO          119    i.buildJoinRequest  lmic.o
+    0x08000c18   0x000000be   Code   RO          120    i.calcAirTime       lmic.o
+    0x08000cd6   0x00000002   PAD
+    0x08000cd8   0x00000080   Code   RO          121    i.calcBcnRxWindowFromMillis  lmic.o
+    0x08000d58   0x00000064   Code   RO          122    i.calcRxWindow      lmic.o
+    0x08000dbc   0x00000050   Code   RO          792    i.configChannel     radio.o
+    0x08000e0c   0x000000a8   Code   RO          793    i.configLoraModem   radio.o
+    0x08000eb4   0x0000002c   Code   RO          794    i.configPower       radio.o
+    0x08000ee0   0x0000002c   Code   RO          123    i.convFreq          lmic.o
+    0x08000f0c   0x0000001c   Code   RO          942    i.debug_char        debug.o
+    0x08000f28   0x00000020   Code   RO          943    i.debug_event       debug.o
+    0x08000f48   0x00000034   Code   RO          944    i.debug_hex         debug.o
+    0x08000f7c   0x00000080   Code   RO          945    i.debug_init        debug.o
+    0x08000ffc   0x00000014   Code   RO          946    i.debug_led         debug.o
+    0x08001010   0x00000016   Code   RO          947    i.debug_str         debug.o
+    0x08001026   0x0000001e   Code   RO          948    i.debug_uint        debug.o
+    0x08001044   0x00000020   Code   RO          949    i.debug_val         debug.o
+    0x08001064   0x00000018   Code   RO          660    i.decDR             lmic.o
+    0x0800107c   0x000000e0   Code   RO          124    i.decodeBeacon      lmic.o
+    0x0800115c   0x000004dc   Code   RO          125    i.decodeFrame       lmic.o
+    0x08001638   0x00000022   Code   RO         1048    i.deltaticks        hal.o
+    0x0800165a   0x00000014   Code   RO          637    i.dndr2rps          lmic.o
+    0x0800166e   0x00000002   PAD
+    0x08001670   0x000002d4   Code   RO          126    i.engineUpdate      lmic.o
+    0x08001944   0x00000008   Code   RO          579    i.getBw             lmic.o
+    0x0800194c   0x00000008   Code   RO          590    i.getCr             lmic.o
+    0x08001954   0x00000008   Code   RO          600    i.getNocrc          lmic.o
+    0x0800195c   0x00000024   Code   RO          127    i.getSensitivity    lmic.o
+    0x08001980   0x00000008   Code   RO          568    i.getSf             lmic.o
+    0x08001988   0x00000068   Code   RO         1049    i.hal_checkTimer    hal.o
+    0x080019f0   0x00000014   Code   RO         1050    i.hal_disableIRQs   hal.o
+    0x08001a04   0x00000014   Code   RO         1051    i.hal_enableIRQs    hal.o
+    0x08001a18   0x0000000c   Code   RO         1052    i.hal_failed        hal.o
+    0x08001a24   0x00000024   Code   RO         1053    i.hal_init          hal.o
+    0x08001a48   0x00000090   Code   RO         1054    i.hal_io_init       hal.o
+    0x08001ad8   0x00000014   Code   RO         1055    i.hal_pin_nss       hal.o
+    0x08001aec   0x00000034   Code   RO         1056    i.hal_pin_rst       hal.o
+    0x08001b20   0x00000030   Code   RO         1057    i.hal_pin_rxtx      hal.o
+    0x08001b50   0x00000014   Code   RO         1058    i.hal_sleep         hal.o
+    0x08001b64   0x00000020   Code   RO         1059    i.hal_spi           hal.o
+    0x08001b84   0x00000048   Code   RO         1060    i.hal_spi_init      hal.o
+    0x08001bcc   0x00000038   Code   RO         1061    i.hal_ticks         hal.o
+    0x08001c04   0x000000a4   Code   RO         1062    i.hal_time_init     hal.o
+    0x08001ca8   0x00000012   Code   RO         1063    i.hal_waitUntil     hal.o
+    0x08001cba   0x00000002   PAD
+    0x08001cbc   0x00000120   Code   RO         1206    i.hw_cfg_extirq     hw.o
+    0x08001ddc   0x00000080   Code   RO         1207    i.hw_cfg_pin        hw.o
+    0x08001e5c   0x00000016   Code   RO         1208    i.hw_set_pin        hw.o
+    0x08001e72   0x00000002   PAD
+    0x08001e74   0x00000100   Code   RO          128    i.initDefaultChannels  lmic.o
+    0x08001f74   0x00000050   Code   RO          129    i.initJoinLoop      lmic.o
+    0x08001fc4   0x0000000e   Code   RO            1    i.initfunc          main.o
+    0x08001fd2   0x00000002   PAD
+    0x08001fd4   0x00000014   Code   RO          130    i.jreqDone          lmic.o
+    0x08001fe8   0x0000001e   Code   RO          676    i.lowerDR           lmic.o
+    0x08002006   0x00000002   PAD
+    0x08002008   0x00000020   Code   RO            2    i.main              main.o
+    0x08002028   0x00000048   Code   RO          131    i.mapChannels       lmic.o
+    0x08002070   0x00000044   Code   RO          132    i.micB0             lmic.o
+    0x080020b4   0x00000098   Code   RO          133    i.nextJoinState     lmic.o
+    0x0800214c   0x000000cc   Code   RO          134    i.nextTx            lmic.o
+    0x08002218   0x0000009c   Code   RO          135    i.onBcnRx           lmic.o
+    0x080022b4   0x00000070   Code   RO            3    i.onEvent           main.o
+    0x08002324   0x0000000c   Code   RO          136    i.onJoinFailed      lmic.o
+    0x08002330   0x0000001c   Code   RO          795    i.opmode            radio.o
+    0x0800234c   0x0000000e   Code   RO          796    i.opmodeFSK         radio.o
+    0x0800235a   0x0000000e   Code   RO          797    i.opmodeLora        radio.o
+    0x08002368   0x000007d0   Code   RO           65    i.os_aes            aes.o
+    0x08002b38   0x00000028   Code   RO          731    i.os_clearCallback  oslmic.o
+    0x08002b60   0x00000040   Code   RO          137    i.os_crc16          lmic.o
+    0x08002ba0   0x00000010   Code   RO            4    i.os_getArtEui      main.o
+    0x08002bb0   0x00000004   Code   RO          138    i.os_getBattLevel   lmic.o
+    0x08002bb4   0x00000010   Code   RO            5    i.os_getDevEui      main.o
+    0x08002bc4   0x00000014   Code   RO            6    i.os_getDevKey      main.o
+    0x08002bd8   0x00000008   Code   RO          732    i.os_getTime        oslmic.o
+    0x08002be0   0x0000001c   Code   RO          733    i.os_init           oslmic.o
+    0x08002bfc   0x0000003e   Code   RO          798    i.os_radio          radio.o
+    0x08002c3a   0x0000000c   Code   RO          139    i.os_rlsbf2         lmic.o
+    0x08002c46   0x00000018   Code   RO          140    i.os_rlsbf4         lmic.o
+    0x08002c5e   0x00000018   Code   RO          141    i.os_rmsbf4         lmic.o
+    0x08002c76   0x00000002   PAD
+    0x08002c78   0x00000050   Code   RO          734    i.os_runloop        oslmic.o
+    0x08002cc8   0x00000030   Code   RO          735    i.os_setCallback    oslmic.o
+    0x08002cf8   0x00000048   Code   RO          736    i.os_setTimedCallback  oslmic.o
+    0x08002d40   0x00000008   Code   RO          142    i.os_wlsbf2         lmic.o
+    0x08002d48   0x00000010   Code   RO          143    i.os_wlsbf4         lmic.o
+    0x08002d58   0x00000010   Code   RO          144    i.os_wmsbf4         lmic.o
+    0x08002d68   0x000001a8   Code   RO          145    i.processBeacon     lmic.o
+    0x08002f10   0x000001a4   Code   RO          146    i.processDnData     lmic.o
+    0x080030b4   0x000001e8   Code   RO          147    i.processJoinAccept  lmic.o
+    0x0800329c   0x00000030   Code   RO          148    i.processPingRx     lmic.o
+    0x080032cc   0x00000028   Code   RO          149    i.processRx1DnData  lmic.o
+    0x080032f4   0x00000028   Code   RO          150    i.processRx1Jacc    lmic.o
+    0x0800331c   0x00000044   Code   RO          151    i.processRx2DnData  lmic.o
+    0x08003360   0x0000000a   Code   RO          152    i.processRx2DnDataDelay  lmic.o
+    0x0800336a   0x00000002   PAD
+    0x0800336c   0x00000020   Code   RO          153    i.processRx2Jacc    lmic.o
+    0x0800338c   0x000000b0   Code   RO          799    i.radio_init        radio.o
+    0x0800343c   0x00000150   Code   RO          800    i.radio_irq_handler  radio.o
+    0x0800358c   0x00000034   Code   RO          801    i.radio_rand1       radio.o
+    0x080035c0   0x00000036   Code   RO          803    i.readBuf           radio.o
+    0x080035f6   0x00000024   Code   RO          804    i.readReg           radio.o
+    0x0800361a   0x00000010   Code   RO          154    i.reportEvent       lmic.o
+    0x0800362a   0x00000042   Code   RO          155    i.rndDelay          lmic.o
+    0x0800366c   0x0000000a   Code   RO          156    i.runEngineUpdate   lmic.o
+    0x08003676   0x00000014   Code   RO          157    i.runReset          lmic.o
+    0x0800368a   0x00000002   PAD
+    0x0800368c   0x000000cc   Code   RO          805    i.rxfsk             radio.o
+    0x08003758   0x000000b8   Code   RO          806    i.rxlora            radio.o
+    0x08003810   0x000000b0   Code   RO          158    i.rxschedInit       lmic.o
+    0x080038c0   0x00000064   Code   RO          159    i.rxschedNext       lmic.o
+    0x08003924   0x00000040   Code   RO          160    i.schedRx2          lmic.o
+    0x08003964   0x00000040   Code   RO          161    i.setBcnRxParams    lmic.o
+    0x080039a4   0x0000000c   Code   RO          595    i.setCr             lmic.o
+    0x080039b0   0x0000000c   Code   RO          162    i.setDrJoin         lmic.o
+    0x080039bc   0x00000034   Code   RO          163    i.setDrTxpow        lmic.o
+    0x080039f0   0x0000000c   Code   RO          615    i.setIh             lmic.o
+    0x080039fc   0x0000000e   Code   RO          605    i.setNocrc          lmic.o
+    0x08003a0a   0x00000002   PAD
+    0x08003a0c   0x00000030   Code   RO          164    i.setupRx1          lmic.o
+    0x08003a3c   0x00000010   Code   RO          165    i.setupRx1DnData    lmic.o
+    0x08003a4c   0x00000010   Code   RO          166    i.setupRx1Jacc      lmic.o
+    0x08003a5c   0x00000030   Code   RO          167    i.setupRx2          lmic.o
+    0x08003a8c   0x00000018   Code   RO          168    i.setupRx2DnData    lmic.o
+    0x08003aa4   0x00000018   Code   RO          169    i.setupRx2Jacc      lmic.o
+    0x08003abc   0x0000000c   Code   RO          170    i.startJoining      lmic.o
+    0x08003ac8   0x0000001c   Code   RO          171    i.startRxBcn        lmic.o
+    0x08003ae4   0x0000001c   Code   RO          172    i.startRxPing       lmic.o
+    0x08003b00   0x0000007c   Code   RO          173    i.startScan         lmic.o
+    0x08003b7c   0x00000034   Code   RO          807    i.startrx           radio.o
+    0x08003bb0   0x0000002c   Code   RO          808    i.starttx           radio.o
+    0x08003bdc   0x0000006c   Code   RO          174    i.stateJustJoined   lmic.o
+    0x08003c48   0x0000003c   Code   RO          175    i.txDelay           lmic.o
+    0x08003c84   0x00000088   Code   RO          176    i.txDone            lmic.o
+    0x08003d0c   0x000000cc   Code   RO          809    i.txfsk             radio.o
+    0x08003dd8   0x0000009c   Code   RO          810    i.txlora            radio.o
+    0x08003e74   0x0000001e   Code   RO          737    i.unlinkjob         oslmic.o
+    0x08003e92   0x00000002   PAD
+    0x08003e94   0x00000014   Code   RO          177    i.updataDone        lmic.o
+    0x08003ea8   0x00000060   Code   RO          178    i.updateTx          lmic.o
+    0x08003f08   0x00000010   Code   RO          632    i.updr2rps          lmic.o
+    0x08003f18   0x00000018   Code   RO          671    i.validDR           lmic.o
+    0x08003f30   0x00000034   Code   RO          811    i.writeBuf          radio.o
+    0x08003f64   0x00000022   Code   RO          812    i.writeReg          radio.o
+    0x08003f86   0x00000020   Data   RO            7    .constdata          main.o
+    0x08003fa6   0x00000002   PAD
+    0x08003fa8   0x00001128   Data   RO           67    .constdata          aes.o
+    0x080050d0   0x00000090   Data   RO          180    .constdata          lmic.o
+    0x08005160   0x00000012   Data   RO          814    .constdata          radio.o
+    0x08005172   0x0000000c   Data   RO         1064    .constdata          hal.o
+    0x0800517e   0x00000002   PAD
+    0x08005180   0x000000b5   Data   RO          950    .conststring        debug.o
+    0x08005235   0x00000003   PAD
+    0x08005238   0x00000020   Data   RO         1324    Region$$Table       anon$$obj.o
+
+
+    Execution Region ER_RW (Base: 0x20000000, Size: 0x00000050, Max: 0xffffffff, ABSOLUTE)
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x20000000   0x00000008   Data   RW          738    .data               oslmic.o
+    0x20000008   0x00000040   Data   RW          951    .data               debug.o
+    0x20000048   0x00000008   Data   RW         1065    .data               hal.o
+
+
+    Execution Region ER_ZI (Base: 0x20000050, Size: 0x00000678, Max: 0xffffffff, ABSOLUTE)
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x20000050   0x000000c0   Zero   RW           66    .bss                aes.o
+    0x20000110   0x000001a8   Zero   RW          179    .bss                lmic.o
+    0x200002b8   0x00000010   Zero   RW          813    .bss                radio.o
+    0x200002c8   0x00000400   Zero   RW         1243    STACK               startup_stm32l1xx_md_keil.o
+
+
+==============================================================================
+
+Image component sizes
+
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
+
+      2184         64       4392          0        192       6013   aes.o
+       344         96        181         64          0     191609   debug.o
+      1040        120         12          8          0      12364   hal.o
+       438         16          0          0          0       4918   hw.o
+      8656        502        144          0        424      61151   lmic.o
+       210         50         32          0          0      15555   main.o
+       306         24          0          8          0      15099   oslmic.o
+      1994         72         18          0         16      28177   radio.o
+        36          8        244          0       1024        804   startup_stm32l1xx_md_keil.o
+       368         28          0          0          0       1421   system_stm32l1xx.o
+
+    ----------------------------------------------------------------------
+     15598        980       5062         80       1656     337111   Object Totals
+         0          0         32          0          0          0   (incl. Generated)
+        22          0          7          0          0          0   (incl. Padding)
+
+    ----------------------------------------------------------------------
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Member Name
+
+         0          0          0          0          0          0   entry.o
+         0          0          0          0          0          0   entry10a.o
+         0          0          0          0          0          0   entry11a.o
+         8          4          0          0          0          0   entry2.o
+         4          0          0          0          0          0   entry5.o
+         0          0          0          0          0          0   entry7b.o
+         0          0          0          0          0          0   entry8b.o
+         8          4          0          0          0          0   entry9a.o
+        30          0          0          0          0          0   handlers.o
+        36          8          0          0          0         68   init.o
+        98          0          0          0          0         84   ldiv.o
+        30          0          0          0          0         68   llshl.o
+        32          0          0          0          0         68   llushr.o
+        36          0          0          0          0         68   memcpya.o
+        36          0          0          0          0        108   memseta.o
+        98          0          0          0          0         92   uldiv.o
+
+    ----------------------------------------------------------------------
+       420         16          0          0          0        556   Library Totals
+         4          0          0          0          0          0   (incl. Padding)
+
+    ----------------------------------------------------------------------
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Name
+
+       416         16          0          0          0        556   mc_w.l
+
+    ----------------------------------------------------------------------
+       420         16          0          0          0        556   Library Totals
+
+    ----------------------------------------------------------------------
+
+==============================================================================
+
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
+
+     16018        996       5062         80       1656     329551   Grand Totals
+     16018        996       5062         80       1656     329551   ELF Image Totals
+     16018        996       5062         80          0          0   ROM Totals
+
+==============================================================================
+
+    Total RO  Size (Code + RO Data)                21080 (  20.59kB)
+    Total RW  Size (RW Data + ZI Data)              1736 (   1.70kB)
+    Total ROM Size (Code + RO Data + RW Data)      21160 (  20.66kB)
+
+==============================================================================
+

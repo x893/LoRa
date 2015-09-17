@@ -3,8 +3,8 @@
 // Copyright (C) 2014 Mike McCauley
 // $Id: RHGenericDriver.cpp,v 1.18 2015/01/02 21:38:24 mikem Exp $
 
-#include <RHGenericDriver.h>
-#include <wirish.h>
+#include "RHGenericDriver.h"
+#include "wirish.h"
 
 RHGenericDriver::RHGenericDriver()
     :

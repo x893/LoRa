@@ -5,8 +5,8 @@
 // It is designed to work with the other example rf95_reliable_datagram_server
 // Tested with Anarduino MiniWirelessLoRa
 
-#include <RHReliableDatagram.h>
-#include <RH_RF95.h>
+#include "RHReliableDatagram.h"
+#include "RH_RF95.h"
 
 #define LED1	PB11
 #define LED2	PB10
@@ -40,6 +40,8 @@ void setup()
 	}
 	else
 	{
+		driver.setTxPower(23);
+
 		digitalWrite(LED3, LOW);
 		digitalWrite(LED2, HIGH);
 		Serial.print("Revision: 0x");

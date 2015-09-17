@@ -362,7 +362,7 @@
             <Rwpi>0</Rwpi>
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
-            <uSurpInc>0</uSurpInc>
+            <uSurpInc>1</uSurpInc>
             <uC99>1</uC99>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
@@ -373,7 +373,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER MCU_STM32L1XX</Define>
               <Undefine></Undefine>
-              <IncludePath>.\libs\STM32L1xx_StdPeriph_Driver\inc;.\libs\RadioHead.1.46;.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX;.\libs\STM32_USB-FS-Device_Driver\inc</IncludePath>
+              <IncludePath>.\libs\RadioHead.1.46;.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX;.\libs\STM32L1xx_StdPeriph_Driver\inc;.\libs\STM32_USB-FS-Device_Driver\inc;.\libs\CMSIS\Include;.\libs\CMSIS\Device\ST\STM32L1xx\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -417,14 +417,14 @@
           <GroupName>src</GroupName>
           <Files>
             <File>
-              <FileName>rf95_reliable_datagram_server.cpp</FileName>
+              <FileName>RF95_reliable_datagram_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\libs\RadioHead.1.46\examples\rf95\rf95_reliable_datagram_server\rf95_reliable_datagram_server.cpp</FilePath>
+              <FilePath>.\libs\RadioHead.1.46\examples\rf95\rf95_reliable_datagram_server\RF95_reliable_datagram_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>rf95_reliable_datagram_client.cpp</FileName>
+              <FileName>RF95_reliable_datagram_client.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\libs\RadioHead.1.46\examples\rf95\rf95_reliable_datagram_client\rf95_reliable_datagram_client.cpp</FilePath>
+              <FilePath>.\libs\RadioHead.1.46\examples\rf95\rf95_reliable_datagram_client\RF95_reliable_datagram_client.cpp</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1111,7 +1111,7 @@
             <Rwpi>0</Rwpi>
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
-            <uSurpInc>0</uSurpInc>
+            <uSurpInc>1</uSurpInc>
             <uC99>1</uC99>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
@@ -1122,7 +1122,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER MCU_STM32L1XX</Define>
               <Undefine></Undefine>
-              <IncludePath>.\libs\STM32L1xx_StdPeriph_Driver\inc;.\libs\RadioHead.1.46;.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX;.\libs\STM32_USB-FS-Device_Driver\inc</IncludePath>
+              <IncludePath>.\libs\STM32L1xx_StdPeriph_Driver\inc;.\libs\RadioHead.1.46;.\libs\RadioHead.1.46\STM32ArduinoCompat\STM32L1XX;.\libs\STM32_USB-FS-Device_Driver\inc;.\libs\CMSIS\Include;.\libs\CMSIS\Device\ST\STM32L1xx\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1166,9 +1166,9 @@
           <GroupName>src</GroupName>
           <Files>
             <File>
-              <FileName>rf95_reliable_datagram_server.cpp</FileName>
+              <FileName>RF95_reliable_datagram_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\libs\RadioHead.1.46\examples\rf95\rf95_reliable_datagram_server\rf95_reliable_datagram_server.cpp</FilePath>
+              <FilePath>.\libs\RadioHead.1.46\examples\rf95\rf95_reliable_datagram_server\RF95_reliable_datagram_server.cpp</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1218,9 +1218,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>rf95_reliable_datagram_client.cpp</FileName>
+              <FileName>RF95_reliable_datagram_client.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\libs\RadioHead.1.46\examples\rf95\rf95_reliable_datagram_client\rf95_reliable_datagram_client.cpp</FilePath>
+              <FilePath>.\libs\RadioHead.1.46\examples\rf95\rf95_reliable_datagram_client\RF95_reliable_datagram_client.cpp</FilePath>
             </File>
           </Files>
         </Group>

@@ -25,6 +25,7 @@ bld/
 
 *.uvopt
 *.uvgui.*
+*.uvmpw.uvgui.*
 
 JLinkLog.*
 JLinkSettings.*

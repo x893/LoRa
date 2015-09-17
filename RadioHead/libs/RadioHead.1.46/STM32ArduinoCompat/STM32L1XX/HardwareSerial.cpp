@@ -2,8 +2,8 @@
 //
 // Author: mikem@airspayce.com
 
-#include <RadioHead.h>
-#include <stm32l1xx_usart.h>
+#include "RadioHead.h"
+#include "stm32l1xx_usart.h"
 
 // Preinstantiated Serial objects
 #ifdef BOARD_HAVE_SERIAL1

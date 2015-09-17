@@ -5,9 +5,8 @@
 #define _HardwareSerial_h
 
 #include <stdio.h>
-#include <stm32l1xx.h>
-
-#include <Print.h>
+#include "stm32l1xx.h"
+#include "Print.h"
 
 #ifndef ARDUINO_RINGBUFFER_SIZE
 	#define ARDUINO_RINGBUFFER_SIZE 64

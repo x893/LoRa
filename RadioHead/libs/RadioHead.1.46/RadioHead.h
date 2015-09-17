@@ -103,7 +103,7 @@
 	#define BOARD_HAVE_SERIALUSB
 	#define Serial SerialUSB
 
-	#include <wirish.h>
+	#include "wirish.h"
 
 #elif (RH_PLATFORM == RH_PLATFORM_STM32STD)		// STM32 with STM32F4xx_StdPeriph_Driver 
 	#include <stm32f4xx.h>

@@ -3,7 +3,7 @@
 // Interface between Arduino-like SPI interface and STM32F4 Discovery and similar
 // using STM32F4xx_DSP_StdPeriph_Lib_V1.3.0
 
-#include <RadioHead.h>
+#include "RadioHead.h"
 #include "stm32l1xx_spi.h"
 
 extern "C"
