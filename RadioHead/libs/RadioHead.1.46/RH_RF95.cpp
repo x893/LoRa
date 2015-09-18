@@ -42,6 +42,8 @@ RH_RF95::RH_RF95(
 
 bool RH_RF95::init()
 {
+	bool result = false;
+
 	if (_resetPin != PIN_UNUSED)
 		pinMode(_resetPin, INPUT);
 
@@ -49,11 +51,10 @@ bool RH_RF95::init()
 	{
 		pinMode(_powerPin, OUTPUT);
 		digitalWrite(_powerPin, HIGH);
+
 		if (_resetPin != PIN_UNUSED)
-		{
 			while (digitalRead(_resetPin) != HIGH)
 				;
-		}
 		delay(20);
 	}
 
@@ -65,7 +66,7 @@ bool RH_RF95::init()
 	if (interruptNumber == NOT_AN_INTERRUPT)
 		return false;
 
-	// No way to check the device type :-(
+	ATOMIC_BLOCK_START;
 
 	// Set sleep mode, so we can also set LORA mode:
 	spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_SLEEP | RH_RF95_LONG_RANGE_MODE);
@@ -73,67 +74,72 @@ bool RH_RF95::init()
 	_revision = spiRead(RH_RF95_REG_42_VERSION);
 
 	// Check we are in sleep mode, with LORA set
-	if (spiRead(RH_RF95_REG_01_OP_MODE) != (RH_RF95_MODE_SLEEP | RH_RF95_LONG_RANGE_MODE))
+	if (spiRead(RH_RF95_REG_01_OP_MODE) == (RH_RF95_MODE_SLEEP | RH_RF95_LONG_RANGE_MODE))
 	{
-		// Serial.println(spiRead(RH_RF95_REG_01_OP_MODE), HEX);
-		return false; // No device present?
+		// Add by Adrien van den Bossche <vandenbo@univ-tlse2.fr> for Teensy
+		// ARM M4 requires the below. else pin interrupt doesn't work properly.
+		// On all other platforms, its innocuous, belt and braces
+		pinMode(_interruptPin, INPUT_PULLDOWN);
+
+		// Set up interrupt handler
+		// Since there are a limited number of interrupt glue functions isr*() available,
+		// we can only support a limited number of devices simultaneously
+		// ON some devices, notably most Arduinos, the interrupt pin passed in is actuallt the 
+		// interrupt number. You have to figure out the interruptnumber-to-interruptpin mapping
+		// yourself based on knwledge of what Arduino board you are running on.
+		if (_myInterruptIndex == 0xFF)
+		{
+			// First run, no interrupt allocated yet
+			if (_interruptCount < RH_RF95_NUM_INTERRUPTS)
+				_myInterruptIndex = _interruptCount++;
+			// else Too many devices, not enough interrupt vectors
+		}
+		if (_myInterruptIndex < RH_RF95_NUM_INTERRUPTS)
+		{
+			_deviceForInterrupt[_myInterruptIndex] = this;
+
+			if (_myInterruptIndex == 0)
+				attachInterrupt(interruptNumber, isr0, RISING);
+			else if (_myInterruptIndex == 1)
+				attachInterrupt(interruptNumber, isr1, RISING);
+			else if (_myInterruptIndex == 2)
+				attachInterrupt(interruptNumber, isr2, RISING);
+
+			// Set up FIFO
+			// We configure so that we can use the entire 256 byte FIFO for either receive
+			// or transmit, but not both at the same time
+			spiWrite(RH_RF95_REG_0E_FIFO_TX_BASE_ADDR, 0);
+			spiWrite(RH_RF95_REG_0F_FIFO_RX_BASE_ADDR, 0);
+
+			result = true;
+		}
 	}
 
-	// Add by Adrien van den Bossche <vandenbo@univ-tlse2.fr> for Teensy
-	// ARM M4 requires the below. else pin interrupt doesn't work properly.
-	// On all other platforms, its innocuous, belt and braces
-	pinMode(_interruptPin, INPUT_PULLDOWN);
+	ATOMIC_BLOCK_END;
 
-	// Set up interrupt handler
-	// Since there are a limited number of interrupt glue functions isr*() available,
-	// we can only support a limited number of devices simultaneously
-	// ON some devices, notably most Arduinos, the interrupt pin passed in is actuallt the 
-	// interrupt number. You have to figure out the interruptnumber-to-interruptpin mapping
-	// yourself based on knwledge of what Arduino board you are running on.
-	if (_myInterruptIndex == 0xff)
+	if (result)
 	{
-		// First run, no interrupt allocated yet
-		if (_interruptCount <= RH_RF95_NUM_INTERRUPTS)
-			_myInterruptIndex = _interruptCount++;
-		else
-			return false; // Too many devices, not enough interrupt vectors
+		// Packet format is preamble + explicit-header + payload + crc
+		// Explicit Header Mode
+		// payload is TO + FROM + ID + FLAGS + message data
+		// RX mode is implmented with RXCONTINUOUS
+		// max message data length is 255 - 4 = 251 octets
+
+		setModeIdle();
+
+		// Set up default configuration
+		// No Sync Words in LORA mode.
+
+		//	setModemConfig(Bw125Cr45Sf128);		// Radio default medium
+		//	setModemConfig(Bw125Cr48Sf4096);	// slow and reliable?
+		setModemConfig(Bw31_25Cr48Sf512);
+
+		setPreambleLength(8);	// Default is 8
+		setFrequency(434.0);	// An innocuous ISM frequency, same as RF22's
+		setTxPower(23);			// Highest power
 	}
-	_deviceForInterrupt[_myInterruptIndex] = this;
 
-	if (_myInterruptIndex == 0)
-		attachInterrupt(interruptNumber, isr0, RISING);
-	else if (_myInterruptIndex == 1)
-		attachInterrupt(interruptNumber, isr1, RISING);
-	else if (_myInterruptIndex == 2)
-		attachInterrupt(interruptNumber, isr2, RISING);
-	else
-		return false; // Too many devices, not enough interrupt vectors
-
-	// Set up FIFO
-	// We configure so that we can use the entire 256 byte FIFO for either receive
-	// or transmit, but not both at the same time
-	spiWrite(RH_RF95_REG_0E_FIFO_TX_BASE_ADDR, 0);
-	spiWrite(RH_RF95_REG_0F_FIFO_RX_BASE_ADDR, 0);
-
-	// Packet format is preamble + explicit-header + payload + crc
-	// Explicit Header Mode
-	// payload is TO + FROM + ID + FLAGS + message data
-	// RX mode is implmented with RXCONTINUOUS
-	// max message data length is 255 - 4 = 251 octets
-
-	setModeIdle();
-
-	// Set up default configuration
-	// No Sync Words in LORA mode.
-	setModemConfig(Bw125Cr45Sf128);	// Radio default
-//	setModemConfig(Bw125Cr48Sf4096);	// slow and reliable?
-	setPreambleLength(8);			// Default is 8
-	// An innocuous ISM frequency, same as RF22's
-	setFrequency(434.0);
-	// Lowish power
-	setTxPower(13);
-
-	return true;
+	return result;
 }
 
 uint8_t RH_RF95::revision(void)
@@ -161,18 +167,18 @@ void RH_RF95::handleInterrupt()
 		else if (irq_flags & RH_RF95_RX_DONE)
 		{
 			// Have received a packet
-			uint8_t len = spiReadNoneBlocking(RH_RF95_REG_13_RX_NB_BYTES);
+			uint8_t len = spiRead(RH_RF95_REG_13_RX_NB_BYTES);
 
 			// Reset the fifo read ptr to the beginning of the packet
-			spiWriteNoneBlocking(RH_RF95_REG_0D_FIFO_ADDR_PTR, spiRead(RH_RF95_REG_10_FIFO_RX_CURRENT_ADDR));
-			spiBurstReadNoneBlocking(RH_RF95_REG_00_FIFO, _buf, len);
+			spiWrite(RH_RF95_REG_0D_FIFO_ADDR_PTR, spiRead(RH_RF95_REG_10_FIFO_RX_CURRENT_ADDR));
+			spiBurstRead(RH_RF95_REG_00_FIFO, _buf, len);
 			_bufLen = len;
-			spiWriteNoneBlocking(RH_RF95_REG_12_IRQ_FLAGS, 0xFF); // Clear all IRQ flags
+			spiWrite(RH_RF95_REG_12_IRQ_FLAGS, 0xFF); // Clear all IRQ flags
 
 			// Remember the RSSI of this packet
 			// this is according to the doc, but is it really correct?
 			// weakest receiveable signals are reported RSSI at about -66
-			_lastRssi = spiReadNoneBlocking(RH_RF95_REG_1A_PKT_RSSI_VALUE) - 137;
+			_lastRssi = spiRead(RH_RF95_REG_1A_PKT_RSSI_VALUE) - 137;
 
 			// We have received a message.
 			validateRxBuf();
@@ -186,7 +192,7 @@ void RH_RF95::handleInterrupt()
 		_txGood++;
 		setModeIdle();
 	}
-	spiWriteNoneBlocking(RH_RF95_REG_12_IRQ_FLAGS, 0xFF); // Clear all IRQ flags
+	spiWrite(RH_RF95_REG_12_IRQ_FLAGS, 0xFF); // Clear all IRQ flags
 }
 
 // These are low level functions that call the interrupt handler for the correct
@@ -274,20 +280,21 @@ bool RH_RF95::send(const uint8_t* data, uint8_t len)
 
 	setModeIdle();
 
-	spiWriteNoneBlocking(RH_RF95_REG_0D_FIFO_ADDR_PTR, 0);		// Position at the beginning of the FIFO
+	spiWrite(RH_RF95_REG_0D_FIFO_ADDR_PTR, 0);		// Position at the beginning of the FIFO
 
-	spiWriteNoneBlocking(RH_RF95_REG_00_FIFO, _txHeaderTo);		// The headers
-	spiWriteNoneBlocking(RH_RF95_REG_00_FIFO, _txHeaderFrom);
-	spiWriteNoneBlocking(RH_RF95_REG_00_FIFO, _txHeaderId);
-	spiWriteNoneBlocking(RH_RF95_REG_00_FIFO, _txHeaderFlags);
+	spiWrite(RH_RF95_REG_00_FIFO, _txHeaderTo);		// The headers
+	spiWrite(RH_RF95_REG_00_FIFO, _txHeaderFrom);
+	spiWrite(RH_RF95_REG_00_FIFO, _txHeaderId);
+	spiWrite(RH_RF95_REG_00_FIFO, _txHeaderFlags);
 
-	spiBurstWriteNoneBlocking(RH_RF95_REG_00_FIFO, data, len);	// The message data
-	spiWriteNoneBlocking(RH_RF95_REG_22_PAYLOAD_LENGTH, len + RH_RF95_HEADER_LEN);
+	spiBurstWrite(RH_RF95_REG_00_FIFO, data, len);	// The message data
+	spiWrite(RH_RF95_REG_22_PAYLOAD_LENGTH, len + RH_RF95_HEADER_LEN);
 
 	setModeTx();	// Start the transmitter
 					// when Tx is done, interruptHandler will fire
 					// and radio mode will return to STANDBY
     ATOMIC_BLOCK_END;
+
 	return true;
 }
 
@@ -353,24 +360,33 @@ bool RH_RF95::setFrequency(float centre)
 
 	ATOMIC_BLOCK_START;
 
-	spiWriteNoneBlocking(RH_RF95_REG_06_FRF_MSB, (frf >> 16) & 0xFF);
-	spiWriteNoneBlocking(RH_RF95_REG_07_FRF_MID, (frf >> 8) & 0xFF);
-	spiWriteNoneBlocking(RH_RF95_REG_08_FRF_LSB, frf & 0xFF);
-	
+	spiWrite(RH_RF95_REG_06_FRF_MSB, (frf >> 16) & 0xFF);
+	spiWrite(RH_RF95_REG_07_FRF_MID, (frf >>  8) & 0xFF);
+	spiWrite(RH_RF95_REG_08_FRF_LSB, (frf      ) & 0xFF);
+
 	ATOMIC_BLOCK_END;
+
 	return true;
 }
 
+//	Always call from ATOMIC_BLOCK or interrupt handle
 void RH_RF95::setModeIdle()
 {
 	if (_mode != RHModeIdle)
 	{
-		ATOMIC_BLOCK_START;
-
 		_mode = RHModeIdle;
-		spiWriteNoneBlocking(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_STDBY);
+		spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_STDBY);
+	}
+}
 
-		ATOMIC_BLOCK_END;
+//	Always call from ATOMIC_BLOCK or interrupt handle
+void RH_RF95::setModeTx()
+{
+	if (_mode != RHModeTx)
+	{
+		_mode = RHModeTx;
+		spiWrite(RH_RF95_REG_40_DIO_MAPPING1, 0x40);		// Interrupt on TxDone
+		spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_TX);	// Set TX mode
 	}
 }
 
@@ -378,8 +394,10 @@ bool RH_RF95::sleep()
 {
 	if (_mode != RHModeSleep)
 	{
-		spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_SLEEP);
+		ATOMIC_BLOCK_START;
 		_mode = RHModeSleep;
+		spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_SLEEP);
+		ATOMIC_BLOCK_END;
 	}
 	return true;
 }
@@ -389,25 +407,9 @@ void RH_RF95::setModeRx()
 	if (_mode != RHModeRx)
 	{
 		ATOMIC_BLOCK_START;
-
 		_mode = RHModeRx;
-		spiWriteNoneBlocking(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_RXCONTINUOUS);
-		spiWriteNoneBlocking(RH_RF95_REG_40_DIO_MAPPING1, 0x00);	// Interrupt on RxDone
-
-		ATOMIC_BLOCK_END;
-	}
-}
-
-void RH_RF95::setModeTx()
-{
-	if (_mode != RHModeTx)
-	{
-		ATOMIC_BLOCK_START;
-
-		_mode = RHModeTx;
-		spiWriteNoneBlocking(RH_RF95_REG_40_DIO_MAPPING1, 0x40);		// Interrupt on TxDone
-		spiWriteNoneBlocking(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_TX);	// Set TX mode
-
+		spiWrite(RH_RF95_REG_40_DIO_MAPPING1, 0x00);	// Interrupt on RxDone
+		spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_RXCONTINUOUS);
 		ATOMIC_BLOCK_END;
 	}
 }
@@ -426,13 +428,11 @@ void RH_RF95::setTxPower(int8_t power)
 	// for 21, 22 and 23dBm
 	if (power > 20)
 	{
-		spiWriteNoneBlocking(RH_RF95_REG_4D_PA_DAC, RH_RF95_PA_DAC_ENABLE);
+		spiWrite(RH_RF95_REG_4D_PA_DAC, RH_RF95_PA_DAC_ENABLE);
 		power -= 3;
 	}
 	else
-	{
-		spiWriteNoneBlocking(RH_RF95_REG_4D_PA_DAC, RH_RF95_PA_DAC_DISABLE);
-	}
+		spiWrite(RH_RF95_REG_4D_PA_DAC, RH_RF95_PA_DAC_DISABLE);
 
 	// RFM95/96/97/98 does not have RFO pins connected to anything. Only PA_BOOST
 	// pin is connected, so must use PA_BOOST
@@ -440,10 +440,9 @@ void RH_RF95::setTxPower(int8_t power)
 	// The documentation is pretty confusing on this topic: PaSelect says the max power is 20dBm,
 	// but OutputPower claims it would be 17dBm.
 	// My measurements show 20dBm is correct
-	spiWriteNoneBlocking(RH_RF95_REG_09_PA_CONFIG, RH_RF95_PA_SELECT | (power - 5));
+	spiWrite(RH_RF95_REG_09_PA_CONFIG, RH_RF95_PA_SELECT | (power - 5));
 
 	ATOMIC_BLOCK_END;
-
 }
 
 // Sets registers from a canned modem configuration structure
@@ -451,9 +450,9 @@ void RH_RF95::setModemRegisters(const ModemConfig* config)
 {
 	ATOMIC_BLOCK_START;
 
-	spiWriteNoneBlocking(RH_RF95_REG_1D_MODEM_CONFIG1,		config->reg_1d);
-	spiWriteNoneBlocking(RH_RF95_REG_1E_MODEM_CONFIG2,		config->reg_1e);
-	spiWriteNoneBlocking(RH_RF95_REG_26_MODEM_CONFIG3,		config->reg_26);
+	spiWrite(RH_RF95_REG_1D_MODEM_CONFIG1,		config->reg_1d);
+	spiWrite(RH_RF95_REG_1E_MODEM_CONFIG2,		config->reg_1e);
+	spiWrite(RH_RF95_REG_26_MODEM_CONFIG3,		config->reg_26);
 
 	ATOMIC_BLOCK_END;
 }
@@ -476,8 +475,8 @@ void RH_RF95::setPreambleLength(uint16_t bytes)
 {
 	ATOMIC_BLOCK_START;
 
-	spiWriteNoneBlocking(RH_RF95_REG_20_PREAMBLE_MSB, bytes >> 8);
-	spiWriteNoneBlocking(RH_RF95_REG_21_PREAMBLE_LSB, bytes & 0xFF);
+	spiWrite(RH_RF95_REG_20_PREAMBLE_MSB, bytes >> 8);
+	spiWrite(RH_RF95_REG_21_PREAMBLE_LSB, bytes & 0xFF);
 
 	ATOMIC_BLOCK_END;
 }

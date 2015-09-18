@@ -43,9 +43,11 @@ static uint8_t unlinkjob (osjob_t** pnext, osjob_t* job)
 }
 
 // clear scheduled job
-void os_clearCallback (osjob_t* job) {
+void os_clearCallback (osjob_t* job)
+{
 	hal_disableIRQs();
-	unlinkjob(&OS.scheduledjobs, job) || unlinkjob(&OS.runnablejobs, job);
+	unlinkjob(&OS.scheduledjobs, job);
+	unlinkjob(&OS.runnablejobs, job);
 	hal_enableIRQs();
 }
 

@@ -4,7 +4,7 @@
  *      *** Do not modify ! ***
  *
  * Project: 'RF95_reliable_datagram' 
- * Target:  'RF95_SERVER' 
+ * Target:  'RF95_CLIENT' 
  */
 
 #ifndef RTE_COMPONENTS_H

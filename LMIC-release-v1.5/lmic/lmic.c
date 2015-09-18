@@ -2170,15 +2170,15 @@ void LMIC_reset (void)
 	os_clearCallback(&LMIC.osjob);
 
 	os_clearMem((uint8_t *)&LMIC, SIZEOFEXPR(LMIC));
-	LMIC.devaddr	= 0;
-	LMIC.devNonce	= os_getRndU2();
-	LMIC.opmode		= OP_NONE;
-	LMIC.errcr		= CR_4_5;
-	LMIC.adrEnabled	= FCT_ADREN;
-	LMIC.dn2Dr		= DR_DNW2;	// we need this for 2nd DN window of join accept
-	LMIC.dn2Freq	= FREQ_DNW2; // ditto
-	LMIC.ping.freq	= FREQ_PING; // defaults for ping
-	LMIC.ping.dr	= DR_PING;	// ditto
+	LMIC.devaddr		= 0;
+	LMIC.devNonce		= os_getRndU2();
+	LMIC.opmode			= OP_NONE;
+	LMIC.errcr			= CR_4_5;
+	LMIC.adrEnabled		= FCT_ADREN;
+	LMIC.dn2Dr			= DR_DNW2;		// we need this for 2nd DN window of join accept
+	LMIC.dn2Freq		= FREQ_DNW2;	// ditto
+	LMIC.ping.freq		= FREQ_PING;	// defaults for ping
+	LMIC.ping.dr		= DR_PING;		// ditto
 	LMIC.ping.intvExp	= 0xFF;
 
 #if defined(CFG_us915)

@@ -53,7 +53,6 @@ public:
 	/// \param[in] reg Register number
 	/// \return The value of the register
 	uint8_t	spiRead(uint8_t reg);
-	uint8_t	spiReadNoneBlocking(uint8_t reg);
 
 	/// Writes a single byte to the SPI device
 	/// \param[in] reg Register number
@@ -61,7 +60,6 @@ public:
 	/// \return Some devices return a status byte during the first data transfer. This byte is returned.
 	///	it may or may not be meaningfule depending on the the type of device being accessed.
 	uint8_t	spiWrite(uint8_t reg, uint8_t val);
-	uint8_t	spiWriteNoneBlocking(uint8_t reg, uint8_t val);
 
 	/// Reads a number of consecutive registers from the SPI device using burst read mode
 	/// \param[in] reg Register number of the first register
@@ -70,7 +68,6 @@ public:
 	/// \return Some devices return a status byte during the first data transfer. This byte is returned.
 	///	it may or may not be meaningfule depending on the the type of device being accessed.
 	uint8_t	spiBurstRead(uint8_t reg, uint8_t* dest, uint8_t len);
-	uint8_t	spiBurstReadNoneBlocking(uint8_t reg, uint8_t* dest, uint8_t len);
 
 	/// Write a number of consecutive registers using burst write mode
 	/// \param[in] reg Register number of the first register
@@ -79,7 +76,6 @@ public:
 	/// \return Some devices return a status byte during the first data transfer. This byte is returned.
 	///	it may or may not be meaningfule depending on the the type of device being accessed.
 	uint8_t	spiBurstWrite(uint8_t reg, const uint8_t* src, uint8_t len);
-	uint8_t	spiBurstWriteNoneBlocking(uint8_t reg, const uint8_t* src, uint8_t len);
 
 protected:
 	/// Reference to the RHGenericSPI instance to use to trasnfer data with teh SPI device

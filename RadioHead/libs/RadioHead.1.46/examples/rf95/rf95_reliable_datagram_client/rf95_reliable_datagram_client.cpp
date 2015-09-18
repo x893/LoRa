@@ -40,8 +40,6 @@ void setup()
 	}
 	else
 	{
-		driver.setTxPower(23);
-
 		digitalWrite(LED3, LOW);
 		digitalWrite(LED2, HIGH);
 		Serial.print("Revision: 0x");
@@ -49,7 +47,7 @@ void setup()
 	}
 	delay(1000);
 	digitalWrite(LED2, LOW);
-	// Defaults after init are 434.0MHz, 13dBm, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on
+	// Defaults after init are 434.0MHz, 23dBm, Bw = 31.25 kHz, Cr = 4/8, Sf = 512chips/symbol, CRC on
 }
 
 void i2a(char * dst, uint32_t n, uint8_t base)
@@ -59,9 +57,7 @@ void i2a(char * dst, uint32_t n, uint8_t base)
 	char ch;
 
 	if (n == 0)
-	{
 		*tmp++ = 0;
-	}
 	else
 		while (n > 0)
 		{
