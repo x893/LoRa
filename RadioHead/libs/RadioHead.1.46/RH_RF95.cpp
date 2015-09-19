@@ -66,8 +66,6 @@ bool RH_RF95::init()
 	if (interruptNumber == NOT_AN_INTERRUPT)
 		return false;
 
-	ATOMIC_BLOCK_START;
-
 	// Set sleep mode, so we can also set LORA mode:
 	spiWrite(RH_RF95_REG_01_OP_MODE, RH_RF95_MODE_SLEEP | RH_RF95_LONG_RANGE_MODE);
 	delay(10); // Wait for sleep mode to take over from say, CAD
@@ -114,8 +112,6 @@ bool RH_RF95::init()
 			result = true;
 		}
 	}
-
-	ATOMIC_BLOCK_END;
 
 	if (result)
 	{

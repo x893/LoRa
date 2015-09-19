@@ -15,7 +15,7 @@
 #define RH_FLAGS_ACK 0x80
 
 /// the default retry timeout in milliseconds
-#define RH_DEFAULT_TIMEOUT 200
+#define RH_DEFAULT_TIMEOUT 1000
 
 /// The default number of retries
 #define RH_DEFAULT_RETRIES 3
