@@ -7,42 +7,33 @@ namespace MyCSLib.General
 {
 	public class EditableObject : IEditableObject
 	{
-		private BindingCollectionBase collection = (BindingCollectionBase)null;
-		private object[] originalValues = (object[])null;
+		private BindingCollectionBase m_collection = (BindingCollectionBase)null;
+		private object[] m_originalValues = (object[])null;
 
 		protected BindingCollectionBase Collection
 		{
-			get
-			{
-				return this.collection;
-			}
+			get { return m_collection; }
 		}
 
 		private bool PendingInsert
 		{
-			get
-			{
-				return this.collection.pendingInsert == this;
-			}
+			get { return m_collection.pendingInsert == this; }
 		}
 
 		private bool IsEdit
 		{
-			get
-			{
-				return this.originalValues != null;
-			}
+			get { return m_originalValues != null; }
 		}
 
 		internal void SetCollection(BindingCollectionBase Collection)
 		{
-			this.collection = Collection;
+			m_collection = Collection;
 		}
 
 		void IEditableObject.BeginEdit()
 		{
 			Trace.WriteLine("BeginEdit");
-			if (this.IsEdit)
+			if (IsEdit)
 				return;
 			PropertyDescriptorCollection properties = TypeDescriptor.GetProperties((object)this, (Attribute[])null);
 			object[] objArray = new object[properties.Count];
@@ -63,33 +54,31 @@ namespace MyCSLib.General
 						objArray[index] = ((ICloneable)obj).Clone();
 				}
 			}
-			this.originalValues = objArray;
+			m_originalValues = objArray;
 		}
 
 		void IEditableObject.CancelEdit()
 		{
 			Trace.WriteLine("CancelEdit");
-			if (!this.IsEdit)
+			if (!IsEdit)
 				return;
-			if (this.PendingInsert)
-				((IList)this.collection).Remove((object)this);
+			if (PendingInsert)
+				((IList)m_collection).Remove((object)this);
 			PropertyDescriptorCollection properties = TypeDescriptor.GetProperties((object)this, (Attribute[])null);
 			for (int index = 0; index < properties.Count; ++index)
-			{
-				if (!(this.originalValues[index] is EditableObject.NotCopied))
-					properties[index].SetValue((object)this, this.originalValues[index]);
-			}
-			this.originalValues = (object[])null;
+				if (!(m_originalValues[index] is EditableObject.NotCopied))
+					properties[index].SetValue((object)this, m_originalValues[index]);
+			m_originalValues = (object[])null;
 		}
 
 		void IEditableObject.EndEdit()
 		{
 			Trace.WriteLine("EndEdit");
-			if (!this.IsEdit)
+			if (!IsEdit)
 				return;
-			if (this.PendingInsert)
-				this.collection.pendingInsert = (object)null;
-			this.originalValues = (object[])null;
+			if (PendingInsert)
+				m_collection.pendingInsert = (object)null;
+			m_originalValues = (object[])null;
 		}
 
 		private class NotCopied
@@ -98,10 +87,7 @@ namespace MyCSLib.General
 
 			public static EditableObject.NotCopied Value
 			{
-				get
-				{
-					return EditableObject.NotCopied.value;
-				}
+				get { return EditableObject.NotCopied.value; }
 			}
 		}
 	}

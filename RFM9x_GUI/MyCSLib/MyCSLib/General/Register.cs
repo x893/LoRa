@@ -1,131 +1,110 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: MyCSLib.General.Register
-// Assembly: MyCSLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 70B056C4-DB31-49BD-9F27-15818C65F327
-// Assembly location: C:\Tools\HopeRF\RFM9x_GUI_1_1_0_9\MyCSLib.dll
-
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace MyCSLib.General
 {
-  public class Register : INotifyPropertyChanged
-  {
-    private uint oldValue = 0U;
-    private uint address = 0U;
-    private uint value = 0U;
-    private bool readOnly = false;
-    private bool visible = false;
-    private string name;
+	public class Register : INotifyPropertyChanged
+	{
+		private uint m_oldValue = 0U;
+		private uint m_address = 0U;
+		private uint m_value = 0U;
+		private bool m_readOnly = false;
+		private bool m_visible = false;
+		private string m_name;
 
-    public string Name
-    {
-      get
-      {
-        return this.name;
-      }
-      set
-      {
-        this.name = value;
-        this.OnPropertyChanged("Name");
-      }
-    }
+		public string Name
+		{
+			get { return m_name; }
+			set
+			{
+				m_name = value;
+				OnPropertyChanged("Name");
+			}
+		}
 
-    public uint Address
-    {
-      get
-      {
-        return this.address;
-      }
-      set
-      {
-        this.address = value;
-        this.OnPropertyChanged("Address");
-      }
-    }
+		public uint Address
+		{
+			get { return m_address; }
+			set
+			{
+				m_address = value;
+				OnPropertyChanged("Address");
+			}
+		}
 
-    public uint Value
-    {
-      get
-      {
-        return this.value;
-      }
-      set
-      {
-        this.value = value;
-        this.OnPropertyChanged("Value");
-      }
-    }
+		public uint Value
+		{
+			get { return m_value; }
+			set
+			{
+				m_value = value;
+				OnPropertyChanged("Value");
+			}
+		}
 
-    public bool ReadOnly
-    {
-      get
-      {
-        return this.readOnly;
-      }
-      set
-      {
-        this.readOnly = value;
-        this.OnPropertyChanged("ReadOnly");
-      }
-    }
+		public bool ReadOnly
+		{
+			get { return m_readOnly; }
+			set
+			{
+				m_readOnly = value;
+				OnPropertyChanged("ReadOnly");
+			}
+		}
 
-    public bool Visible
-    {
-      get
-      {
-        return this.visible;
-      }
-      set
-      {
-        this.visible = value;
-        this.OnPropertyChanged("Visible");
-      }
-    }
+		public bool Visible
+		{
+			get { return m_visible; }
+			set
+			{
+				m_visible = value;
+				OnPropertyChanged("Visible");
+			}
+		}
 
-    public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler PropertyChanged;
 
-    public Register()
-    {
-      this.name = "";
-      this.address = 0U;
-      this.value = 0U;
-      this.oldValue = 0U;
-    }
+		public Register()
+		{
+			m_name = "";
+			m_address = 0U;
+			m_value = 0U;
+			m_oldValue = 0U;
+		}
 
-    public Register(string name, uint address, uint value)
-    {
-      this.name = name;
-      this.address = address;
-      this.value = value;
-      this.oldValue = value;
-      this.readOnly = false;
-    }
+		public Register(string name, uint address, uint value)
+		{
+			m_name = name;
+			m_address = address;
+			m_value = value;
+			m_oldValue = value;
+			m_readOnly = false;
+		}
 
-    public Register(string name, uint address, uint value, bool readOnly, bool visible)
-    {
-      this.name = name;
-      this.address = address;
-      this.value = value;
-      this.oldValue = value;
-      this.readOnly = readOnly;
-      this.visible = visible;
-    }
+		public Register(string name, uint address, uint value, bool readOnly, bool visible)
+		{
+			m_name = name;
+			m_address = address;
+			m_value = value;
+			m_oldValue = value;
+			m_readOnly = readOnly;
+			m_visible = visible;
+		}
 
-    public bool IsValueChanged()
-    {
-      return (int) this.oldValue != (int) this.value;
-    }
+		public bool IsValueChanged()
+		{
+			return (int)m_oldValue != (int)m_value;
+		}
 
-    public void ApplyValue()
-    {
-      this.oldValue = this.value;
-    }
+		public void ApplyValue()
+		{
+			m_oldValue = m_value;
+		}
 
-    private void OnPropertyChanged(string propName)
-    {
-      if (this.PropertyChanged == null)
-        return;
-      this.PropertyChanged((object) this, new PropertyChangedEventArgs(propName));
-    }
-  }
+		private void OnPropertyChanged(string propName)
+		{
+			if (PropertyChanged == null)
+				return;
+			PropertyChanged((object)this, new PropertyChangedEventArgs(propName));
+		}
+	}
 }

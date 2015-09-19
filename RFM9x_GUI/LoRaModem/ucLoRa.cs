@@ -13,8 +13,6 @@ namespace LoRaModem
 		public event DecimalEventHandler FrequencyRfChanged;
 		public FTDI ftdi = new FTDI();
 
-		protected object syncThread = new object();
-
 		public byte[] TxBuf = new byte[255];
 		public RFM96 rfm96 = new RFM96();
 		public RFM92 rfm92 = new RFM92();
@@ -26,6 +24,8 @@ namespace LoRaModem
 		public uint PktRxCnt;
 		public ucLoRa.RFStatus rfstatus;
 		public ucLoRa.ChipSet ChipVer;
+
+		protected object syncThread = new object();
 
 		private const int FR_BAND_1_MAX = 175000000;
 		private const int FR_BAND_1_MIN = 137000000;
@@ -191,10 +191,7 @@ namespace LoRaModem
 
 		public Decimal FrequencyRf
 		{
-			get
-			{
-				return nudRadioFreq.Value;
-			}
+			get { return nudRadioFreq.Value; }
 			set
 			{
 				try
@@ -2943,8 +2940,8 @@ namespace LoRaModem
 				tx_length = (byte)tx_str.Length;
 				if (cbNewLine.Checked)
 				{
-					TxBuf[idx+0] = 13;
-					TxBuf[idx+1] = 10;
+					TxBuf[idx + 0] = 13;
+					TxBuf[idx + 1] = 10;
 					tx_length += 2;
 				}
 			}
@@ -3405,7 +3402,7 @@ namespace LoRaModem
 		{
 			ftdi.LCDAndValue(addr, 0x80);
 			byte num1 = (byte)(
-				(label < 65 || label > 90 )
+				(label < 65 || label > 90)
 				? ((label < 48 || label > 57)
 					? (label != 45 ? 36 : 37)
 					: (label - 48))

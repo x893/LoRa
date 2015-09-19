@@ -10,38 +10,40 @@ namespace RFM9x_GUI
 {
 	public class MainForm : Form
 	{
+		public MainForm()
+		{
+			InitializeComponent();
+			tscbChipVer.SelectedIndex = 0;
+			ucLoRa.ChipVer = ucLoRa.ChipSet.RF96;
+		}
+
+		#region InitializeComponent
 		private IContainer components;
-		private MenuStrip menuStrip1;
+		private MenuStrip menuStrip;
 		private ToolStripMenuItem fileToolStripMenuItem;
 		private ToolStripMenuItem aboutToolStripMenuItem;
 		private ToolStripMenuItem aboutHopeRFToolStripMenuItem;
 		private ToolStripMenuItem openConfigToolStripMenuItem;
 		private ToolStripMenuItem saveConfigFileToolStripMenuItem;
-		private ToolStripSeparator toolStripSeparator1;
 		private ToolStripMenuItem exitToolStripMenuItem;
-		private ToolStrip toolStrip1;
+
+		private ToolStrip toolStrip;
 		private ToolStripButton tSBOpenFile;
 		private ToolStripButton tSBSave;
-		private ToolStripSeparator toolStripSeparator2;
 		private ToolStripButton btnConnect;
-		private ToolStripSeparator toolStripSeparator3;
-		private ToolStripLabel toolStripLabel1;
-		private ToolStripSeparator toolStripSeparator4;
 		private ToolStripButton tSBReg;
-		private StatusStrip statusStrip1;
+		private ToolStripLabel toolStripLabel1;
+		private StatusStrip statusStrip;
 		private ToolStripStatusLabel tSSLConnect;
 		private ToolStripLed ConnectLed;
-		private ucLoRa ucLoRa1;
+		private ucLoRa ucLoRa;
 		private ToolStripComboBox tscbChipVer;
-		private ToolStripSeparator toolStripSeparator5;
 		private ToolStripLabel ChipType;
-
-		public MainForm()
-		{
-			InitializeComponent();
-			tscbChipVer.SelectedIndex = 0;
-			ucLoRa1.ChipVer = ucLoRa.ChipSet.RF96;
-		}
+		private ToolStripSeparator toolStripSeparator1;
+		private ToolStripSeparator toolStripSeparator2;
+		private ToolStripSeparator toolStripSeparator3;
+		private ToolStripSeparator toolStripSeparator4;
+		private ToolStripSeparator toolStripSeparator5;
 
 		protected override void Dispose(bool disposing)
 		{
@@ -53,7 +55,7 @@ namespace RFM9x_GUI
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveConfigFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,7 +63,7 @@ namespace RFM9x_GUI
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutHopeRFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.tSBOpenFile = new System.Windows.Forms.ToolStripButton();
 			this.tSBSave = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -74,24 +76,26 @@ namespace RFM9x_GUI
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.ChipType = new System.Windows.Forms.ToolStripLabel();
 			this.tscbChipVer = new System.Windows.Forms.ToolStripComboBox();
-			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.tSSLConnect = new System.Windows.Forms.ToolStripStatusLabel();
-			this.ucLoRa1 = new LoRaModem.ucLoRa();
-			this.menuStrip1.SuspendLayout();
-			this.toolStrip1.SuspendLayout();
-			this.statusStrip1.SuspendLayout();
+			this.ucLoRa = new LoRaModem.ucLoRa();
+			this.menuStrip.SuspendLayout();
+			this.toolStrip.SuspendLayout();
+			this.statusStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// menuStrip1
+			// menuStrip
 			// 
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.aboutToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(675, 24);
-			this.menuStrip1.TabIndex = 0;
-			this.menuStrip1.Text = "menuStrip1";
+			this.menuStrip.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip.Name = "menuStrip";
+			this.menuStrip.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+			this.menuStrip.Size = new System.Drawing.Size(900, 28);
+			this.menuStrip.TabIndex = 0;
+			this.menuStrip.Text = "menuStrip1";
 			// 
 			// fileToolStripMenuItem
 			// 
@@ -101,32 +105,32 @@ namespace RFM9x_GUI
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
 			// openConfigToolStripMenuItem
 			// 
 			this.openConfigToolStripMenuItem.Name = "openConfigToolStripMenuItem";
-			this.openConfigToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+			this.openConfigToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
 			this.openConfigToolStripMenuItem.Text = "&Open Config File";
 			this.openConfigToolStripMenuItem.Click += new System.EventHandler(this.openConfigToolStripMenuItem_Click);
 			// 
 			// saveConfigFileToolStripMenuItem
 			// 
 			this.saveConfigFileToolStripMenuItem.Name = "saveConfigFileToolStripMenuItem";
-			this.saveConfigFileToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+			this.saveConfigFileToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
 			this.saveConfigFileToolStripMenuItem.Text = "&Save Config File";
 			this.saveConfigFileToolStripMenuItem.Click += new System.EventHandler(this.saveConfigFileToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(192, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
 			this.exitToolStripMenuItem.Text = "&Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -135,20 +139,21 @@ namespace RFM9x_GUI
 			this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutHopeRFToolStripMenuItem});
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
 			this.aboutToolStripMenuItem.Text = "About";
 			// 
 			// aboutHopeRFToolStripMenuItem
 			// 
 			this.aboutHopeRFToolStripMenuItem.Name = "aboutHopeRFToolStripMenuItem";
-			this.aboutHopeRFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.aboutHopeRFToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.aboutHopeRFToolStripMenuItem.Text = "&About HopeRF";
 			this.aboutHopeRFToolStripMenuItem.Click += new System.EventHandler(this.aboutHopeRFToolStripMenuItem_Click);
 			// 
-			// toolStrip1
+			// toolStrip
 			// 
-			this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.toolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tSBOpenFile,
             this.tSBSave,
             this.toolStripSeparator2,
@@ -161,11 +166,11 @@ namespace RFM9x_GUI
             this.toolStripSeparator5,
             this.ChipType,
             this.tscbChipVer});
-			this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(675, 27);
-			this.toolStrip1.TabIndex = 1;
-			this.toolStrip1.Text = "toolStrip1";
+			this.toolStrip.Location = new System.Drawing.Point(0, 28);
+			this.toolStrip.Name = "toolStrip";
+			this.toolStrip.Size = new System.Drawing.Size(900, 33);
+			this.toolStrip.TabIndex = 1;
+			this.toolStrip.Text = "toolStrip1";
 			// 
 			// tSBOpenFile
 			// 
@@ -173,7 +178,7 @@ namespace RFM9x_GUI
 			this.tSBOpenFile.Image = ((System.Drawing.Image)(resources.GetObject("tSBOpenFile.Image")));
 			this.tSBOpenFile.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tSBOpenFile.Name = "tSBOpenFile";
-			this.tSBOpenFile.Size = new System.Drawing.Size(23, 24);
+			this.tSBOpenFile.Size = new System.Drawing.Size(24, 30);
 			this.tSBOpenFile.Text = "toolStripButton1";
 			this.tSBOpenFile.ToolTipText = "open config file";
 			this.tSBOpenFile.Click += new System.EventHandler(this.tSBOpenFile_Click);
@@ -184,7 +189,7 @@ namespace RFM9x_GUI
 			this.tSBSave.Image = ((System.Drawing.Image)(resources.GetObject("tSBSave.Image")));
 			this.tSBSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tSBSave.Name = "tSBSave";
-			this.tSBSave.Size = new System.Drawing.Size(23, 24);
+			this.tSBSave.Size = new System.Drawing.Size(24, 30);
 			this.tSBSave.Text = "toolStripButton1";
 			this.tSBSave.ToolTipText = "save config file";
 			this.tSBSave.Click += new System.EventHandler(this.tSBSave_Click);
@@ -192,7 +197,7 @@ namespace RFM9x_GUI
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 33);
 			// 
 			// btnConnect
 			// 
@@ -200,7 +205,7 @@ namespace RFM9x_GUI
 			this.btnConnect.Image = ((System.Drawing.Image)(resources.GetObject("btnConnect.Image")));
 			this.btnConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.btnConnect.Name = "btnConnect";
-			this.btnConnect.Size = new System.Drawing.Size(23, 24);
+			this.btnConnect.Size = new System.Drawing.Size(24, 30);
 			this.btnConnect.Text = "toolStripButton1";
 			this.btnConnect.ToolTipText = "Connect/Disconnect";
 			this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
@@ -213,24 +218,24 @@ namespace RFM9x_GUI
 			this.ConnectLed.LedColor = System.Drawing.Color.Red;
 			this.ConnectLed.LedSize = new System.Drawing.Size(11, 11);
 			this.ConnectLed.Name = "ConnectLed";
-			this.ConnectLed.Size = new System.Drawing.Size(15, 24);
+			this.ConnectLed.Size = new System.Drawing.Size(20, 30);
 			this.ConnectLed.Text = "toolStripLed1";
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 33);
 			// 
 			// toolStripLabel1
 			// 
 			this.toolStripLabel1.Name = "toolStripLabel1";
-			this.toolStripLabel1.Size = new System.Drawing.Size(81, 24);
+			this.toolStripLabel1.Size = new System.Drawing.Size(101, 30);
 			this.toolStripLabel1.Text = "Modem: LoRa";
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 27);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 33);
 			// 
 			// tSBReg
 			// 
@@ -238,7 +243,7 @@ namespace RFM9x_GUI
 			this.tSBReg.Image = ((System.Drawing.Image)(resources.GetObject("tSBReg.Image")));
 			this.tSBReg.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tSBReg.Name = "tSBReg";
-			this.tSBReg.Size = new System.Drawing.Size(23, 24);
+			this.tSBReg.Size = new System.Drawing.Size(24, 30);
 			this.tSBReg.Text = "toolStripButton2";
 			this.tSBReg.ToolTipText = "View";
 			this.tSBReg.Click += new System.EventHandler(this.tSBReg_Click);
@@ -246,12 +251,12 @@ namespace RFM9x_GUI
 			// toolStripSeparator5
 			// 
 			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 27);
+			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 33);
 			// 
 			// ChipType
 			// 
 			this.ChipType.Name = "ChipType";
-			this.ChipType.Size = new System.Drawing.Size(58, 24);
+			this.ChipType.Size = new System.Drawing.Size(70, 30);
 			this.ChipType.Text = "ChipType";
 			// 
 			// tscbChipVer
@@ -260,121 +265,125 @@ namespace RFM9x_GUI
             "RFM95/96/97/98",
             "RFM92/93"});
 			this.tscbChipVer.Name = "tscbChipVer";
-			this.tscbChipVer.Size = new System.Drawing.Size(121, 27);
+			this.tscbChipVer.Size = new System.Drawing.Size(160, 33);
 			this.tscbChipVer.Text = "RFM95/96/97/98";
 			// 
-			// statusStrip1
+			// statusStrip
 			// 
-			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tSSLConnect});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 618);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-			this.statusStrip1.Size = new System.Drawing.Size(675, 22);
-			this.statusStrip1.TabIndex = 2;
-			this.statusStrip1.Text = "statusStrip1";
+			this.statusStrip.Location = new System.Drawing.Point(0, 766);
+			this.statusStrip.Name = "statusStrip";
+			this.statusStrip.Padding = new System.Windows.Forms.Padding(19, 0, 1, 0);
+			this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+			this.statusStrip.Size = new System.Drawing.Size(900, 22);
+			this.statusStrip.TabIndex = 2;
+			this.statusStrip.Text = "statusStrip1";
 			// 
 			// tSSLConnect
 			// 
 			this.tSSLConnect.Name = "tSSLConnect";
 			this.tSSLConnect.Size = new System.Drawing.Size(0, 17);
 			// 
-			// ucLoRa1
+			// ucLoRa
 			// 
-			this.ucLoRa1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.ucLoRa1.FrequencyRf = new decimal(new int[] {
-            915999973,
+			this.ucLoRa.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.ucLoRa.FrequencyRf = new decimal(new int[] {
+            433999994,
             0,
             0,
             0});
-			this.ucLoRa1.FrequencyStep = new decimal(new int[] {
+			this.ucLoRa.FrequencyStep = new decimal(new int[] {
             61,
             0,
             0,
             0});
-			this.ucLoRa1.Location = new System.Drawing.Point(0, 51);
-			this.ucLoRa1.Name = "ucLoRa1";
-			this.ucLoRa1.Size = new System.Drawing.Size(675, 567);
-			this.ucLoRa1.TabIndex = 0;
+			this.ucLoRa.Location = new System.Drawing.Point(0, 61);
+			this.ucLoRa.Margin = new System.Windows.Forms.Padding(5);
+			this.ucLoRa.Name = "ucLoRa";
+			this.ucLoRa.Size = new System.Drawing.Size(900, 705);
+			this.ucLoRa.TabIndex = 0;
 			// 
 			// MainForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(675, 640);
-			this.Controls.Add(this.ucLoRa1);
-			this.Controls.Add(this.statusStrip1);
-			this.Controls.Add(this.toolStrip1);
-			this.Controls.Add(this.menuStrip1);
+			this.ClientSize = new System.Drawing.Size(900, 788);
+			this.Controls.Add(this.ucLoRa);
+			this.Controls.Add(this.statusStrip);
+			this.Controls.Add(this.toolStrip);
+			this.Controls.Add(this.menuStrip);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MainMenuStrip = this.menuStrip1;
+			this.MainMenuStrip = this.menuStrip;
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.MaximizeBox = false;
 			this.Name = "MainForm";
 			this.Text = "RFM9x_GUI V1.1";
-			this.menuStrip1.ResumeLayout(false);
-			this.menuStrip1.PerformLayout();
-			this.toolStrip1.ResumeLayout(false);
-			this.toolStrip1.PerformLayout();
-			this.statusStrip1.ResumeLayout(false);
-			this.statusStrip1.PerformLayout();
+			this.menuStrip.ResumeLayout(false);
+			this.menuStrip.PerformLayout();
+			this.toolStrip.ResumeLayout(false);
+			this.toolStrip.PerformLayout();
+			this.statusStrip.ResumeLayout(false);
+			this.statusStrip.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
+		#endregion
 
-		private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-		{
-		}
-
+		#region tSBReg_Click
 		private void tSBReg_Click(object sender, EventArgs e)
 		{
 			RegTable regTable = new RegTable();
-			if (ucLoRa1.ChipVer == ucLoRa.ChipSet.RF92)
+			if (ucLoRa.ChipVer == ucLoRa.ChipSet.RF92)
 			{
-				regTable.tbRegOpMode.Text = toHexString(ucLoRa1.rfm92.RegOpMode.Value);
-				regTable.tbRegFrMsb.Text = toHexString(ucLoRa1.rfm92.RegFrMsb.Value);
-				regTable.tbRegFrMid.Text = toHexString(ucLoRa1.rfm92.RegFrMid.Value);
-				regTable.tbRegFrLsb.Text = toHexString(ucLoRa1.rfm92.RegFrLsb.Value);
-				regTable.tbRegPaConfig.Text = toHexString(ucLoRa1.rfm92.RegPaConfig.Value);
-				regTable.tbRegPaRamp.Text = toHexString(ucLoRa1.rfm92.RegPaRamp.Value);
-				regTable.tbRegOcp.Text = toHexString(ucLoRa1.rfm92.RegOcp.Value);
-				regTable.tbRegLna.Text = toHexString(ucLoRa1.rfm92.RegLna.Value);
-				regTable.tbRegIrqFlagsMask.Text = toHexString(ucLoRa1.rfm92.RegIrqFlagsMask.Value);
-				regTable.tbRegModemConfig1.Text = toHexString(ucLoRa1.rfm92.RegModemConfig1.Value);
-				regTable.tbRegModemConfig2.Text = toHexString(ucLoRa1.rfm92.RegModemConfig2.Value);
-				regTable.tbRegSymbTimeoutLsb.Text = toHexString(ucLoRa1.rfm92.RegSymbTimeoutLsb.Value);
-				regTable.tbRegPreambleMsb.Text = toHexString(ucLoRa1.rfm92.RegPreambleMsb.Value);
-				regTable.tbRegPreambleLsb.Text = toHexString(ucLoRa1.rfm92.RegPreambleLsb.Value);
+				regTable.tbRegOpMode.Text = HexString(ucLoRa.rfm92.RegOpMode.Value);
+				regTable.tbRegFrMsb.Text = HexString(ucLoRa.rfm92.RegFrMsb.Value);
+				regTable.tbRegFrMid.Text = HexString(ucLoRa.rfm92.RegFrMid.Value);
+				regTable.tbRegFrLsb.Text = HexString(ucLoRa.rfm92.RegFrLsb.Value);
+				regTable.tbRegPaConfig.Text = HexString(ucLoRa.rfm92.RegPaConfig.Value);
+				regTable.tbRegPaRamp.Text = HexString(ucLoRa.rfm92.RegPaRamp.Value);
+				regTable.tbRegOcp.Text = HexString(ucLoRa.rfm92.RegOcp.Value);
+				regTable.tbRegLna.Text = HexString(ucLoRa.rfm92.RegLna.Value);
+				regTable.tbRegIrqFlagsMask.Text = HexString(ucLoRa.rfm92.RegIrqFlagsMask.Value);
+				regTable.tbRegModemConfig1.Text = HexString(ucLoRa.rfm92.RegModemConfig1.Value);
+				regTable.tbRegModemConfig2.Text = HexString(ucLoRa.rfm92.RegModemConfig2.Value);
+				regTable.tbRegSymbTimeoutLsb.Text = HexString(ucLoRa.rfm92.RegSymbTimeoutLsb.Value);
+				regTable.tbRegPreambleMsb.Text = HexString(ucLoRa.rfm92.RegPreambleMsb.Value);
+				regTable.tbRegPreambleLsb.Text = HexString(ucLoRa.rfm92.RegPreambleLsb.Value);
 				regTable.tbRegModemConfig3.Text = "--";
-				regTable.tbRegTcxo.Text = toHexString(ucLoRa1.rfm92.RegTcxo.Value);
-				regTable.tbRegPaDac.Text = toHexString(ucLoRa1.rfm92.RegPaDac.Value);
-				regTable.tbRegPllHf.Text = toHexString(ucLoRa1.rfm92.RegPllHf.Value);
+				regTable.tbRegTcxo.Text = HexString(ucLoRa.rfm92.RegTcxo.Value);
+				regTable.tbRegPaDac.Text = HexString(ucLoRa.rfm92.RegPaDac.Value);
+				regTable.tbRegPllHf.Text = HexString(ucLoRa.rfm92.RegPllHf.Value);
 			}
 			else
 			{
-				regTable.tbRegOpMode.Text = toHexString(ucLoRa1.rfm96.RegOpMode.Value);
-				regTable.tbRegFrMsb.Text = toHexString(ucLoRa1.rfm96.RegFrMsb.Value);
-				regTable.tbRegFrMid.Text = toHexString(ucLoRa1.rfm96.RegFrMid.Value);
-				regTable.tbRegFrLsb.Text = toHexString(ucLoRa1.rfm96.RegFrLsb.Value);
-				regTable.tbRegPaConfig.Text = toHexString(ucLoRa1.rfm96.RegPaConfig.Value);
-				regTable.tbRegPaRamp.Text = toHexString(ucLoRa1.rfm96.RegPaRamp.Value);
-				regTable.tbRegOcp.Text = toHexString(ucLoRa1.rfm96.RegOcp.Value);
-				regTable.tbRegLna.Text = toHexString(ucLoRa1.rfm96.RegLna.Value);
-				regTable.tbRegIrqFlagsMask.Text = toHexString(ucLoRa1.rfm96.RegIrqFlagsMask.Value);
-				regTable.tbRegModemConfig1.Text = toHexString(ucLoRa1.rfm96.RegModemConfig1.Value);
-				regTable.tbRegModemConfig2.Text = toHexString(ucLoRa1.rfm96.RegModemConfig2.Value);
-				regTable.tbRegSymbTimeoutLsb.Text = toHexString(ucLoRa1.rfm96.RegSymbTimeoutLsb.Value);
-				regTable.tbRegPreambleMsb.Text = toHexString(ucLoRa1.rfm96.RegPreambleMsb.Value);
-				regTable.tbRegPreambleLsb.Text = toHexString(ucLoRa1.rfm96.RegPreambleLsb.Value);
-				regTable.tbRegModemConfig3.Text = toHexString(ucLoRa1.rfm96.RegModemConfig3.Value);
-				regTable.tbRegTcxo.Text = toHexString(ucLoRa1.rfm96.RegTcxo.Value);
-				regTable.tbRegPaDac.Text = toHexString(ucLoRa1.rfm96.RegPaDac.Value);
-				regTable.tbRegPllHf.Text = toHexString(ucLoRa1.rfm96.RegPllHf.Value);
+				regTable.tbRegOpMode.Text = HexString(ucLoRa.rfm96.RegOpMode.Value);
+				regTable.tbRegFrMsb.Text = HexString(ucLoRa.rfm96.RegFrMsb.Value);
+				regTable.tbRegFrMid.Text = HexString(ucLoRa.rfm96.RegFrMid.Value);
+				regTable.tbRegFrLsb.Text = HexString(ucLoRa.rfm96.RegFrLsb.Value);
+				regTable.tbRegPaConfig.Text = HexString(ucLoRa.rfm96.RegPaConfig.Value);
+				regTable.tbRegPaRamp.Text = HexString(ucLoRa.rfm96.RegPaRamp.Value);
+				regTable.tbRegOcp.Text = HexString(ucLoRa.rfm96.RegOcp.Value);
+				regTable.tbRegLna.Text = HexString(ucLoRa.rfm96.RegLna.Value);
+				regTable.tbRegIrqFlagsMask.Text = HexString(ucLoRa.rfm96.RegIrqFlagsMask.Value);
+				regTable.tbRegModemConfig1.Text = HexString(ucLoRa.rfm96.RegModemConfig1.Value);
+				regTable.tbRegModemConfig2.Text = HexString(ucLoRa.rfm96.RegModemConfig2.Value);
+				regTable.tbRegSymbTimeoutLsb.Text = HexString(ucLoRa.rfm96.RegSymbTimeoutLsb.Value);
+				regTable.tbRegPreambleMsb.Text = HexString(ucLoRa.rfm96.RegPreambleMsb.Value);
+				regTable.tbRegPreambleLsb.Text = HexString(ucLoRa.rfm96.RegPreambleLsb.Value);
+				regTable.tbRegModemConfig3.Text = HexString(ucLoRa.rfm96.RegModemConfig3.Value);
+				regTable.tbRegTcxo.Text = HexString(ucLoRa.rfm96.RegTcxo.Value);
+				regTable.tbRegPaDac.Text = HexString(ucLoRa.rfm96.RegPaDac.Value);
+				regTable.tbRegPllHf.Text = HexString(ucLoRa.rfm96.RegPllHf.Value);
 			}
 			regTable.Show();
 		}
+		#endregion
 
-		private string toHexString(byte xd)
+		#region HexString
+		private string HexString(byte xd)
 		{
 			string str = "0x";
 			if (((int)xd >> 4 & 15) < 10)
@@ -435,124 +444,44 @@ namespace RFM9x_GUI
 			}
 			return str;
 		}
+		#endregion
 
+		#region StringToHex
 		private byte StringToHex(string str)
 		{
-			byte num1 = (byte)0;
-			if ((int)str[2] >= 48 && (int)str[2] <= 57)
-				num1 = (byte)((uint)str[2] - 48U);
-			else if ((int)str[2] >= 65 && (int)str[2] <= 70)
-			{
-				switch (str[2])
-				{
-					case 'A':
-						num1 = (byte)10;
-						break;
-					case 'B':
-						num1 = (byte)11;
-						break;
-					case 'C':
-						num1 = (byte)12;
-						break;
-					case 'D':
-						num1 = (byte)13;
-						break;
-					case 'E':
-						num1 = (byte)14;
-						break;
-					case 'F':
-						num1 = (byte)15;
-						break;
-				}
-			}
-			else if ((int)str[2] >= 97 && (int)str[2] <= 102)
-			{
-				switch (str[2])
-				{
-					case 'a':
-						num1 = (byte)10;
-						break;
-					case 'b':
-						num1 = (byte)11;
-						break;
-					case 'c':
-						num1 = (byte)12;
-						break;
-					case 'd':
-						num1 = (byte)13;
-						break;
-					case 'e':
-						num1 = (byte)14;
-						break;
-					case 'f':
-						num1 = (byte)15;
-						break;
-				}
-			}
-			byte num2 = (byte)((uint)num1 << 4);
-			if ((int)str[3] >= 48 && (int)str[3] <= 57)
-				num2 |= (byte)((uint)str[3] - 48U);
-			else if ((int)str[3] >= 65 && (int)str[3] <= 70)
-			{
-				switch (str[3])
-				{
-					case 'A':
-						num2 |= (byte)10;
-						break;
-					case 'B':
-						num2 |= (byte)11;
-						break;
-					case 'C':
-						num2 |= (byte)12;
-						break;
-					case 'D':
-						num2 |= (byte)13;
-						break;
-					case 'E':
-						num2 |= (byte)14;
-						break;
-					case 'F':
-						num2 |= (byte)15;
-						break;
-				}
-			}
-			else if ((int)str[3] >= 97 && (int)str[3] <= 102)
-			{
-				switch (str[3])
-				{
-					case 'a':
-						num2 |= (byte)10;
-						break;
-					case 'b':
-						num2 |= (byte)11;
-						break;
-					case 'c':
-						num2 |= (byte)12;
-						break;
-					case 'd':
-						num2 |= (byte)13;
-						break;
-					case 'e':
-						num2 |= (byte)14;
-						break;
-					case 'f':
-						num2 |= (byte)15;
-						break;
-				}
-			}
-			return num2;
-		}
+			byte hex = 0;
 
+			if (str[2] >= '0' && str[2] <= '9')
+				hex = (byte)(str[2] - '0');
+			else if (str[2] >= 'A' && str[2] <= 'F')
+				hex = (byte)(str[2] - 'A' + 10);
+			else if ((int)str[2] >= 'a' && (int)str[2] <= 'f')
+				hex = (byte)(str[2] - 'a' + 10);
+
+			hex = (byte)(hex << 4);
+
+			if (str[3] >= '0' && str[3] <= '9')
+				hex |= (byte)(str[3] - '0');
+			else if (str[3] >= 'A' && str[3] <= 'F')
+				hex |= (byte)(str[3] - 'A' + 10);
+			else if (str[3] >= 'a' && str[3] <= 'f')
+				hex |= (byte)(str[3] - 'a' + 10);
+
+			return hex;
+		}
+		#endregion
+
+		#region btnConnect_Click
 		private void btnConnect_Click(object sender, EventArgs e)
 		{
 			if (ConnectLed.LedColor == Color.Red)
 			{
-				if (ucLoRa1.TryConnect())
+				if (ucLoRa.TryConnect())
 				{
-					ucLoRa1.gbOpMode.Enabled = true;
+					ucLoRa.gbOpMode.Enabled = true;
 					ConnectLed.LedColor = Color.Lime;
 					tscbChipVer.Enabled = false;
-					if (ucLoRa1.ChipVer == ucLoRa.ChipSet.RF92)
+					if (ucLoRa.ChipVer == ucLoRa.ChipSet.RF92)
 						tscbChipVer.SelectedIndex = 1;
 					else
 						tscbChipVer.SelectedIndex = 0;
@@ -564,13 +493,14 @@ namespace RFM9x_GUI
 			}
 			else
 			{
-				ucLoRa1.ftdi.LCDClear();
-				ucLoRa1.ftdi.Close();
+				ucLoRa.ftdi.LCDClear();
+				ucLoRa.ftdi.Close();
 				tscbChipVer.Enabled = true;
-				ucLoRa1.gbOpMode.Enabled = false;
+				ucLoRa.gbOpMode.Enabled = false;
 				ConnectLed.LedColor = Color.Red;
 			}
 		}
+		#endregion
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -596,7 +526,7 @@ namespace RFM9x_GUI
 		{
 			SaveCfgFile();
 		}
-
+		#region OpenCfgFile
 		private void OpenCfgFile()
 		{
 			OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -604,343 +534,332 @@ namespace RFM9x_GUI
 			openFileDialog.Filter = "HopeRF RF-Config Files(*.hpflr)|*.hpflr";
 			if (openFileDialog.ShowDialog() == DialogResult.OK)
 			{
-				StreamReader streamReader = new StreamReader(openFileDialog.FileName);
-				string str1 = "";
-				while (str1 != null)
+				using (StreamReader streamReader = new StreamReader(openFileDialog.FileName))
 				{
-					str1 = streamReader.ReadLine();
-					if (str1 != "" && str1.Contains("Chipset Type"))
-						break;
-				}
-				if (str1 == null)
-				{
-					streamReader.Close();
-					MessageBox.Show("File format is wrong, does not recognize the chip models!");
-				}
-				else
-				{
-					ucLoRa.ChipSet chipSet = !str1.Contains("RF92") ? ucLoRa.ChipSet.RF96 : ucLoRa.ChipSet.RF92;
-					if (ConnectLed.LedColor == Color.Lime)
+					string line = null;
+					while ((line = streamReader.ReadLine()) != null)
 					{
-						if (ucLoRa1.ChipVer != chipSet)
-						{
-							streamReader.Close();
-							MessageBox.Show("File type does not match with the hardware connection type!");
-							openFileDialog.Dispose();
-							return;
-						}
-					}
-					else if (chipSet == ucLoRa.ChipSet.RF92)
-					{
-						ucLoRa1.ChipVer = ucLoRa.ChipSet.RF92;
-						tscbChipVer.SelectedIndex = 1;
-					}
-					else
-					{
-						ucLoRa1.ChipVer = ucLoRa.ChipSet.RF96;
-						tscbChipVer.SelectedIndex = 0;
-					}
-					while (str1 != null)
-					{
-						str1 = streamReader.ReadLine();
-						if (str1 != "" && str1.Contains("const unsigned int RegTable"))
+						if (!string.IsNullOrEmpty(line) && line.Contains("Chipset Type"))
 							break;
 					}
-					if (str1 == null)
-					{
-						streamReader.Close();
-						MessageBox.Show("File format is wrong, does not recognize the register values!");
-					}
+
+					if (line == null)
+						MessageBox.Show("File format is wrong, does not recognize the chip models!");
 					else
 					{
-						string str2 = streamReader.ReadLine();
-						if (chipSet == ucLoRa.ChipSet.RF92)
+						ucLoRa.ChipSet chipSet = line.Contains("RF92") ? ucLoRa.ChipSet.RF92 : ucLoRa.ChipSet.RF96;
+						if (ConnectLed.LedColor == Color.Lime)
 						{
-							for (; str2 != null; str2 = streamReader.ReadLine())
+							if (ucLoRa.ChipVer != chipSet)
 							{
-								string str3 = "";
-								string[] strArray1 = new string[5];
-								char[] chArray = new char[2]
-                {
-                  '0',
-                  'x'
-                };
-								if (str2.Contains("0x"))
-								{
-									byte num1;
-									for (num1 = (byte)0; (int)num1 < 17; ++num1)
-									{
-										switch (num1)
-										{
-											case (byte)0:
-												str3 = "RegFrMsb";
-												break;
-											case (byte)1:
-												str3 = "RegFrMid";
-												break;
-											case (byte)2:
-												str3 = "RegFrLsb";
-												break;
-											case (byte)3:
-												str3 = "RegPaConfig";
-												break;
-											case (byte)4:
-												str3 = "RegPaRamp";
-												break;
-											case (byte)5:
-												str3 = "RegOcp";
-												break;
-											case (byte)6:
-												str3 = "RegLna";
-												break;
-											case (byte)7:
-												str3 = "RegIrqFlagsMask";
-												break;
-											case (byte)8:
-												str3 = "RegModemConfig1";
-												break;
-											case (byte)9:
-												str3 = "RegModemConfig2";
-												break;
-											case (byte)10:
-												str3 = "RegSymbTimeoutLsb";
-												break;
-											case (byte)11:
-												str3 = "RegPreambleMsb";
-												break;
-											case (byte)12:
-												str3 = "RegPreambleLsb";
-												break;
-											case (byte)13:
-												str3 = "RegPayloadLength";
-												break;
-											case (byte)14:
-												str3 = "RegTcxo";
-												break;
-											case (byte)15:
-												str3 = "RegPaDac";
-												break;
-											case (byte)16:
-												str3 = "RegPllHf";
-												break;
-										}
-										if (str2.Contains(str3))
-											break;
-									}
-									string[] strArray2 = str2.Trim(' ').Split('+');
-									strArray2[0] = strArray2[0].Trim(' ');
-									strArray2[1] = strArray2[1].Trim(' ');
-									byte num2 = StringToHex(strArray2[1]);
-									switch (num1)
-									{
-										case (byte)0:
-											ucLoRa1.rfm92.RegFrMsb.Value = num2;
-											continue;
-										case (byte)1:
-											ucLoRa1.rfm92.RegFrMid.Value = num2;
-											continue;
-										case (byte)2:
-											ucLoRa1.rfm92.RegFrLsb.Value = num2;
-											continue;
-										case (byte)3:
-											ucLoRa1.rfm92.RegPaConfig.Value = num2;
-											continue;
-										case (byte)4:
-											ucLoRa1.rfm92.RegPaRamp.Value = num2;
-											continue;
-										case (byte)5:
-											ucLoRa1.rfm92.RegOcp.Value = num2;
-											continue;
-										case (byte)6:
-											ucLoRa1.rfm92.RegLna.Value = num2;
-											continue;
-										case (byte)7:
-											ucLoRa1.rfm92.RegIrqFlagsMask.Value = num2;
-											continue;
-										case (byte)8:
-											ucLoRa1.rfm92.RegModemConfig1.Value = num2;
-											continue;
-										case (byte)9:
-											ucLoRa1.rfm92.RegModemConfig2.Value = num2;
-											continue;
-										case (byte)10:
-											ucLoRa1.rfm92.RegSymbTimeoutLsb.Value = num2;
-											continue;
-										case (byte)11:
-											ucLoRa1.rfm92.RegPreambleMsb.Value = num2;
-											continue;
-										case (byte)12:
-											ucLoRa1.rfm92.RegPreambleLsb.Value = num2;
-											continue;
-										case (byte)13:
-											ucLoRa1.rfm92.RegPayloadLength.Value = num2;
-											continue;
-										case (byte)14:
-											ucLoRa1.rfm92.RegTcxo.Value = num2;
-											continue;
-										case (byte)15:
-											ucLoRa1.rfm92.RegPaDac.Value = num2;
-											continue;
-										case (byte)16:
-											ucLoRa1.rfm92.RegPllHf.Value = num2;
-											continue;
-										default:
-											continue;
-									}
-								}
+								streamReader.Close();
+								MessageBox.Show("File type does not match with the hardware connection type!");
+								openFileDialog.Dispose();
+								return;
 							}
+						}
+						else if (chipSet == ucLoRa.ChipSet.RF92)
+						{
+							ucLoRa.ChipVer = ucLoRa.ChipSet.RF92;
+							tscbChipVer.SelectedIndex = 1;
 						}
 						else
 						{
-							for (; str2 != null; str2 = streamReader.ReadLine())
+							ucLoRa.ChipVer = ucLoRa.ChipSet.RF96;
+							tscbChipVer.SelectedIndex = 0;
+						}
+						while ((line = streamReader.ReadLine()) != null)
+						{
+							if (!string.IsNullOrEmpty(line) && line.Contains("const unsigned int RegTable"))
+								break;
+						}
+						if (line == null)
+							MessageBox.Show("File format is wrong, does not recognize the register values!");
+						else
+						{
+							string str2 = streamReader.ReadLine();
+							if (chipSet == ucLoRa.ChipSet.RF92)
 							{
-								string str3 = "";
-								string[] strArray1 = new string[5];
-								char[] chArray = new char[2]
-                {
-                  '0',
-                  'x'
-                };
-								if (str2.Contains("0x"))
+								for (; str2 != null; str2 = streamReader.ReadLine())
 								{
-									byte num1;
-									for (num1 = (byte)0; (int)num1 < 18; ++num1)
+									string str3 = "";
+									string[] strArray1 = new string[5];
+									char[] chArray = new char[2] { '0', 'x' };
+									if (str2.Contains("0x"))
 									{
+										byte num1;
+										for (num1 = (byte)0; (int)num1 < 17; ++num1)
+										{
+											switch (num1)
+											{
+												case (byte)0:
+													str3 = "RegFrMsb";
+													break;
+												case (byte)1:
+													str3 = "RegFrMid";
+													break;
+												case (byte)2:
+													str3 = "RegFrLsb";
+													break;
+												case (byte)3:
+													str3 = "RegPaConfig";
+													break;
+												case (byte)4:
+													str3 = "RegPaRamp";
+													break;
+												case (byte)5:
+													str3 = "RegOcp";
+													break;
+												case (byte)6:
+													str3 = "RegLna";
+													break;
+												case (byte)7:
+													str3 = "RegIrqFlagsMask";
+													break;
+												case (byte)8:
+													str3 = "RegModemConfig1";
+													break;
+												case (byte)9:
+													str3 = "RegModemConfig2";
+													break;
+												case (byte)10:
+													str3 = "RegSymbTimeoutLsb";
+													break;
+												case (byte)11:
+													str3 = "RegPreambleMsb";
+													break;
+												case (byte)12:
+													str3 = "RegPreambleLsb";
+													break;
+												case (byte)13:
+													str3 = "RegPayloadLength";
+													break;
+												case (byte)14:
+													str3 = "RegTcxo";
+													break;
+												case (byte)15:
+													str3 = "RegPaDac";
+													break;
+												case (byte)16:
+													str3 = "RegPllHf";
+													break;
+											}
+											if (str2.Contains(str3))
+												break;
+										}
+										string[] strArray2 = str2.Trim(' ').Split('+');
+										strArray2[0] = strArray2[0].Trim(' ');
+										strArray2[1] = strArray2[1].Trim(' ');
+										byte num2 = StringToHex(strArray2[1]);
 										switch (num1)
 										{
 											case (byte)0:
-												str3 = "RegFrMsb";
-												break;
+												ucLoRa.rfm92.RegFrMsb.Value = num2;
+												continue;
 											case (byte)1:
-												str3 = "RegFrMid";
-												break;
+												ucLoRa.rfm92.RegFrMid.Value = num2;
+												continue;
 											case (byte)2:
-												str3 = "RegFrLsb";
-												break;
+												ucLoRa.rfm92.RegFrLsb.Value = num2;
+												continue;
 											case (byte)3:
-												str3 = "RegPaConfig";
-												break;
+												ucLoRa.rfm92.RegPaConfig.Value = num2;
+												continue;
 											case (byte)4:
-												str3 = "RegPaRamp";
-												break;
+												ucLoRa.rfm92.RegPaRamp.Value = num2;
+												continue;
 											case (byte)5:
-												str3 = "RegOcp";
-												break;
+												ucLoRa.rfm92.RegOcp.Value = num2;
+												continue;
 											case (byte)6:
-												str3 = "RegLna";
-												break;
+												ucLoRa.rfm92.RegLna.Value = num2;
+												continue;
 											case (byte)7:
-												str3 = "RegIrqFlagsMask";
-												break;
+												ucLoRa.rfm92.RegIrqFlagsMask.Value = num2;
+												continue;
 											case (byte)8:
-												str3 = "RegModemConfig1";
-												break;
+												ucLoRa.rfm92.RegModemConfig1.Value = num2;
+												continue;
 											case (byte)9:
-												str3 = "RegModemConfig2";
-												break;
+												ucLoRa.rfm92.RegModemConfig2.Value = num2;
+												continue;
 											case (byte)10:
-												str3 = "RegSymbTimeoutLsb";
-												break;
+												ucLoRa.rfm92.RegSymbTimeoutLsb.Value = num2;
+												continue;
 											case (byte)11:
-												str3 = "RegPreambleMsb";
-												break;
+												ucLoRa.rfm92.RegPreambleMsb.Value = num2;
+												continue;
 											case (byte)12:
-												str3 = "RegPreambleLsb";
-												break;
+												ucLoRa.rfm92.RegPreambleLsb.Value = num2;
+												continue;
 											case (byte)13:
-												str3 = "RegPayloadLength";
-												break;
+												ucLoRa.rfm92.RegPayloadLength.Value = num2;
+												continue;
 											case (byte)14:
-												str3 = "RegTcxo";
-												break;
+												ucLoRa.rfm92.RegTcxo.Value = num2;
+												continue;
 											case (byte)15:
-												str3 = "RegPaDac";
-												break;
+												ucLoRa.rfm92.RegPaDac.Value = num2;
+												continue;
 											case (byte)16:
-												str3 = "RegPllHf";
-												break;
-											case (byte)17:
-												str3 = "RegModemConfig3";
-												break;
+												ucLoRa.rfm92.RegPllHf.Value = num2;
+												continue;
+											default:
+												continue;
 										}
-										if (str2.Contains(str3))
-											break;
-									}
-									string[] strArray2 = str2.Trim(' ').Split('+');
-									strArray2[0] = strArray2[0].Trim(' ');
-									strArray2[1] = strArray2[1].Trim(' ');
-									byte num2 = StringToHex(strArray2[1]);
-									switch (num1)
-									{
-										case (byte)0:
-											ucLoRa1.rfm96.RegFrMsb.Value = num2;
-											continue;
-										case (byte)1:
-											ucLoRa1.rfm96.RegFrMid.Value = num2;
-											continue;
-										case (byte)2:
-											ucLoRa1.rfm96.RegFrLsb.Value = num2;
-											continue;
-										case (byte)3:
-											ucLoRa1.rfm96.RegPaConfig.Value = num2;
-											continue;
-										case (byte)4:
-											ucLoRa1.rfm96.RegPaRamp.Value = num2;
-											continue;
-										case (byte)5:
-											ucLoRa1.rfm96.RegOcp.Value = num2;
-											continue;
-										case (byte)6:
-											ucLoRa1.rfm96.RegLna.Value = num2;
-											continue;
-										case (byte)7:
-											ucLoRa1.rfm96.RegIrqFlagsMask.Value = num2;
-											continue;
-										case (byte)8:
-											ucLoRa1.rfm96.RegModemConfig1.Value = num2;
-											continue;
-										case (byte)9:
-											ucLoRa1.rfm96.RegModemConfig2.Value = num2;
-											continue;
-										case (byte)10:
-											ucLoRa1.rfm96.RegSymbTimeoutLsb.Value = num2;
-											continue;
-										case (byte)11:
-											ucLoRa1.rfm96.RegPreambleMsb.Value = num2;
-											continue;
-										case (byte)12:
-											ucLoRa1.rfm96.RegPreambleLsb.Value = num2;
-											continue;
-										case (byte)13:
-											ucLoRa1.rfm96.RegPayloadLength.Value = num2;
-											continue;
-										case (byte)14:
-											ucLoRa1.rfm96.RegTcxo.Value = num2;
-											continue;
-										case (byte)15:
-											ucLoRa1.rfm96.RegPaDac.Value = num2;
-											continue;
-										case (byte)16:
-											ucLoRa1.rfm96.RegPllHf.Value = num2;
-											continue;
-										case (byte)17:
-											ucLoRa1.rfm96.RegModemConfig3.Value = num2;
-											continue;
-										default:
-											continue;
 									}
 								}
 							}
+							else
+							{
+								for (; str2 != null; str2 = streamReader.ReadLine())
+								{
+									string str3 = "";
+									string[] strArray1 = new string[5];
+									char[] chArray = new char[2] { '0', 'x' };
+									if (str2.Contains("0x"))
+									{
+										byte num1;
+										for (num1 = (byte)0; (int)num1 < 18; ++num1)
+										{
+											switch (num1)
+											{
+												case (byte)0:
+													str3 = "RegFrMsb";
+													break;
+												case (byte)1:
+													str3 = "RegFrMid";
+													break;
+												case (byte)2:
+													str3 = "RegFrLsb";
+													break;
+												case (byte)3:
+													str3 = "RegPaConfig";
+													break;
+												case (byte)4:
+													str3 = "RegPaRamp";
+													break;
+												case (byte)5:
+													str3 = "RegOcp";
+													break;
+												case (byte)6:
+													str3 = "RegLna";
+													break;
+												case (byte)7:
+													str3 = "RegIrqFlagsMask";
+													break;
+												case (byte)8:
+													str3 = "RegModemConfig1";
+													break;
+												case (byte)9:
+													str3 = "RegModemConfig2";
+													break;
+												case (byte)10:
+													str3 = "RegSymbTimeoutLsb";
+													break;
+												case (byte)11:
+													str3 = "RegPreambleMsb";
+													break;
+												case (byte)12:
+													str3 = "RegPreambleLsb";
+													break;
+												case (byte)13:
+													str3 = "RegPayloadLength";
+													break;
+												case (byte)14:
+													str3 = "RegTcxo";
+													break;
+												case (byte)15:
+													str3 = "RegPaDac";
+													break;
+												case (byte)16:
+													str3 = "RegPllHf";
+													break;
+												case (byte)17:
+													str3 = "RegModemConfig3";
+													break;
+											}
+											if (str2.Contains(str3))
+												break;
+										}
+										string[] strArray2 = str2.Trim(' ').Split('+');
+										strArray2[0] = strArray2[0].Trim(' ');
+										strArray2[1] = strArray2[1].Trim(' ');
+										byte num2 = StringToHex(strArray2[1]);
+										switch (num1)
+										{
+											case (byte)0:
+												ucLoRa.rfm96.RegFrMsb.Value = num2;
+												continue;
+											case (byte)1:
+												ucLoRa.rfm96.RegFrMid.Value = num2;
+												continue;
+											case (byte)2:
+												ucLoRa.rfm96.RegFrLsb.Value = num2;
+												continue;
+											case (byte)3:
+												ucLoRa.rfm96.RegPaConfig.Value = num2;
+												continue;
+											case (byte)4:
+												ucLoRa.rfm96.RegPaRamp.Value = num2;
+												continue;
+											case (byte)5:
+												ucLoRa.rfm96.RegOcp.Value = num2;
+												continue;
+											case (byte)6:
+												ucLoRa.rfm96.RegLna.Value = num2;
+												continue;
+											case (byte)7:
+												ucLoRa.rfm96.RegIrqFlagsMask.Value = num2;
+												continue;
+											case (byte)8:
+												ucLoRa.rfm96.RegModemConfig1.Value = num2;
+												continue;
+											case (byte)9:
+												ucLoRa.rfm96.RegModemConfig2.Value = num2;
+												continue;
+											case (byte)10:
+												ucLoRa.rfm96.RegSymbTimeoutLsb.Value = num2;
+												continue;
+											case (byte)11:
+												ucLoRa.rfm96.RegPreambleMsb.Value = num2;
+												continue;
+											case (byte)12:
+												ucLoRa.rfm96.RegPreambleLsb.Value = num2;
+												continue;
+											case (byte)13:
+												ucLoRa.rfm96.RegPayloadLength.Value = num2;
+												continue;
+											case (byte)14:
+												ucLoRa.rfm96.RegTcxo.Value = num2;
+												continue;
+											case (byte)15:
+												ucLoRa.rfm96.RegPaDac.Value = num2;
+												continue;
+											case (byte)16:
+												ucLoRa.rfm96.RegPllHf.Value = num2;
+												continue;
+											case (byte)17:
+												ucLoRa.rfm96.RegModemConfig3.Value = num2;
+												continue;
+											default:
+												continue;
+										}
+									}
+								}
+							}
+							ucLoRa.SetcbBW();
+							ucLoRa.SetAllValue();
 						}
-						streamReader.Close();
-						ucLoRa1.SetcbBW();
-						ucLoRa1.SetAllValue();
 					}
+					streamReader.Close();
 				}
 			}
 			openFileDialog.Dispose();
 		}
+		#endregion
 
+		#region SaveCfgFile
 		private void SaveCfgFile()
 		{
 			SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -948,7 +867,8 @@ namespace RFM9x_GUI
 			saveFileDialog.Filter = "HopeRF files(*.hpflr)|*.hpflr";
 			saveFileDialog.CreatePrompt = true;
 			saveFileDialog.OverwritePrompt = true;
-			ucLoRa1.UpdataAllValue();
+			ucLoRa.UpdataAllValue();
+
 			if (saveFileDialog.ShowDialog() == DialogResult.OK)
 			{
 				StreamWriter streamWriter = new StreamWriter(saveFileDialog.FileName);
@@ -963,17 +883,19 @@ namespace RFM9x_GUI
 				streamWriter.WriteLine("****************************************/");
 				streamWriter.WriteLine("");
 				streamWriter.WriteLine("/****************************************");
-				bool flag;
-				if (ucLoRa1.ChipVer == ucLoRa.ChipSet.RF92)
+
+				bool rf92chip;
+				if (ucLoRa.ChipVer == ucLoRa.ChipSet.RF92)
 				{
 					streamWriter.WriteLine("Chipset Type: RF92/RF93");
-					flag = true;
+					rf92chip = true;
 				}
 				else
 				{
 					streamWriter.WriteLine("Chipset Type: RF95/RF96/RF97/RF98");
-					flag = false;
+					rf92chip = false;
 				}
+
 				streamWriter.WriteLine("****************************************/");
 				streamWriter.WriteLine("");
 				streamWriter.WriteLine("#define    RegFifo                 0x0000");
@@ -1011,7 +933,8 @@ namespace RFM9x_GUI
 				streamWriter.WriteLine("#define    RegHopPeriod            0x2400");
 				streamWriter.WriteLine("#define    RegFifoRxByteAddr       0x2500");
 				streamWriter.WriteLine("#define    RegModemConfig3         0x2600  //only for RF95/96/97/98");
-				if (flag)
+
+				if (rf92chip)
 				{
 					streamWriter.WriteLine("#define    RegTcxo                 0x5800");
 					streamWriter.WriteLine("#define    RegPaDac                0x5A00");
@@ -1023,52 +946,54 @@ namespace RFM9x_GUI
 					streamWriter.WriteLine("#define    RegPaDac                0x4D00");
 					streamWriter.WriteLine("#define    RegPllHf                0x7000");
 				}
-				streamWriter.WriteLine("");
-				streamWriter.WriteLine("");
-				if (flag)
+
+				streamWriter.WriteLine();
+				streamWriter.WriteLine();
+
+				if (rf92chip)
 				{
 					streamWriter.WriteLine("const unsigned int RegTable[17] = ");
 					streamWriter.WriteLine("{");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegFrMsb.Name + " + " + toHexString(ucLoRa1.rfm92.RegFrMsb.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegFrMid.Name + " + " + toHexString(ucLoRa1.rfm92.RegFrMid.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegFrLsb.Name + " + " + toHexString(ucLoRa1.rfm92.RegFrLsb.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegPaConfig.Name + " + " + toHexString(ucLoRa1.rfm92.RegPaConfig.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegPaRamp.Name + " + " + toHexString(ucLoRa1.rfm92.RegPaRamp.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegOcp.Name + " + " + toHexString(ucLoRa1.rfm92.RegOcp.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegLna.Name + " + " + toHexString(ucLoRa1.rfm92.RegLna.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegIrqFlagsMask.Name + " + " + toHexString(ucLoRa1.rfm92.RegIrqFlagsMask.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegModemConfig1.Name + " + " + toHexString(ucLoRa1.rfm92.RegModemConfig1.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegModemConfig2.Name + " + " + toHexString(ucLoRa1.rfm92.RegModemConfig2.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegSymbTimeoutLsb.Name + " + " + toHexString(ucLoRa1.rfm92.RegSymbTimeoutLsb.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegPreambleMsb.Name + " + " + toHexString(ucLoRa1.rfm92.RegPreambleMsb.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegPreambleLsb.Name + " + " + toHexString(ucLoRa1.rfm92.RegPreambleLsb.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegPayloadLength.Name + " + " + toHexString(ucLoRa1.rfm92.RegPayloadLength.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegTcxo.Name + " + " + toHexString(ucLoRa1.rfm92.RegTcxo.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegPaDac.Name + " + " + toHexString(ucLoRa1.rfm92.RegPaDac.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm92.RegPllHf.Name + " + " + toHexString(ucLoRa1.rfm92.RegPllHf.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegFrMsb.Name + " + " + HexString(ucLoRa.rfm92.RegFrMsb.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegFrMid.Name + " + " + HexString(ucLoRa.rfm92.RegFrMid.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegFrLsb.Name + " + " + HexString(ucLoRa.rfm92.RegFrLsb.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegPaConfig.Name + " + " + HexString(ucLoRa.rfm92.RegPaConfig.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegPaRamp.Name + " + " + HexString(ucLoRa.rfm92.RegPaRamp.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegOcp.Name + " + " + HexString(ucLoRa.rfm92.RegOcp.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegLna.Name + " + " + HexString(ucLoRa.rfm92.RegLna.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegIrqFlagsMask.Name + " + " + HexString(ucLoRa.rfm92.RegIrqFlagsMask.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegModemConfig1.Name + " + " + HexString(ucLoRa.rfm92.RegModemConfig1.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegModemConfig2.Name + " + " + HexString(ucLoRa.rfm92.RegModemConfig2.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegSymbTimeoutLsb.Name + " + " + HexString(ucLoRa.rfm92.RegSymbTimeoutLsb.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegPreambleMsb.Name + " + " + HexString(ucLoRa.rfm92.RegPreambleMsb.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegPreambleLsb.Name + " + " + HexString(ucLoRa.rfm92.RegPreambleLsb.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegPayloadLength.Name + " + " + HexString(ucLoRa.rfm92.RegPayloadLength.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegTcxo.Name + " + " + HexString(ucLoRa.rfm92.RegTcxo.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegPaDac.Name + " + " + HexString(ucLoRa.rfm92.RegPaDac.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm92.RegPllHf.Name + " + " + HexString(ucLoRa.rfm92.RegPllHf.Value) + ";");
 				}
 				else
 				{
 					streamWriter.WriteLine("const unsigned int RegTable[18] = ");
 					streamWriter.WriteLine("{");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegFrMsb.Name + " + " + toHexString(ucLoRa1.rfm96.RegFrMsb.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegFrMid.Name + " + " + toHexString(ucLoRa1.rfm96.RegFrMid.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegFrLsb.Name + " + " + toHexString(ucLoRa1.rfm96.RegFrLsb.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegPaConfig.Name + " + " + toHexString(ucLoRa1.rfm96.RegPaConfig.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegPaRamp.Name + " + " + toHexString(ucLoRa1.rfm96.RegPaRamp.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegOcp.Name + " + " + toHexString(ucLoRa1.rfm96.RegOcp.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegLna.Name + " + " + toHexString(ucLoRa1.rfm96.RegLna.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegIrqFlagsMask.Name + " + " + toHexString(ucLoRa1.rfm96.RegIrqFlagsMask.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegModemConfig1.Name + " + " + toHexString(ucLoRa1.rfm96.RegModemConfig1.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegModemConfig2.Name + " + " + toHexString(ucLoRa1.rfm96.RegModemConfig2.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegModemConfig3.Name + " + " + toHexString(ucLoRa1.rfm96.RegModemConfig3.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegSymbTimeoutLsb.Name + " + " + toHexString(ucLoRa1.rfm96.RegSymbTimeoutLsb.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegPreambleMsb.Name + " + " + toHexString(ucLoRa1.rfm96.RegPreambleMsb.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegPreambleLsb.Name + " + " + toHexString(ucLoRa1.rfm96.RegPreambleLsb.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegPayloadLength.Name + " + " + toHexString(ucLoRa1.rfm96.RegPayloadLength.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegTcxo.Name + " + " + toHexString(ucLoRa1.rfm96.RegTcxo.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegPaDac.Name + " + " + toHexString(ucLoRa1.rfm96.RegPaDac.Value) + ";");
-					streamWriter.WriteLine("        " + ucLoRa1.rfm96.RegPllHf.Name + " + " + toHexString(ucLoRa1.rfm96.RegPllHf.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegFrMsb.Name + " + " + HexString(ucLoRa.rfm96.RegFrMsb.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegFrMid.Name + " + " + HexString(ucLoRa.rfm96.RegFrMid.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegFrLsb.Name + " + " + HexString(ucLoRa.rfm96.RegFrLsb.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegPaConfig.Name + " + " + HexString(ucLoRa.rfm96.RegPaConfig.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegPaRamp.Name + " + " + HexString(ucLoRa.rfm96.RegPaRamp.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegOcp.Name + " + " + HexString(ucLoRa.rfm96.RegOcp.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegLna.Name + " + " + HexString(ucLoRa.rfm96.RegLna.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegIrqFlagsMask.Name + " + " + HexString(ucLoRa.rfm96.RegIrqFlagsMask.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegModemConfig1.Name + " + " + HexString(ucLoRa.rfm96.RegModemConfig1.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegModemConfig2.Name + " + " + HexString(ucLoRa.rfm96.RegModemConfig2.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegModemConfig3.Name + " + " + HexString(ucLoRa.rfm96.RegModemConfig3.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegSymbTimeoutLsb.Name + " + " + HexString(ucLoRa.rfm96.RegSymbTimeoutLsb.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegPreambleMsb.Name + " + " + HexString(ucLoRa.rfm96.RegPreambleMsb.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegPreambleLsb.Name + " + " + HexString(ucLoRa.rfm96.RegPreambleLsb.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegPayloadLength.Name + " + " + HexString(ucLoRa.rfm96.RegPayloadLength.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegTcxo.Name + " + " + HexString(ucLoRa.rfm96.RegTcxo.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegPaDac.Name + " + " + HexString(ucLoRa.rfm96.RegPaDac.Value) + ";");
+					streamWriter.WriteLine("        " + ucLoRa.rfm96.RegPllHf.Name + " + " + HexString(ucLoRa.rfm96.RegPllHf.Value) + ";");
 				}
 				streamWriter.WriteLine("};");
 				streamWriter.Flush();
@@ -1076,6 +1001,7 @@ namespace RFM9x_GUI
 			}
 			saveFileDialog.Dispose();
 		}
+		#endregion
 
 		private void aboutHopeRFToolStripMenuItem_Click(object sender, EventArgs e)
 		{

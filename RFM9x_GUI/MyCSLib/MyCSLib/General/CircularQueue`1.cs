@@ -8,19 +8,17 @@ namespace MyCSLib.General
 
 		public CircularQueue(int maxLength)
 		{
-			this.MaxLength = maxLength;
+			MaxLength = maxLength;
 		}
 
 		public void Add(T item)
 		{
-			if (this.Count < this.MaxLength)
-			{
-				this.Enqueue(item);
-			}
+			if (Count < MaxLength)
+				Enqueue(item);
 			else
 			{
-				this.Dequeue();
-				this.Enqueue(item);
+				Dequeue();
+				Enqueue(item);
 			}
 		}
 	}

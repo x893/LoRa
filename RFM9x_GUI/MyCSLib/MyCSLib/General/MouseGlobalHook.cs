@@ -23,9 +23,10 @@ namespace MyCSLib.General
 		private const int WM_RBUTTONDBLCLK = 518;
 		private const int WM_MBUTTONDBLCLK = 521;
 		private const int WM_MOUSEWHEEL = 522;
-		private static int OldX;
-		private static int OldY;
-		private static MouseGlobalHook.HookProc MouseHookProcedure;
+
+		private static int m_OldX;
+		private static int m_OldY;
+		private static MouseGlobalHook.HookProc m_MouseHookProcedure;
 
 		public event MouseEventHandler MouseMove;
 
@@ -33,8 +34,8 @@ namespace MyCSLib.General
 		{
 			if (MouseGlobalHook.hHook == 0)
 			{
-				MouseGlobalHook.MouseHookProcedure = new MouseGlobalHook.HookProc(this.MouseHookProc);
-				MouseGlobalHook.hHook = MouseGlobalHook.SetWindowsHookEx(14, MouseGlobalHook.MouseHookProcedure, Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]), 0);
+				MouseGlobalHook.m_MouseHookProcedure = new MouseGlobalHook.HookProc(MouseHookProc);
+				MouseGlobalHook.hHook = MouseGlobalHook.SetWindowsHookEx(14, MouseGlobalHook.m_MouseHookProcedure, Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]), 0);
 				if (MouseGlobalHook.hHook == 0)
 				{
 					MessageBox.Show("SetWindowsHookEx Failed");
@@ -44,7 +45,7 @@ namespace MyCSLib.General
 
 		~MouseGlobalHook()
 		{
-			this.Dispose();
+			Dispose();
 		}
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
@@ -62,15 +63,15 @@ namespace MyCSLib.General
 			{
 				MouseGlobalHook.MouseLLHookStruct mouseLlHookStruct = (MouseGlobalHook.MouseLLHookStruct)Marshal.PtrToStructure(lParam, typeof(MouseGlobalHook.MouseLLHookStruct));
 				MouseButtons button = MouseButtons.None;
-				short num = (short)0;
+				short num = 0;
 				int clicks = 0;
 				MouseEventArgs e = new MouseEventArgs(button, clicks, mouseLlHookStruct.Point.X, mouseLlHookStruct.Point.Y, (int)num);
-				if (this.MouseMove != null && (MouseGlobalHook.OldX != mouseLlHookStruct.Point.X || MouseGlobalHook.OldY != mouseLlHookStruct.Point.Y))
+				if (MouseMove != null && (MouseGlobalHook.m_OldX != mouseLlHookStruct.Point.X || MouseGlobalHook.m_OldY != mouseLlHookStruct.Point.Y))
 				{
-					MouseGlobalHook.OldX = mouseLlHookStruct.Point.X;
-					MouseGlobalHook.OldY = mouseLlHookStruct.Point.Y;
-					if (this.MouseMove != null)
-						this.MouseMove((object)null, e);
+					MouseGlobalHook.m_OldX = mouseLlHookStruct.Point.X;
+					MouseGlobalHook.m_OldY = mouseLlHookStruct.Point.Y;
+					if (MouseMove != null)
+						MouseMove((object)null, e);
 				}
 			}
 			return MouseGlobalHook.CallNextHookEx(MouseGlobalHook.hHook, nCode, wParam, lParam);

@@ -9,28 +9,25 @@ namespace MyCSLib.General
 {
 	public sealed class ApplicationSettings : IDisposable
 	{
-		private const string FileName = "ApplicationSettings.xml";
-		private const string RootElement = "ApplicationSettings";
-		private const string SettingElement = "Setting";
-		private const string PathSeperator = "/";
-		private XmlDocument Document;
+		private const string m_fileName = "ApplicationSettings.xml";
+		private const string m_RootElement = "ApplicationSettings";
+		private const string m_SettingElement = "Setting";
+		private const string m_PathSeperator = "/";
+		private XmlDocument m_Document;
 
 		public XmlDocument XmlDocument
 		{
-			get
-			{
-				return this.Document;
-			}
+			get { return m_Document; }
 		}
 
 		public ApplicationSettings()
 		{
-			this.Document = ApplicationSettings.OpenDocument();
+			m_Document = ApplicationSettings.OpenDocument();
 		}
 
 		public bool SetValue(string Name, string Value)
 		{
-			foreach (XmlNode xmlNode in this.Document.SelectNodes("/ApplicationSettings/Setting"))
+			foreach (XmlNode xmlNode in this.m_Document.SelectNodes("/ApplicationSettings/Setting"))
 			{
 				if (xmlNode.Attributes["Name"].Value.Equals(Name))
 				{
@@ -38,10 +35,10 @@ namespace MyCSLib.General
 					return false;
 				}
 			}
-			XmlNode xmlNode1 = this.Document.SelectSingleNode("/ApplicationSettings");
-			XmlNode newChild = (XmlNode)this.Document.CreateElement("Setting");
-			newChild.Attributes.Append(this.Document.CreateAttribute("Name"));
-			newChild.Attributes.Append(this.Document.CreateAttribute("Value"));
+			XmlNode xmlNode1 = m_Document.SelectSingleNode("/ApplicationSettings");
+			XmlNode newChild = (XmlNode)m_Document.CreateElement("Setting");
+			newChild.Attributes.Append(m_Document.CreateAttribute("Name"));
+			newChild.Attributes.Append(m_Document.CreateAttribute("Value"));
 			newChild.Attributes["Name"].Value = Name;
 			newChild.Attributes["Value"].Value = Value;
 			xmlNode1.AppendChild(newChild);
@@ -50,7 +47,7 @@ namespace MyCSLib.General
 
 		public bool RemoveValue(string Name)
 		{
-			foreach (XmlNode oldChild in this.Document.SelectNodes("/ApplicationSettings/Setting"))
+			foreach (XmlNode oldChild in m_Document.SelectNodes("/ApplicationSettings/Setting"))
 			{
 				if (oldChild.Attributes["Name"].Value.Equals(Name))
 				{
@@ -63,31 +60,31 @@ namespace MyCSLib.General
 
 		public string GetValue(string Name)
 		{
-			foreach (XmlNode xmlNode in this.Document.SelectNodes("/ApplicationSettings/Setting"))
+			foreach (XmlNode xmlNode in m_Document.SelectNodes("/ApplicationSettings/Setting"))
 			{
 				if (xmlNode.Attributes["Name"].Value.Equals(Name))
 					return xmlNode.Attributes["Value"].Value;
 			}
-			return (string)null;
+			return null;
 		}
 
 		public void ClearSettings()
 		{
-			this.Document = ApplicationSettings.CreateDocument();
+			m_Document = ApplicationSettings.CreateDocument();
 		}
 
 		public Hashtable GetSettings()
 		{
-			XmlNodeList xmlNodeList = this.Document.SelectNodes("/ApplicationSettings/Setting");
+			XmlNodeList xmlNodeList = m_Document.SelectNodes("/ApplicationSettings/Setting");
 			Hashtable hashtable = new Hashtable(xmlNodeList.Count);
 			foreach (XmlNode xmlNode in xmlNodeList)
-				hashtable.Add((object)xmlNode.Attributes["Name"].Value, (object)xmlNode.Attributes["Value"].Value);
+				hashtable.Add(xmlNode.Attributes["Name"].Value, xmlNode.Attributes["Value"].Value);
 			return hashtable;
 		}
 
 		public void SaveConfiguration()
 		{
-			ApplicationSettings.SaveDocument(this.Document, "ApplicationSettings.xml");
+			ApplicationSettings.SaveDocument(m_Document, "ApplicationSettings.xml");
 		}
 
 		private static XmlDocument OpenDocument()
@@ -131,7 +128,7 @@ namespace MyCSLib.General
 
 		public void Dispose()
 		{
-			ApplicationSettings.SaveDocument(this.Document, "ApplicationSettings.xml");
+			ApplicationSettings.SaveDocument(m_Document, "ApplicationSettings.xml");
 		}
 	}
 }

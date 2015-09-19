@@ -2,80 +2,56 @@
 {
 	public class BindingRegister : EditableObject
 	{
-		private uint address = 0U;
-		private uint value = 0U;
-		private bool readOnly = false;
-		private string name;
+		private uint m_address = 0U;
+		private uint m_value = 0U;
+		private bool m_readOnly = false;
+		private string m_name;
 
 		public string Name
 		{
-			get
-			{
-				return this.name;
-			}
-			set
-			{
-				this.name = value;
-			}
+			get { return m_name; }
+			set { m_name = value; }
 		}
 
 		public uint Address
 		{
-			get
-			{
-				return this.address;
-			}
-			set
-			{
-				this.address = value;
-			}
+			get { return m_address; }
+			set { m_address = value; }
 		}
 
 		public uint Value
 		{
-			get
-			{
-				return this.value;
-			}
-			set
-			{
-				this.value = value;
-			}
+			get { return m_value; }
+			set { m_value = value; }
 		}
 
 		public bool ReadOnly
 		{
-			get
-			{
-				return this.readOnly;
-			}
-			set
-			{
-				this.readOnly = value;
-			}
+			get { return m_readOnly; }
+			set { m_readOnly = value; }
 		}
 
 		public BindingRegister()
 		{
-			this.name = "";
-			this.address = 0U;
-			this.value = 0U;
+			m_name = "";
+			m_address = 0U;
+			m_value = 0U;
 		}
 
 		public BindingRegister(string name, uint address, uint value)
 		{
-			this.name = name;
-			this.address = address;
-			this.value = value;
-			this.readOnly = false;
+			m_name = name;
+			m_address = address;
+			m_value = value;
+			m_readOnly = false;
 		}
 
 		public BindingRegister(string name, uint address, uint value, bool readOnly)
 		{
-			this.name = name;
-			this.address = address;
-			this.value = value;
-			this.readOnly = readOnly;
+			m_name = name;
+			m_address = address;
+			m_value = value;
+			m_readOnly = readOnly;
 		}
 	}
 }

@@ -60,21 +60,12 @@
     <Compile Include="MyCSLib\General\RegisterCollection.cs" />
     <Compile Include="MyCSLib\General\EngineeringNotation.cs" />
     <Compile Include="MyCSLib\General\Register.cs" />
-    <Compile Include="MyCSLib\General\Events\DecimalEventHandler.cs" />
     <Compile Include="MyCSLib\General\Events\Int16EventArg.cs" />
-    <Compile Include="MyCSLib\General\Events\ByteEventHandler.cs" />
     <Compile Include="MyCSLib\General\Events\ByteArrayEventArg.cs" />
-    <Compile Include="MyCSLib\General\Events\BooleanEventHandler.cs" />
-    <Compile Include="MyCSLib\General\Events\Int16EventHandler.cs" />
-    <Compile Include="MyCSLib\General\Events\DoubleEventHandler.cs" />
-    <Compile Include="MyCSLib\General\Events\ProgressEventHandler.cs" />
     <Compile Include="MyCSLib\General\Events\ByteEventArg.cs" />
-    <Compile Include="MyCSLib\General\Events\ByteArrayEventHandler.cs" />
     <Compile Include="MyCSLib\General\Events\Int32EventArg.cs" />
     <Compile Include="MyCSLib\General\Events\DoubleEventArg.cs" />
     <Compile Include="MyCSLib\General\Events\BooleanEventArg.cs" />
-    <Compile Include="MyCSLib\General\Events\Int32EventHandler.cs" />
-    <Compile Include="MyCSLib\General\Events\ErrorEventHandler.cs" />
     <Compile Include="MyCSLib\General\Events\ErrorEventArgs.cs" />
     <Compile Include="MyCSLib\General\Events\DecimalEventArg.cs" />
     <Compile Include="MyCSLib\General\Events\ProgressEventArg.cs" />
@@ -84,7 +75,6 @@
     <Compile Include="MyCSLib\General\TypeConverters\UInt16HexConverter.cs" />
     <Compile Include="MyCSLib\General\Interfaces\INotifyDocumentationChanged.cs" />
     <Compile Include="MyCSLib\General\Interfaces\DocumentationChangedEventArgs.cs" />
-    <Compile Include="MyCSLib\General\Interfaces\DocumentationChangedEventHandler.cs" />
     <Compile Include="MyCSLib\Controls\PushBtn.cs">
       <SubType>Component</SubType>
     </Compile>

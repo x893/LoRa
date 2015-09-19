@@ -8,10 +8,9 @@ namespace LoRaModem
 {
 	public class FTDI
 	{
-		protected object syncThread = new object();
+		private object m_lock = new object();
 		private IContainer components;
-		public SerialPort mycomm;
-		public string PortName;
+		private SerialPort m_comm;
 
 		public FTDI()
 		{
@@ -21,7 +20,7 @@ namespace LoRaModem
 		private void InitializeComponent()
 		{
 			components = (IContainer)new Container();
-			mycomm = new SerialPort(components);
+			m_comm = new SerialPort(components);
 		}
 
 		public bool Open()
@@ -31,17 +30,17 @@ namespace LoRaModem
 				byte[] buffer = new byte[1] { (byte)FTDI.SPI_CMD.SPI_QUERY };
 				foreach (string port in SerialPort.GetPortNames())
 				{
-					mycomm.PortName = port;
-					if (!mycomm.IsOpen)
+					m_comm.PortName = port;
+					if (!m_comm.IsOpen)
 					{
-						mycomm.BaudRate = 115200;
-						mycomm.Parity = Parity.None;
-						mycomm.Open();
-						mycomm.Write(buffer, 0, 1);
+						m_comm.BaudRate = 115200;
+						m_comm.Parity = Parity.None;
+						m_comm.Open();
+						m_comm.Write(buffer, 0, 1);
 						Thread.Sleep(100);
-						if (mycomm.ReadExisting().Contains("HopeRF LoRa"))
+						if (m_comm.ReadExisting().Contains("HopeRF LoRa"))
 							return true;
-						mycomm.Close();
+						m_comm.Close();
 					}
 				}
 				return false;
@@ -55,24 +54,24 @@ namespace LoRaModem
 
 		public bool Close()
 		{
-			if (mycomm.PortName == null || !mycomm.IsOpen)
+			if (m_comm.PortName == null || !m_comm.IsOpen)
 				return false;
-			mycomm.Close();
+			m_comm.Close();
 			return true;
 		}
 
 		public bool SendByte(byte address, byte data)
 		{
-			lock (syncThread)
+			lock (m_lock)
 			{
 				byte[] outData = new byte[3] { (byte)FTDI.SPI_CMD.SPI_WRITE, address, data };
-				mycomm.DiscardOutBuffer();
-				mycomm.Write(outData, 0, 3);
+				m_comm.DiscardOutBuffer();
+				m_comm.Write(outData, 0, 3);
 				int delay;
 				for (delay = 0; delay < 5; ++delay)
 				{
 					Thread.Sleep(3);
-					if (mycomm.BytesToWrite == 0)
+					if (m_comm.BytesToWrite == 0)
 						break;
 				}
 				return delay < 5;
@@ -81,7 +80,7 @@ namespace LoRaModem
 
 		public bool SendBytes(byte address, byte[] data, int length)
 		{
-			lock (syncThread)
+			lock (m_lock)
 			{
 				byte[] outData = new byte[(int)length + 2];
 				outData[0] = (byte)FTDI.SPI_CMD.SPI_BURST_WRITE;
@@ -89,22 +88,22 @@ namespace LoRaModem
 				for (int idx = 2; idx < length + 2; ++idx)
 					outData[idx] = data[idx - 2];
 
-				mycomm.DiscardOutBuffer();
-				mycomm.Write(outData, 0, length + 2);
+				m_comm.DiscardOutBuffer();
+				m_comm.Write(outData, 0, length + 2);
 				int delay;
 				for (delay = 0; delay < length; ++delay)
 				{
 					Thread.Sleep(5);
-					if (mycomm.BytesToWrite == 0)
+					if (m_comm.BytesToWrite == 0)
 						break;
 				}
 				if (delay >= length)
 					return false;
-				mycomm.ReadTimeout += length + 100;
+				m_comm.ReadTimeout += length + 100;
 				FTDI.SPI_CMD ack;
 				try
 				{
-					ack = (FTDI.SPI_CMD)(mycomm.ReadByte() & 0xFF);
+					ack = (FTDI.SPI_CMD)(m_comm.ReadByte() & 0xFF);
 				}
 				catch
 				{
@@ -116,25 +115,25 @@ namespace LoRaModem
 
 		public bool ReadByte(byte address, ref byte data)
 		{
-			lock (syncThread)
+			lock (m_lock)
 			{
 				try
 				{
 					byte[] outData = new byte[3] { (byte)FTDI.SPI_CMD.SPI_READ, address, 0xFF };
-					mycomm.DiscardOutBuffer();
-					mycomm.DiscardInBuffer();
-					mycomm.Write(outData, 0, 3);
+					m_comm.DiscardOutBuffer();
+					m_comm.DiscardInBuffer();
+					m_comm.Write(outData, 0, 3);
 					int delay;
 					for (delay = 0; delay < 5; ++delay)
 					{
 						Thread.Sleep(3);
-						if (mycomm.BytesToWrite == 0)
+						if (m_comm.BytesToWrite == 0)
 							break;
 					}
 					if (delay >= 5)
 						return false;
-					mycomm.ReadTimeout += 10;
-					data = (byte)(mycomm.ReadByte() & 0xFF);
+					m_comm.ReadTimeout += 10;
+					data = (byte)(m_comm.ReadByte() & 0xFF);
 					return true;
 				}
 				catch (Exception)
@@ -146,26 +145,26 @@ namespace LoRaModem
 
 		public bool ReadBytes(byte address, ref byte[] data, int length)
 		{
-			lock (syncThread)
+			lock (m_lock)
 			{
 				try
 				{
 					byte[] outData = new byte[3] { (byte)FTDI.SPI_CMD.SPI_BURST_READ, address, (byte)length };
-					mycomm.DiscardInBuffer();
-					mycomm.DiscardOutBuffer();
-					mycomm.Write(outData, 0, 3);
+					m_comm.DiscardInBuffer();
+					m_comm.DiscardOutBuffer();
+					m_comm.Write(outData, 0, 3);
 					int delay;
 					for (delay = 0; delay < 5; ++delay)
 					{
 						Thread.Sleep(3);
-						if (mycomm.BytesToWrite == 0)
+						if (m_comm.BytesToWrite == 0)
 							break;
 					}
 					if (delay >= 5)
 						return false;
 					Thread.Sleep(length + 10);
-					mycomm.ReadTimeout += 20;
-					mycomm.Read(data, 0, length);
+					m_comm.ReadTimeout += 20;
+					m_comm.Read(data, 0, length);
 					return true;
 				}
 				catch (Exception)
@@ -178,13 +177,13 @@ namespace LoRaModem
 		private bool SendByte(byte data)
 		{
 			byte[] outData = new byte[] { data };
-			mycomm.DiscardOutBuffer();
-			mycomm.Write(outData, 0, 1);
+			m_comm.DiscardOutBuffer();
+			m_comm.Write(outData, 0, 1);
 			int delay;
 			for (delay = 0; delay < 5; ++delay)
 			{
 				Thread.Sleep(3);
-				if (mycomm.BytesToWrite == 0)
+				if (m_comm.BytesToWrite == 0)
 					break;
 			}
 			return (delay < 5);
@@ -219,14 +218,14 @@ namespace LoRaModem
 		{
 			byte[] buffer = new byte[1];
 			buffer[0] = (byte)FTDI.SPI_CMD.SPI_HRESET;
-			mycomm.DiscardOutBuffer();
-			mycomm.DiscardInBuffer();
-			mycomm.Write(buffer, 0, 1);
-			mycomm.ReadTimeout += 30;
+			m_comm.DiscardOutBuffer();
+			m_comm.DiscardInBuffer();
+			m_comm.Write(buffer, 0, 1);
+			m_comm.ReadTimeout += 30;
 			FTDI.SPI_CMD ack = FTDI.SPI_CMD.SPI_NACK;
 			try
 			{
-				ack = (FTDI.SPI_CMD)(mycomm.ReadByte() & 0xFF);
+				ack = (FTDI.SPI_CMD)(m_comm.ReadByte() & 0xFF);
 			}
 			catch
 			{
@@ -238,15 +237,15 @@ namespace LoRaModem
 		public bool LReset()
 		{
 			byte[] buffer = new byte[] { (byte)FTDI.SPI_CMD.SPI_LRESET };
-			mycomm.DiscardOutBuffer();
-			mycomm.DiscardInBuffer();
-			mycomm.Write(buffer, 0, 1);
+			m_comm.DiscardOutBuffer();
+			m_comm.DiscardInBuffer();
+			m_comm.Write(buffer, 0, 1);
 
-			mycomm.ReadTimeout += 30;
+			m_comm.ReadTimeout += 30;
 			FTDI.SPI_CMD ack = FTDI.SPI_CMD.SPI_NACK;
 			try
 			{
-				ack = (FTDI.SPI_CMD)(mycomm.ReadByte() & 0xFF);
+				ack = (FTDI.SPI_CMD)(m_comm.ReadByte() & 0xFF);
 			}
 			catch
 			{
@@ -260,11 +259,11 @@ namespace LoRaModem
 			try
 			{
 				byte[] buffer = new byte[1] { (byte)FTDI.LCD_CMD.LCD_CLEAR };
-				mycomm.DiscardInBuffer();
-				mycomm.DiscardOutBuffer();
-				mycomm.Write(buffer, 0, 1);
-				mycomm.ReadTimeout += 100;
-				return ((mycomm.ReadByte() & 0xFF) == (int)FTDI.LCD_CMD.LCD_ACK);
+				m_comm.DiscardInBuffer();
+				m_comm.DiscardOutBuffer();
+				m_comm.Write(buffer, 0, 1);
+				m_comm.ReadTimeout += 100;
+				return ((m_comm.ReadByte() & 0xFF) == (int)FTDI.LCD_CMD.LCD_ACK);
 			}
 			catch { }
 			return false;
@@ -275,11 +274,11 @@ namespace LoRaModem
 			try
 			{
 				byte[] buffer = new byte[1] { (byte)FTDI.LCD_CMD.LCD_FULL };
-				mycomm.DiscardInBuffer();
-				mycomm.DiscardOutBuffer();
-				mycomm.Write(buffer, 0, 1);
-				mycomm.ReadTimeout += 100;
-				return ((mycomm.ReadByte() & 0xFF) == (int)FTDI.LCD_CMD.LCD_ACK);
+				m_comm.DiscardInBuffer();
+				m_comm.DiscardOutBuffer();
+				m_comm.Write(buffer, 0, 1);
+				m_comm.ReadTimeout += 100;
+				return ((m_comm.ReadByte() & 0xFF) == (int)FTDI.LCD_CMD.LCD_ACK);
 			}
 			catch { }
 			return false;
@@ -290,11 +289,11 @@ namespace LoRaModem
 			try
 			{
 				byte[] buffer = new byte[1] { (byte)FTDI.LCD_CMD.LCD_SHOW };
-				mycomm.DiscardInBuffer();
-				mycomm.DiscardOutBuffer();
-				mycomm.Write(buffer, 0, 1);
-				mycomm.ReadTimeout += 100;
-				return ((mycomm.ReadByte() & 0xFF) == (int)FTDI.LCD_CMD.LCD_ACK);
+				m_comm.DiscardInBuffer();
+				m_comm.DiscardOutBuffer();
+				m_comm.Write(buffer, 0, 1);
+				m_comm.ReadTimeout += 100;
+				return ((m_comm.ReadByte() & 0xFF) == (int)FTDI.LCD_CMD.LCD_ACK);
 			}
 			catch { }
 			return false;
@@ -302,13 +301,13 @@ namespace LoRaModem
 
 		private bool SendByte(byte[] data)
 		{
-			mycomm.DiscardOutBuffer();
-			mycomm.Write(data, 0, data.Length);
+			m_comm.DiscardOutBuffer();
+			m_comm.Write(data, 0, data.Length);
 			int delay;
 			for (delay = 0; delay < 5; ++delay)
 			{
 				Thread.Sleep(3);
-				if (mycomm.BytesToWrite == 0)
+				if (m_comm.BytesToWrite == 0)
 					break;
 			}
 			return (delay < 5);
@@ -331,22 +330,22 @@ namespace LoRaModem
 
 		public void RfDataIn()
 		{
-			mycomm.Write(new byte[1] { (byte)FTDI.HAL_CMD.HAL_DIO2_IN }, 0, 1);
+			m_comm.Write(new byte[1] { (byte)FTDI.HAL_CMD.HAL_DIO2_IN }, 0, 1);
 		}
 
 		public void RfDataOut()
 		{
-			mycomm.Write(new byte[1] { (byte)FTDI.HAL_CMD.HAL_DIO2_OUT }, 0, 1);
+			m_comm.Write(new byte[1] { (byte)FTDI.HAL_CMD.HAL_DIO2_OUT }, 0, 1);
 		}
 
 		public void RfDataHigh()
 		{
-			mycomm.Write(new byte[1] { (byte)FTDI.HAL_CMD.HAL_DIO2_H }, 0, 1);
+			m_comm.Write(new byte[1] { (byte)FTDI.HAL_CMD.HAL_DIO2_H }, 0, 1);
 		}
 
 		public void RfDataLow()
 		{
-			mycomm.Write(new byte[1] { (byte)FTDI.HAL_CMD.HAL_DIO2_L }, 0, 1);
+			m_comm.Write(new byte[1] { (byte)FTDI.HAL_CMD.HAL_DIO2_L }, 0, 1);
 		}
 
 		private enum SPI_CMD

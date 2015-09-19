@@ -1,42 +1,30 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: MyCSLib.General.PropertyOrderPair
-// Assembly: MyCSLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 70B056C4-DB31-49BD-9F27-15818C65F327
-// Assembly location: C:\Tools\HopeRF\RFM9x_GUI_1_1_0_9\MyCSLib.dll
-
-using System;
+﻿using System;
 
 namespace MyCSLib.General
 {
-  public class PropertyOrderPair : IComparable
-  {
-    private int order = 0;
-    private string name = string.Empty;
+	public class PropertyOrderPair : IComparable
+	{
+		private int m_order = 0;
+		private string m_name = string.Empty;
 
-    public string Name
-    {
-      get
-      {
-        return this.name;
-      }
-    }
+		public string Name
+		{
+			get { return this.m_name; }
+		}
 
-    public PropertyOrderPair()
-    {
-    }
+		public PropertyOrderPair() { }
+		public PropertyOrderPair(string name, int order)
+		{
+			m_order = order;
+			m_name = name;
+		}
 
-    public PropertyOrderPair(string name, int order)
-    {
-      this.order = order;
-      this.name = name;
-    }
-
-    public int CompareTo(object obj)
-    {
-      int num = ((PropertyOrderPair) obj).order;
-      if (num == this.order)
-        return string.Compare(this.name, ((PropertyOrderPair) obj).name);
-      return num > this.order ? -1 : 1;
-    }
-  }
+		public int CompareTo(object obj)
+		{
+			int num = ((PropertyOrderPair)obj).m_order;
+			if (num == m_order)
+				return string.Compare(m_name, ((PropertyOrderPair)obj).m_name);
+			return num > m_order ? -1 : 1;
+		}
+	}
 }
